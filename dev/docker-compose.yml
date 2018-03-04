@@ -1,0 +1,49 @@
+version: '3'
+services:
+      
+  mysql-keycloak:
+    image: mysql
+    hostname: mysql-keycloak
+    container_name: mysql-keycloak
+    ports:
+      - 3306:3306
+    env_file:
+     - ./keycloak_common.env
+
+  keycloak:
+    image: jboss/keycloak
+    hostname: keycloak
+    container_name: keycloak
+    environment:
+      - MYSQL_ADDR=mysql-keycloak
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+    ports:
+      - 8181:8080
+    links:
+      - mysql-keycloak
+    env_file:
+     - ./keycloak_common.env
+     
+  ldap-service:
+    image: osixia/openldap:1.1.11
+    container_name: ldap-service
+    hostname: ldap-service
+    environment:
+      - LDAP_ORGANISATION="MyCompany Inc."
+      - LDAP_DOMAIN=mycompany.com
+    ports:
+      - 389:389
+
+  phpldapadmin-service:
+    image: osixia/phpldapadmin:0.7.1
+    container_name: phpldapadmin-service
+    hostname: phpldapadmin-service
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=ldap-host
+    ports:
+      - 6443:443
+    depends_on:
+      - ldap-service
+    links:
+      - ldap-service:ldap-host
