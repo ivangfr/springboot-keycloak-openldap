@@ -40,60 +40,60 @@ Mark Cuban > username: mcuban, password: 123
 
 ### Keycloak
 
-- **Access the link**
+1. Access the link
 ```
 http://localhost:8181
 ```
 
-- **Login with the credentials**
+2. Login with the credentials
 ```
 Username: admin
 Password: admin
 ```
 
-- **Create a new Realm**
-1. Go to top-left corner where `Master` realm is. A blue button `Add realm` will appear. Click on it.
-2. On `Name` field, write `company-services`. Click on `Create`.
+3. Create a new Realm
+- Go to top-left corner where `Master` realm is. A blue button `Add realm` will appear. Click on it.
+- On `Name` field, write `company-services`. Click on `Create`.
 
-- **Create a new Client**
-1. Click on `Clients` menu on the left.
-2. Click `Create` button.
-3. On `Client ID` field type `springboot-keycloak-openldap`.
-4. Click on `Save`.
-5. On `Settings` tab, set the `Access Type` to `confidential`
-6. Still on `Settings` tab, set the `Valid Redirect URIs` to `http://localhost:8080/*`
-7. Click on `Save`.
-8. Go to `Credentials` tab. Copy the value on `Secret` field and set this value on `springboot-keycloak-openldap`application.yaml (property `keycloak.credentials.secret`).
+4. Create a new Client
+- Click on `Clients` menu on the left.
+- Click `Create` button.
+- On `Client ID` field type `springboot-keycloak-openldap`.
+- Click on `Save`.
+- On `Settings` tab, set the `Access Type` to `confidential`
+- Still on `Settings` tab, set the `Valid Redirect URIs` to `http://localhost:8080/*`
+- Click on `Save`.
+- Go to `Credentials` tab. Copy the value on `Secret` field and set this value on `springboot-keycloak-openldap`application.yaml (property `keycloak.credentials.secret`).
 
-- **Create a new Role**
-1. Click on `Roles` menu on the left.
-2. Click `Add Role` button.
-3. On `Role Name` type `user`.
-4. Click on `Save`.
+5. Create a new Role
+- Click on `Roles` menu on the left.
+- Click `Add Role` button.
+- On `Role Name` type `user`.
+- Click on `Save`.
 
-- **LDAP Integration**
-1. Click on the `User Federation` menu on the left.
-2. Select `ldap`.
-3. On `Vendor` field select `Other`
-4. On `Connection URL` type `ldap://<ldap-service_ip-address>:389`. To get the ldap-service ip address run the following docker command:
+6. LDAP Integration
+- Click on the `User Federation` menu on the left.
+- Select `ldap`.
+- On `Vendor` field select `Other`
+- On `Connection URL` type `ldap://<ldap-service_ip-address>:389`. To get the ldap-service ip address run the following docker command:
 ```
 docker inspect -f "{{ .NetworkSettings.Networks.dev_default.IPAddress }}" ldap-service
 ```
-5. Click on `Test connection` to check if it is ok.
-6. On `Users DN` type `ou=users,dc=mycompany,dc=com`
-7. On `Bind DN` type `cn=admin,dc=mycompany,dc=com`
-8. On `Bind Credential` set `admin`
-9. Click on `Test authentication` to check if it is ok.
-10. Click on `Save`.
-11. Click on `Synchronize all users`.
+- Click on `Test connection` to check if it is ok.
+- On `Users DN` type `ou=users,dc=mycompany,dc=com`
+- On `Bind DN` type `cn=admin,dc=mycompany,dc=com`
+- On `Bind Credential` set `admin`
+- Click on `Test authentication` to check if it is ok.
+- Click on `Save`.
+- Click on `Synchronize all users`.
 
-- **Configure users imported**
-1. Click on `Users` menu on the left.
-2. Click on `View all users`. 3 users will be shown.
-3. Edit user `bgates`.
-4. Go to `Role Mappings` tab and add role `user` to him.
-5. Do the same for the user `sjobs`.
-6. Let's leave `mcuban` without `user` role.
+7. Configure users imported
+- Click on `Users` menu on the left.
+- Click on `View all users`. 3 users will be shown.
+- Edit user `bgates`.
+- Go to `Role Mappings` tab and add role `user` to him.
+- Do the same for the user `sjobs`.
+- Let's leave `mcuban` without `user` role.
 
 ### Spring Boot Application
 
