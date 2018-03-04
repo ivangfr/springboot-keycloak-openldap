@@ -133,7 +133,11 @@ export KEYCLOAK_CLIENT_SECRET=<keycloak-client-secret>
 
 5. Run the command bellow to get an access token for `bgates` user.
 ```
-MYCOMPANY_BGATES_ACCESS_TOKEN=$(curl -s -X POST http://localhost:8181/auth/realms/company-services/protocol/openid-connect/token -H "Content-Type: application/x-www-form-urlencoded" -d "username=bgates" -d 'password=123' -d 'grant_type=password' -d 'client_secret='$KEYCLOAK_CLIENT_SECRET -d 'client_id=springboot-keycloak-openldap' | jq -r .access_token )
+MYCOMPANY_BGATES_ACCESS_TOKEN=$(curl -s -X POST \
+  http://localhost:8181/auth/realms/company-services/protocol/openid-connect/token \
+  -H "Content-Type: application/x-www-form-urlencoded" -d "username=bgates" -d 'password=123' \
+  -d 'grant_type=password' -d 'client_secret='$KEYCLOAK_CLIENT_SECRET \
+  -d 'client_id=springboot-keycloak-openldap' | jq -r .access_token)
 ```
 
 6. Call the endpoint `/api/private` using the cURL command bellow.
@@ -147,7 +151,11 @@ bgates, it is private.
 
 7. Run the command bellow to get an access token for `mcuban` user.
 ```
-MYCOMPANY_MCUBAN_ACCESS_TOKEN=$(curl -s -X POST http://localhost:8181/auth/realms/company-services/protocol/openid-connect/token -H "Content-Type: application/x-www-form-urlencoded" -d "username=mcuban" -d 'password=123' -d 'grant_type=password' -d 'client_secret='$KEYCLOAK_CLIENT_SECRET -d 'client_id=springboot-keycloak-openldap' | jq -r .access_token )
+MYCOMPANY_MCUBAN_ACCESS_TOKEN=$(curl -s -X POST \
+  http://localhost:8181/auth/realms/company-services/protocol/openid-connect/token \
+  -H "Content-Type: application/x-www-form-urlencoded" -d "username=mcuban" -d 'password=123' \
+  -d 'grant_type=password' -d 'client_secret='$KEYCLOAK_CLIENT_SECRET \
+  -d 'client_id=springboot-keycloak-openldap' | jq -r .access_token )
 ```
 
 8. Try to call the endpoint `/api/private` using the cURL command bellow.
@@ -163,7 +171,11 @@ As mcuban doesn't have the `user` role, he cannot access this endpoint. The endp
 
 10. Run the command bellow to get a new access token for `mcuban` user.
 ```
-MYCOMPANY_MCUBAN_ACCESS_TOKEN=$(curl -s -X POST http://localhost:8181/auth/realms/company-services/protocol/openid-connect/token -H "Content-Type: application/x-www-form-urlencoded" -d "username=mcuban" -d 'password=123' -d 'grant_type=password' -d 'client_secret='$KEYCLOAK_CLIENT_SECRET -d 'client_id=springboot-keycloak-openldap' | jq -r .access_token )
+MYCOMPANY_MCUBAN_ACCESS_TOKEN=$(curl -s -X POST \
+  http://localhost:8181/auth/realms/company-services/protocol/openid-connect/token \
+  -H "Content-Type: application/x-www-form-urlencoded" -d "username=mcuban" -d 'password=123' \
+  -d 'grant_type=password' -d 'client_secret='$KEYCLOAK_CLIENT_SECRET \
+  -d 'client_id=springboot-keycloak-openldap' | jq -r .access_token )
 ```
 
 11. Call again the endpoint `/api/private` using the cURL command bellow.
