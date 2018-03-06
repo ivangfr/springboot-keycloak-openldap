@@ -31,11 +31,12 @@ Password: admin
 3. Import the file `ldap-mycompany-com.ldif`
 
 This file has already a pre-defined structure for mycompany.com.
-Basically, it has 2 groups (employees and clients) and 3 users (Bill Gates, Steve Jobs and Mark Cuban). Besides, it is defined that Bill Gates and Steve Jobs belong to employees group and Mark Cuban belongs to clients group.
+Basically, it has 2 groups (developers and admin) and 4 users (Bill Gates, Steve Jobs, Mark Cuban and Ivan Franchin). Besides, it is defined that Bill Gates, Steve Jobs and Mark Cuban belong to developers group and Ivan Franchin belongs to admin group.
 ```
 Bill Gates > username: bgates, password: 123
 Steve Jobs > username: sjobs, password: 123
 Mark Cuban > username: mcuban, password: 123
+Ivan Franchin > username: ifranchin, password: 123
 ```
 
 ### Keycloak
@@ -52,7 +53,7 @@ Password: admin
 ```
 
 3. Create a new Realm
-- Go to top-left corner where `Master` realm is. A blue button `Add realm` will appear. Click on it.
+- Go to top-left corner and hover the mouse over `Master` realm. A blue button `Add realm` will appear. Click on it.
 - On `Name` field, write `company-services`. Click on `Create`.
 
 4. Create a new Client
@@ -75,7 +76,7 @@ Password: admin
 - Click on the `User Federation` menu on the left.
 - Select `ldap`.
 - On `Vendor` field select `Other`
-- On `Connection URL` type `ldap://<ldap-service_ip-address>:389`. To get the ldap-service ip address run the following docker command:
+- On `Connection URL` type `ldap://<ldap-service_ip-address>`. To get the ldap-service ip address run the following docker command:
 ```
 docker inspect -f "{{ .NetworkSettings.Networks.dev_default.IPAddress }}" ldap-service
 ```
@@ -84,6 +85,7 @@ docker inspect -f "{{ .NetworkSettings.Networks.dev_default.IPAddress }}" ldap-s
 - On `Bind DN` type `cn=admin,dc=mycompany,dc=com`
 - On `Bind Credential` set `admin`
 - Click on `Test authentication` to check if it is ok.
+- On `Custom User LDAP Filter` set `(gidnumber=500)` ot just get developers.
 - Click on `Save`.
 - Click on `Synchronize all users`.
 
@@ -134,15 +136,15 @@ export KEYCLOAK_CLIENT_SECRET=<keycloak-client-secret>
 5. Run the command bellow to get an access token for `bgates` user.
 ```
 MYCOMPANY_BGATES_ACCESS_TOKEN=$(curl -s -X POST \
-  http://localhost:8181/auth/realms/company-services/protocol/openid-connect/token \
-  -H "Content-Type: application/x-www-form-urlencoded" -d "username=bgates" -d 'password=123' \
-  -d 'grant_type=password' -d 'client_secret='$KEYCLOAK_CLIENT_SECRET \
-  -d 'client_id=springboot-keycloak-openldap' | jq -r .access_token)
+  "http://localhost:8181/auth/realms/company-services/protocol/openid-connect/token" \
+  -H "Content-Type: application/x-www-form-urlencoded" -d "username=bgates" -d "password=123" \
+  -d "grant_type=password" -d "client_secret=$KEYCLOAK_CLIENT_SECRET" \
+  -d "client_id=springboot-keycloak-openldap" | jq -r .access_token)
 ```
 
 6. Call the endpoint `/api/private` using the cURL command bellow.
 ```
-curl -X GET -H 'authorization: Bearer '$MYCOMPANY_BGATES_ACCESS_TOKEN 'http://localhost:8080/api/private'
+curl -H "authorization: Bearer $MYCOMPANY_BGATES_ACCESS_TOKEN" "http://localhost:8080/api/private"
 ```
 It will return:
 ```
@@ -152,15 +154,15 @@ bgates, it is private.
 7. Run the command bellow to get an access token for `mcuban` user.
 ```
 MYCOMPANY_MCUBAN_ACCESS_TOKEN=$(curl -s -X POST \
-  http://localhost:8181/auth/realms/company-services/protocol/openid-connect/token \
-  -H "Content-Type: application/x-www-form-urlencoded" -d "username=mcuban" -d 'password=123' \
-  -d 'grant_type=password' -d 'client_secret='$KEYCLOAK_CLIENT_SECRET \
-  -d 'client_id=springboot-keycloak-openldap' | jq -r .access_token )
+  "http://localhost:8181/auth/realms/company-services/protocol/openid-connect/token" \
+  -H "Content-Type: application/x-www-form-urlencoded" -d "username=mcuban" -d "password=123" \
+  -d "grant_type=password" -d "client_secret=$KEYCLOAK_CLIENT_SECRET" \
+  -d "client_id=springboot-keycloak-openldap" | jq -r .access_token )
 ```
 
 8. Try to call the endpoint `/api/private` using the cURL command bellow.
 ```
-curl -X GET -H 'authorization: Bearer '$MYCOMPANY_MCUBAN_ACCESS_TOKEN 'http://localhost:8080/api/private'
+curl -H "authorization: Bearer $MYCOMPANY_MCUBAN_ACCESS_TOKEN" "http://localhost:8080/api/private"
 ```
 As mcuban doesn't have the `user` role, he cannot access this endpoint. The endpoint return is:
 ```
@@ -169,19 +171,9 @@ As mcuban doesn't have the `user` role, he cannot access this endpoint. The endp
 
 9. Go to Keycloak and add the role `user` to the `mcuban` user.
 
-10. Run the command bellow to get a new access token for `mcuban` user.
-```
-MYCOMPANY_MCUBAN_ACCESS_TOKEN=$(curl -s -X POST \
-  http://localhost:8181/auth/realms/company-services/protocol/openid-connect/token \
-  -H "Content-Type: application/x-www-form-urlencoded" -d "username=mcuban" -d 'password=123' \
-  -d 'grant_type=password' -d 'client_secret='$KEYCLOAK_CLIENT_SECRET \
-  -d 'client_id=springboot-keycloak-openldap' | jq -r .access_token )
-```
+10. Run the command on `step 7)` again to get a new access token for `mcuban` user.
 
-11. Call again the endpoint `/api/private` using the cURL command bellow.
-```
-curl -X GET -H 'authorization: Bearer '$MYCOMPANY_MCUBAN_ACCESS_TOKEN 'http://localhost:8080/api/private'
-```
+11. Call again the endpoint `/api/private` using the cURL command presented on `step 8`.
 It will return:
 ```
 mcuban, it is private.
