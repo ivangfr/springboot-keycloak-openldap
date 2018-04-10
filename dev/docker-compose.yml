@@ -2,16 +2,17 @@ version: '3'
 services:
       
   mysql-keycloak:
-    image: mysql
+    image: mysql:5.7.21
     hostname: mysql-keycloak
     container_name: mysql-keycloak
     ports:
       - 3306:3306
     env_file:
-     - ./keycloak_common.env
+     - keycloak-common.env
 
   keycloak:
-    image: jboss/keycloak
+    image: jboss/keycloak:4.0.0.Beta1
+#    image: jboss/keycloak:3.4.3.Final # this version doesn't get up
     hostname: keycloak
     container_name: keycloak
     environment:
@@ -23,7 +24,7 @@ services:
     links:
       - mysql-keycloak
     env_file:
-     - ./keycloak_common.env
+      - keycloak-common.env
      
   ldap-service:
     image: osixia/openldap:1.1.11

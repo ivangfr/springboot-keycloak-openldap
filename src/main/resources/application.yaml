@@ -1,8 +1,12 @@
+spring:
+  application:
+    name: springboot-keycloak-openldap
+
 keycloak:
   auth-server-url: http://localhost:8181/auth
   realm: company-services
   resource: springboot-keycloak-openldap
   credentials:
-    secret: 04847779-73e7-49d1-ac19-973781b94276
+    secret: a71dc035-92b3-4170-a64a-5480e05eb950
   ssl-required: external
   principal-attribute: preferred_username
