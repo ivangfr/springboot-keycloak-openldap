@@ -23,8 +23,9 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    private static final String TEAM_NAME = "MyCompany Team";
-    private static final String TEAM_EMAIL = "staff@mycompany.com";
+    private static final String NAME = "MyCompany Team";
+    private static final String URL = "http://mycompany.com";
+    private static final String EMAIL = "staff@mycompany.com";
 
     private static final String TITLE = "App";
     private static final String DESCRIPTION = "";
@@ -34,11 +35,17 @@ public class SwaggerConfig {
 
     @Bean
     public Docket api() {
-        Contact contact = new Contact(TEAM_NAME, null, TEAM_EMAIL);
+        Contact contact = new Contact(NAME, URL, EMAIL);
         ApiInfo apiInfo = new ApiInfo(TITLE, DESCRIPTION, VERSION, "", contact, "", "", new ArrayList<>());
 
-        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any()).paths(regex("/api/.*")).build().apiInfo(apiInfo)
-                .securityContexts(Collections.singletonList(securityContext())).securitySchemes(Collections.singletonList(apiKey()));
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(regex("/api/.*"))
+                .build()
+                .apiInfo(apiInfo)
+                .securityContexts(Collections.singletonList(securityContext()))
+                .securitySchemes(Collections.singletonList(apiKey()));
     }
 
     private ApiKey apiKey() {
