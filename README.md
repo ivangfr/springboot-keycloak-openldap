@@ -62,18 +62,16 @@ Password: admin
 - Click `Create` button.
 - On `Client ID` field type `springboot-keycloak-openldap`.
 - Click on `Save`.
-- On `Settings` tab, set the `Access Type` to `confidential`
-- Still on `Settings` tab, set the `Valid Redirect URIs` to `http://localhost:8080/*`
+- On `Settings` tab, set the `Access Type` to `confidential`.
+- Still on `Settings` tab, set the `Valid Redirect URIs` to `http://localhost:8080/*`.
 - Click on `Save`.
 - Go to `Credentials` tab. Copy the value on `Secret` field. It will be used on the next steps.
-
-5. Create a new Role
-- Click on `Roles` menu on the left.
+- Go to `Roles` tab.
 - Click `Add Role` button.
 - On `Role Name` type `user`.
 - Click on `Save`.
 
-6. LDAP Integration
+5. LDAP Integration
 - Click on the `User Federation` menu on the left.
 - Select `ldap`.
 - On `Vendor` field select `Other`
@@ -90,11 +88,13 @@ docker inspect -f "{{ .NetworkSettings.Networks.dev_default.IPAddress }}" ldap-s
 - Click on `Save`.
 - Click on `Synchronize all users`.
 
-7. Configure users imported
+6. Configure users imported
 - Click on `Users` menu on the left.
 - Click on `View all users`. 3 users will be shown.
 - Edit user `bgates`.
-- Go to `Role Mappings` tab and add role `user` to him.
+- Go to `Role Mappings` tab.
+- Select `springboot-keycloak-openldap` on the combo-box `Client Roles`.
+- Add the role `user` to `bgates`.
 - Do the same for the user `sjobs`.
 - Let's leave `mcuban` without `user` role.
 
@@ -105,7 +105,7 @@ docker inspect -f "{{ .NetworkSettings.Networks.dev_default.IPAddress }}" ldap-s
 2. In `springboot-keycloak-openldap` root folder, run those 2 commands to start `springboot-keycloak-openldap` application:
 ```
 mvn clean package
-java -jar target/springboot-keycloak-openldap-0.0.1-SNAPSHOT.jar
+mvn spring-boot:run
 ```
 
 ## Test using cURL
@@ -199,20 +199,15 @@ Response Body: mcuban, it is private.
 
 You can get an access token to `springboot-keycloak-openldap` using `client_id` and `client_secret`
 
-1. Go to `Keycloak`
-
-4. Select `company-services` realm, select `Clients` on the left menu
-
-5. Select `springboot-keycloak-openldap` client
-
-6. On `Settings` tab, turn `ON` the field `Service Accounts Enabled`
-
-7. Click on `Save`
-
-8. On `Service Account Roles` tab, add the `user` role
-
-9. Go to a terminal and run the commands
-
+- Go to `Keycloak`.
+- Select `company-services` realm, select `Clients` on the left menu.
+- Select `springboot-keycloak-openldap` client.
+- On `Settings` tab, turn `ON` the field `Service Accounts Enabled`.
+- Click on `Save`.
+- On `Service Account Roles` tab.
+- Select `springboot-keycloak-openldap` on the combo-box `Client Roles`.
+- Add the role `user`.
+- Go to a terminal and run the commands
 ```
 MYCOMPANY_CLIENT_ACCESS_TOKEN=$(curl -s -X POST \
   "http://localhost:8181/auth/realms/company-services/protocol/openid-connect/token" \
@@ -222,7 +217,7 @@ MYCOMPANY_CLIENT_ACCESS_TOKEN=$(curl -s -X POST \
   -d "client_id=springboot-keycloak-openldap" | jq -r .access_token)
 ```
 
-10. Try to call the endpoint `GET /api/private` using the cURL command bellow.
+- Try to call the endpoint `GET /api/private` using the cURL command bellow.
 ```
 curl -i http://localhost:8080/api/private -H "authorization: Bearer $MYCOMPANY_CLIENT_ACCESS_TOKEN"
 ```

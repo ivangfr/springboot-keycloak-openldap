@@ -9,6 +9,6 @@ keycloak:
   auth-server-url: http://localhost:8181/auth
   realm: company-services
   resource: springboot-keycloak-openldap
-#  credentials.secret:
   ssl-required: external
   principal-attribute: preferred_username
+  use-resource-role-mappings: true
