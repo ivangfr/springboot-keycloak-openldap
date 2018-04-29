@@ -1,4 +1,4 @@
-package com.mycompany.springbootkeycloakopenldap.config;
+package com.mycompany.simpleservice.config;
 
 import org.apache.http.HttpHeaders;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ public class SwaggerConfig {
     private static final String URL = "http://mycompany.com";
     private static final String EMAIL = "staff@mycompany.com";
 
-    private static final String TITLE = "App";
+    private static final String TITLE = "simple-service";
     private static final String DESCRIPTION = "";
     private static final String VERSION = "1.0";
 

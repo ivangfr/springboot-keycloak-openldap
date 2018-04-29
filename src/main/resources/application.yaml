@@ -1,6 +1,6 @@
 spring:
   application:
-    name: springboot-keycloak-openldap
+    name: simple-service
 management:
   security.enabled: false
 endpoints:
@@ -8,7 +8,7 @@ endpoints:
 keycloak:
   auth-server-url: http://localhost:8181/auth
   realm: company-services
-  resource: springboot-keycloak-openldap
+  resource: simple-service
   ssl-required: external
   principal-attribute: preferred_username
   use-resource-role-mappings: true

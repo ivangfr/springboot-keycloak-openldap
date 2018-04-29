@@ -1,4 +1,4 @@
-package com.mycompany.springbootkeycloakopenldap.controller;
+package com.mycompany.simpleservice.controller;
 
 import java.security.Principal;
 
