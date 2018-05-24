@@ -2,7 +2,7 @@ version: '3.5'
 services:
       
   mysql-keycloak:
-    image: mysql:5.7.21
+    image: mysql:5.7.22
     hostname: mysql-keycloak
     container_name: mysql-keycloak
     ports:
@@ -27,7 +27,7 @@ services:
       - keycloak-common.env
      
   ldap-service:
-    image: osixia/openldap:1.1.11
+    image: osixia/openldap:1.2.1
     container_name: ldap-service
     hostname: ldap-service
     environment:

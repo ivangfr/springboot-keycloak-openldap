@@ -19,10 +19,8 @@ docker-compose up
 
 ### Configuring `LDAP`
 
-1. Access the link
-```
-https://localhost:6443
-```
+1. Access the link: https://localhost:6443
+
 
 2. Login with the credentials
 ```
@@ -43,10 +41,7 @@ Ivan Franchin > username: ifranchin, password: 123
 
 ### Configuring `Keycloak`
 
-1. Access the link
-```
-http://localhost:8181
-```
+1. Access the link: http://localhost:8181
 
 2. Login with the credentials
 ```
@@ -76,7 +71,12 @@ Password: admin
 - Click on the `User Federation` menu on the left.
 - Select `ldap`.
 - On `Vendor` field select `Other`
-- On `Connection URL` type `ldap://<machine-ip-address>`.
+- On `Connection URL` type `ldap://<machine-ip-address OR ldap-service-docker-ip-address>`.
+
+> `machine-ip-address` can be obtained executing `ifconfig` command on Mac/Linux terminal or `ipconfig` on Windows;
+>
+> `ldap-service-docker-ip-address` can be obtained running the following command on a terminal: `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ldap-service`
+
 - On `Users DN` type `ou=users,dc=mycompany,dc=com`
 - On `Bind DN` type `cn=admin,dc=mycompany,dc=com`
 - On `Bind Credential` set `admin`
@@ -100,7 +100,7 @@ Password: admin
 
 2. In `springboot-keycloak-openldap` root folder, run the command bellow to start `simple-service` application:
 ```
-mvn spring-boot:run
+mvn clean spring-boot:run
 ```
 
 ## Test using cURL
@@ -235,10 +235,7 @@ Response Body: service-account-simple-service, it is private.
 
 ## Test using Swagger
 
-1. Access the link
-```
-http://localhost:8080/swagger-ui.html
-```
+1. Access the link: http://localhost:8080/swagger-ui.html
 
 2. Click on `GET /api/public` to open it. Then, click on `Try it out` button and, finally, click on `Execute` button
 It will return:
