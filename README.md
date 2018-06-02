@@ -8,19 +8,24 @@ Furthermore, `Keycloak`'s users will be loaded from a `OpenLDAP` server.
 
 ## Start Environment
 
+***Note. In order to run some commands/scripts, you must have [`jq`](https://stedolan.github.io/jq) installed on you machine***
+
 ### Docker Compose
 
 1. Open one terminal
 
 2. Inside `/springboot-keycloak-openldap/dev` folder run
 ```
-docker-compose up
+docker-compose up -d
 ```
+> To stop and remove containers, networks, images, and volumes type:
+> ```
+> docker-compose down
+> ```
 
 ### Configuring `LDAP`
 
 1. Access the link: https://localhost:6443
-
 
 2. Login with the credentials
 ```
@@ -31,7 +36,8 @@ Password: admin
 3. Import the file `/src/main/resources/ldap-mycompany-com.ldif`
 
 This file has already a pre-defined structure for mycompany.com.
-Basically, it has 2 groups (developers and admin) and 4 users (Bill Gates, Steve Jobs, Mark Cuban and Ivan Franchin). Besides, it is defined that Bill Gates, Steve Jobs and Mark Cuban belong to developers group and Ivan Franchin belongs to admin group.
+Basically, it has 2 groups (developers and admin) and 4 users (Bill Gates, Steve Jobs, Mark Cuban and Ivan Franchin).
+Besides, it is defined that Bill Gates, Steve Jobs and Mark Cuban belong to developers group and Ivan Franchin belongs to admin group.
 ```
 Bill Gates > username: bgates, password: 123
 Steve Jobs > username: sjobs, password: 123
@@ -73,9 +79,12 @@ Password: admin
 - On `Vendor` field select `Other`
 - On `Connection URL` type `ldap://<machine-ip-address OR ldap-service-docker-ip-address>`.
 
-> `machine-ip-address` can be obtained executing `ifconfig` command on Mac/Linux terminal or `ipconfig` on Windows;
+> `machine-ip-address` can be obtained by executing `ifconfig` command on Mac/Linux terminal or `ipconfig` on Windows;
 >
-> `ldap-service-docker-ip-address` can be obtained running the following command on a terminal: `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ldap-service`
+> `ldap-service-docker-ip-address` can be obtained running the following command on a terminal:
+> ```  
+> docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ldap-service
+> ```
 
 - On `Users DN` type `ou=users,dc=mycompany,dc=com`
 - On `Bind DN` type `cn=admin,dc=mycompany,dc=com`
