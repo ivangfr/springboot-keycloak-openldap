@@ -9,6 +9,9 @@ services:
       - 3306:3306
     env_file:
      - keycloak-common.env
+#    healthcheck:
+#      test: ???
+#      start_period: 10s
 
   keycloak:
     image: jboss/keycloak:4.0.0.Beta1
@@ -25,6 +28,9 @@ services:
       - mysql-keycloak
     env_file:
       - keycloak-common.env
+    healthcheck:
+      test: "curl -f http://localhost:8080/auth || exit 1"
+      start_period: 10s
      
   ldap-service:
     image: osixia/openldap:1.2.1
@@ -35,6 +41,9 @@ services:
       - LDAP_DOMAIN=mycompany.com
     ports:
       - 389:389
+#    healthcheck:
+#      test: ???
+#      start_period: 10s
 
   phpldapadmin-service:
     image: osixia/phpldapadmin:0.7.1
@@ -48,3 +57,6 @@ services:
       - ldap-service
     links:
       - ldap-service:ldap-host
+#    healthcheck:
+#      test: ???
+#      start_period: 10s
