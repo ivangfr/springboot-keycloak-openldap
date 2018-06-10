@@ -3,8 +3,8 @@
 
 ## Goal
 
-The goal of this project is to create a simple REST API (`simple-service`) and secure it with `Keycloak`.
-Furthermore, `Keycloak`'s users will be loaded from a `OpenLDAP` server.
+The goal of this project is to create a simple REST API (`simple-service`) and secure it with [`Keycloak`](https://www.keycloak.org).
+Furthermore, `Keycloak`'s users will be loaded from a [`OpenLDAP`](https://www.openldap.org) server.
 
 ## Start Environment
 
@@ -20,10 +20,26 @@ docker-compose up -d
 ```
 > To stop and remove containers, networks, images, and volumes type:
 > ```
-> docker-compose down
+> docker-compose down -v
 > ```
 
-### Configuring `LDAP`
+- Wait a little bit until `MySQL` and `Keycloak` containers are `Up (healthy)`
+- In order to check the status of the containers run the command
+```
+docker-compose ps
+```
+
+You should see something like
+```
+Name                   Command                          State          Ports
+----------------------------------------------------------------------------------------------------
+keycloak               /opt/jboss/docker-entrypoi ...   Up (healthy)   0.0.0.0:8181->8080/tcp
+ldap-service           /container/tool/run              Up             0.0.0.0:389->389/tcp, 636/tcp
+mysql-keycloak         docker-entrypoint.sh mysqld      Up (healthy)   0.0.0.0:3306->3306/tcp
+phpldapadmin-service   /container/tool/run              Up             0.0.0.0:6443->443/tcp, 80/tcp
+```
+
+### Configuring OpenLDAP
 
 1. Access the link: https://localhost:6443
 
@@ -45,7 +61,7 @@ Mark Cuban > username: mcuban, password: 123
 Ivan Franchin > username: ifranchin, password: 123
 ```
 
-### Configuring `Keycloak`
+### Configuring Keycloak
 
 1. Access the link: http://localhost:8181
 
@@ -208,7 +224,7 @@ Code: 200
 Response Body: mcuban, it is private.
 ```
 
-## Using `client_id` and `client_secret` to get access token
+## Using client_id and client_secret to get access token
 
 You can get an access token to `simple-service` using `client_id` and `client_secret`
 
