@@ -16,13 +16,13 @@ services:
       start_period: 10s
 
   keycloak:
-    image: jboss/keycloak:4.0.0.Beta1
-#    image: jboss/keycloak:3.4.3.Final # this version doesn't get up
+    image: jboss/keycloak:4.0.0.Final
     container_name: keycloak
     environment:
-      - MYSQL_ADDR=mysql-keycloak
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
+      - MYSQL_ADDR=mysql-keycloak
+      - JDBC_PARAMS=useSSL=false
     ports:
       - 8181:8080
     links:
