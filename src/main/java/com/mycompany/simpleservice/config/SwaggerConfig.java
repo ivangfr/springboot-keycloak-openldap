@@ -1,10 +1,14 @@
 package com.mycompany.simpleservice.config;
 
-import org.apache.http.HttpHeaders;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.*;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.AuthorizationScope;
+import springfox.documentation.service.Contact;
+import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -12,8 +16,8 @@ import springfox.documentation.swagger.web.SecurityConfiguration;
 import springfox.documentation.swagger.web.SecurityConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,13 +43,15 @@ public class SwaggerConfig {
         ApiInfo apiInfo = new ApiInfo(TITLE, DESCRIPTION, VERSION, "", contact, "", "", new ArrayList<>());
 
         return new Docket(DocumentationType.SWAGGER_2)
+                .useDefaultResponseMessages(false)
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(regex("/api/.*"))
                 .build()
                 .apiInfo(apiInfo)
                 .securityContexts(Collections.singletonList(securityContext()))
-                .securitySchemes(Collections.singletonList(apiKey()));
+                .securitySchemes(Collections.singletonList(apiKey()))
+                .ignoredParameterTypes(Principal.class);
     }
 
     private ApiKey apiKey() {
@@ -65,7 +71,7 @@ public class SwaggerConfig {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Arrays.asList(new SecurityReference(API_KEY_NAME, authorizationScopes));
+        return Collections.singletonList(new SecurityReference(API_KEY_NAME, authorizationScopes));
     }
 
 }

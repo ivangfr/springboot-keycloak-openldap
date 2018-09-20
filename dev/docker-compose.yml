@@ -16,7 +16,7 @@ services:
       start_period: 10s
 
   keycloak:
-    image: jboss/keycloak:4.0.0.Final
+    image: jboss/keycloak:4.4.0.Final
     container_name: keycloak
     environment:
       - KEYCLOAK_USER=admin
@@ -32,7 +32,7 @@ services:
       start_period: 10s
      
   ldap-service:
-    image: osixia/openldap:1.2.1
+    image: osixia/openldap:1.2.2
     container_name: ldap-service
     environment:
       - LDAP_ORGANISATION="MyCompany Inc."
@@ -44,7 +44,7 @@ services:
 #      start_period: 10s
 
   phpldapadmin-service:
-    image: osixia/phpldapadmin:0.7.1
+    image: osixia/phpldapadmin:0.7.2
     container_name: phpldapadmin-service
     environment:
       - PHPLDAPADMIN_LDAP_HOSTS=ldap-host
