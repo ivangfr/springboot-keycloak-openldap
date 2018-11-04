@@ -23,6 +23,9 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         auth.authenticationProvider(keycloakAuthenticationProvider);
     }
 
+    // TODO
+    // There is a problem with this bean. https://issues.jboss.org/browse/KEYCLOAK-8444
+    // There is already a fix for that, maybe will be available on the release 4.6.0.Final
     @Bean
     public KeycloakSpringBootConfigResolver KeycloakConfigResolver() {
         return new KeycloakSpringBootConfigResolver();

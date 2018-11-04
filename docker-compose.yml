@@ -2,7 +2,7 @@ version: '3.5'
 services:
       
   mysql-keycloak:
-    image: mysql:5.7.22
+    image: mysql:5.7.24 #8.0.13 <- At least Keycloak 4.4.0.Final doesn't work with MySQL 8
     container_name: mysql-keycloak
     ports:
       - 3306:3306
@@ -21,8 +21,9 @@ services:
     environment:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
-      - MYSQL_ADDR=mysql-keycloak
-      - JDBC_PARAMS=useSSL=false
+      - DB_VENDOR=mysql
+      - DB_ADDR=mysql-keycloak
+      - JDBC_PARAMS=useSSL=false # it's needed for mysql 8 -> &allowPublicKeyRetrieval=true
     ports:
       - 8181:8080
     links:

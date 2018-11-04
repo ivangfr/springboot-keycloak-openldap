@@ -14,7 +14,7 @@ Furthermore, `Keycloak`'s users will be loaded from a [`OpenLDAP`](https://www.o
 
 1. Open one terminal
 
-2. Inside `/springboot-keycloak-openldap/dev` folder run
+2. Inside `/springboot-keycloak-openldap` root folder run
 ```
 docker-compose up -d
 ```
@@ -41,6 +41,8 @@ phpldapadmin-service   /container/tool/run              Up             0.0.0.0:6
 
 ### Configuring OpenLDAP
 
+![openldap](images/openldap.png)
+
 1. Access the link: https://localhost:6443
 
 2. Login with the credentials
@@ -49,7 +51,7 @@ Login DN: cn=admin,dc=mycompany,dc=com
 Password: admin
 ```
 
-3. Import the file `/src/main/resources/ldap-mycompany-com.ldif`
+3. Import the file `/springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`
 
 This file has already a pre-defined structure for mycompany.com.
 Basically, it has 2 groups (developers and admin) and 4 users (Bill Gates, Steve Jobs, Mark Cuban and Ivan Franchin).
@@ -62,6 +64,8 @@ Ivan Franchin > username: ifranchin, password: 123
 ```
 
 ### Configuring Keycloak
+
+![keycloak](images/keycloak.png)
 
 1. Access the link: http://localhost:8181
 
@@ -260,6 +264,8 @@ Response Body: service-account-simple-service, it is private.
 ```
 
 ## Test using Swagger
+
+![swagger](images/swagger.png)
 
 1. Access the link: http://localhost:8080/swagger-ui.html
 

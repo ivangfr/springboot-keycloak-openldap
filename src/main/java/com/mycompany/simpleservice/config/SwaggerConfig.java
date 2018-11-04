@@ -1,5 +1,6 @@
 package com.mycompany.simpleservice.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -7,7 +8,6 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
-import springfox.documentation.service.Contact;
 import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -17,7 +17,6 @@ import springfox.documentation.swagger.web.SecurityConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,31 +26,27 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    private static final String NAME = "MyCompany Team";
-    private static final String URL = "http://mycompany.com";
-    private static final String EMAIL = "staff@mycompany.com";
-
-    private static final String TITLE = "simple-service";
-    private static final String DESCRIPTION = "";
-    private static final String VERSION = "1.0";
+    @Value("${spring.application.name}")
+    private String appName;
 
     private static final String API_KEY_NAME = "JWT_TOKEN";
 
     @Bean
-    public Docket api() {
-        Contact contact = new Contact(NAME, URL, EMAIL);
-        ApiInfo apiInfo = new ApiInfo(TITLE, DESCRIPTION, VERSION, "", contact, "", "", new ArrayList<>());
-
+    Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(regex("/api/.*"))
                 .build()
-                .apiInfo(apiInfo)
+                .apiInfo(getApiInfo())
                 .securityContexts(Collections.singletonList(securityContext()))
                 .securitySchemes(Collections.singletonList(apiKey()))
                 .ignoredParameterTypes(Principal.class);
+    }
+
+    private ApiInfo getApiInfo() {
+        return new ApiInfo(appName, null, null, null, null, null, null, Collections.emptyList());
     }
 
     private ApiKey apiKey() {
