@@ -16,7 +16,7 @@ services:
       start_period: 10s
 
   keycloak:
-    image: jboss/keycloak:4.4.0.Final
+    image: jboss/keycloak:4.8.1.Final
     container_name: keycloak
     environment:
       - KEYCLOAK_USER=admin

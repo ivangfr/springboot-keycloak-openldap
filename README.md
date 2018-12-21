@@ -300,7 +300,7 @@ echo $BGATES_ACCESS_TOKEN
 
 6. Copy (`Ctr-C`) the token generated (something like that starts with `Bearer ...`) and go back to `Swagger`.
 
-7. Click on the `Authorize` button, paste (`Ctr-V`) the copied access token in the value field. Then, click on `Authorize` and, to finalize, click on `Done`.
+7. Click on the `Authorize` button, paste (`Ctr-V`) the copied access token in the value field. Then, click on `Authorize` and, to finalize, click on `Close`.
 
 8. Go to `GET /api/private`, click on `Try it out` and then on `Execute` button
 It will return:
@@ -322,3 +322,10 @@ Response Body:
   "path": "/api/private"
 }
 ```
+
+## Useful Links
+
+### jwt.io
+
+With [jwt.io](https://jwt.io) you can inform the JWT token you have received from Keycloak and the online tool decodes
+the token, showing the header and payload of the token.
