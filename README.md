@@ -328,4 +328,4 @@ Response Body:
 ### jwt.io
 
 With [jwt.io](https://jwt.io) you can inform the JWT token you have received from Keycloak and the online tool decodes
-the token, showing the header and payload of the token.
+the token, showing its header and payload.

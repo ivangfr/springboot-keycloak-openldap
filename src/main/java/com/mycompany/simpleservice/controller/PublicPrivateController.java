@@ -13,7 +13,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api")
-public class ApplicationController {
+public class PublicPrivateController {
 
     @ApiOperation(value = "Get string from public endpoint")
     @ApiResponses(value = {
