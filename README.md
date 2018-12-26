@@ -1,4 +1,3 @@
-
 # springboot-keycloak-openldap
 
 ## Goal
@@ -34,12 +33,34 @@ You should see something like
 Name                   Command                          State          Ports
 ----------------------------------------------------------------------------------------------------
 keycloak               /opt/jboss/docker-entrypoi ...   Up (healthy)   0.0.0.0:8181->8080/tcp
-ldap-service           /container/tool/run              Up             0.0.0.0:389->389/tcp, 636/tcp
+ldap-host              /container/tool/run              Up             0.0.0.0:389->389/tcp, 636/tcp
 mysql-keycloak         docker-entrypoint.sh mysqld      Up (healthy)   0.0.0.0:3306->3306/tcp
 phpldapadmin-service   /container/tool/run              Up             0.0.0.0:6443->443/tcp, 80/tcp
 ```
 
-### Configuring OpenLDAP
+### Import OpenLDAP Users
+
+The LDIF file that we will use, `/springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`, has already a pre-defined
+structure for mycompany.com. Basically, it has 2 groups (developers and admin) and 4 users (Bill Gates, Steve Jobs, Mark
+Cuban and Ivan Franchin). Besides, it is defined that Bill Gates, Steve Jobs and Mark Cuban belong to developers group
+and Ivan Franchin belongs to admin group.
+```
+Bill Gates > username: bgates, password: 123
+Steve Jobs > username: sjobs, password: 123
+Mark Cuban > username: mcuban, password: 123
+Ivan Franchin > username: ifranchin, password: 123
+```
+
+There are two ways to import those users: just running a script or through `phpldapadmin`
+
+#### Import users with script
+
+In `/springboot-keycloak-openldap` root folder run
+```
+./import-openldap-users.sh.sh
+```
+
+#### Import Users with phpldapadmin
 
 ![openldap](images/openldap.png)
 
@@ -53,14 +74,14 @@ Password: admin
 
 3. Import the file `/springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`
 
-This file has already a pre-defined structure for mycompany.com.
-Basically, it has 2 groups (developers and admin) and 4 users (Bill Gates, Steve Jobs, Mark Cuban and Ivan Franchin).
-Besides, it is defined that Bill Gates, Steve Jobs and Mark Cuban belong to developers group and Ivan Franchin belongs to admin group.
+#### Check Users Imported
+
+In a terminal, you can test ldap configuration using `ldapsearch`
 ```
-Bill Gates > username: bgates, password: 123
-Steve Jobs > username: sjobs, password: 123
-Mark Cuban > username: mcuban, password: 123
-Ivan Franchin > username: ifranchin, password: 123
+ldapsearch -x -D "cn=admin,dc=mycompany,dc=com" \
+  -w admin -H ldap://localhost:389 \
+  -b "ou=users,dc=mycompany,dc=com" \
+  -s sub "(uid=*)"
 ```
 
 ### Configuring Keycloak
@@ -97,13 +118,13 @@ Password: admin
 - Click on the `User Federation` menu on the left.
 - Select `ldap`.
 - On `Vendor` field select `Other`
-- On `Connection URL` type `ldap://<machine-ip-address OR ldap-service-docker-ip-address>`.
+- On `Connection URL` type `ldap://<machine-ip-address OR ldap-host-docker-ip-address>`.
 
 > `machine-ip-address` can be obtained by executing `ifconfig` command on Mac/Linux terminal or `ipconfig` on Windows;
 >
-> `ldap-service-docker-ip-address` can be obtained running the following command on a terminal:
+> `ldap-host-docker-ip-address` can be obtained running the following command on a terminal:
 > ```  
-> docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ldap-service
+> docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ldap-host
 > ```
 
 - On `Users DN` type `ou=users,dc=mycompany,dc=com`
@@ -143,8 +164,8 @@ curl -i http://localhost:8080/api/public
 
 It will return:
 ```
-Code: 200
-Response Body: It is public.
+HTTP/1.1 200
+It is public.
 ```
 
 3. Try to call the endpoint `GET /api/private` (without authentication) using the cURL command bellow.
@@ -154,7 +175,7 @@ curl -i http://localhost:8080/api/private
 
 It will return:
 ```
-Code: 302
+HTTP/1.1 302
 ```
 
 Here, the application is trying to redirect the request to an authentication link.
@@ -184,8 +205,8 @@ curl -i -H "Authorization: Bearer $BGATES_ACCESS_TOKEN" http://localhost:8080/ap
 
 It will return:
 ```
-Code: 200
-Response Body: bgates, it is private.
+HTTP/1.1 200
+bgates, it is private.
 ```
 
 7. Run the command bellow to get an access token for `mcuban` user.
@@ -207,13 +228,12 @@ curl -i -H "Authorization: Bearer $MCUBAN_ACCESS_TOKEN" http://localhost:8080/ap
 
 As mcuban doesn't have the `user` role, he cannot access this endpoint. The endpoint return will be:
 ```
-Code: 403
-Response Body:
+HTTP/1.1 403
 {
-  "timestamp":1524556466611,
+  "timestamp":"2018-12-26T13:14:10.493+0000",
   "status":403,
   "error":"Forbidden",
-  "message":"Access is denied",
+  "message":"Forbidden",
   "path":"/api/private"
 }
 ```
@@ -225,8 +245,15 @@ Response Body:
 11. Call again the endpoint `GET /api/private` using the cURL command presented on `step 8`.
 It will return:
 ```
-Code: 200
-Response Body: mcuban, it is private.
+HTTP/1.1 200
+mcuban, it is private.
+```
+
+12. The access token default expiration period is `5 minutes`. So, wait for this time and, using the same access token,
+try to call the private endpoint. It will return:
+```
+HTTP/1.1 401
+WWW-Authenticate: Bearer realm="company-services", error="invalid_token", error_description="Token is not active"
 ```
 
 ## Using client_id and client_secret to get access token
@@ -259,8 +286,8 @@ curl -i http://localhost:8080/api/private -H "authorization: Bearer $CLIENT_ACCE
 
 It will return:
 ```
-Code: 200
-Response Body: service-account-simple-service, it is private.
+HTTP/1.1 200
+service-account-simple-service, it is private.
 ```
 
 ## Test using Swagger
@@ -307,20 +334,6 @@ It will return:
 ```
 Code: 200
 Response Body: bgates, it is private.
-```
-
-9. The access token default expiration period is `5 minutes`. So, wait for this time and, using the same access token, try to call the private endpoint.
-It will return:
-```
-Code: 401
-Response Body:
-{
-  "timestamp": 1523395954815,
-  "status": 401,
-  "error": "Unauthorized",
-  "message": "Unable to authenticate using the Authorization header",
-  "path": "/api/private"
-}
 ```
 
 ## Useful Links

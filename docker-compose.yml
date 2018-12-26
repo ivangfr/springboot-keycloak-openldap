@@ -26,15 +26,15 @@ services:
       - JDBC_PARAMS=useSSL=false # it's needed for mysql 8 -> &allowPublicKeyRetrieval=true
     ports:
       - 8181:8080
-    links:
+    depends_on:
       - mysql-keycloak
     healthcheck:
       test: "curl -f http://localhost:8080/auth || exit 1"
       start_period: 10s
      
-  ldap-service:
+  ldap-host:
     image: osixia/openldap:1.2.2
-    container_name: ldap-service
+    container_name: ldap-host
     environment:
       - LDAP_ORGANISATION="MyCompany Inc."
       - LDAP_DOMAIN=mycompany.com
@@ -52,9 +52,7 @@ services:
     ports:
       - 6443:443
     depends_on:
-      - ldap-service
-    links:
-      - ldap-service:ldap-host
+      - ldap-host
 #    healthcheck:
 #      test: ???
 #      start_period: 10s
