@@ -57,7 +57,7 @@ There are two ways to import those users: just running a script or through `phpl
 
 In `/springboot-keycloak-openldap` root folder run
 ```
-./import-openldap-users.sh.sh
+./import-openldap-users.sh
 ```
 
 #### Import Users with phpldapadmin
