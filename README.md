@@ -1,15 +1,13 @@
-# springboot-keycloak-openldap
-
-## Goal
+# `springboot-keycloak-openldap`
 
 The goal of this project is to create a simple REST API (`simple-service`) and secure it with [`Keycloak`](https://www.keycloak.org).
 Furthermore, `Keycloak`'s users will be loaded from a [`OpenLDAP`](https://www.openldap.org) server.
 
-## Start Environment
+# Start Environment
 
 ***Note. In order to run some commands/scripts, you must have [`jq`](https://stedolan.github.io/jq) installed on you machine***
 
-### Docker Compose
+## Docker Compose
 
 1. Open one terminal
 
@@ -38,7 +36,7 @@ mysql-keycloak         docker-entrypoint.sh mysqld      Up (healthy)   0.0.0.0:3
 phpldapadmin-service   /container/tool/run              Up             0.0.0.0:6443->443/tcp, 80/tcp
 ```
 
-### Import OpenLDAP Users
+# Import OpenLDAP Users
 
 The LDIF file that we will use, `/springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`, has already a pre-defined
 structure for mycompany.com. Basically, it has 2 groups (developers and admin) and 4 users (Bill Gates, Steve Jobs, Mark
@@ -53,14 +51,14 @@ Ivan Franchin > username: ifranchin, password: 123
 
 There are two ways to import those users: just running a script or through `phpldapadmin`
 
-#### Import users with script
+### Import users with script
 
 In `/springboot-keycloak-openldap` root folder run
 ```
 ./import-openldap-users.sh
 ```
 
-#### Import Users with phpldapadmin
+### Import users with phpldapadmin
 
 ![openldap](images/openldap.png)
 
@@ -74,7 +72,7 @@ Password: admin
 
 3. Import the file `/springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`
 
-#### Check Users Imported
+### Check users Imported
 
 In a terminal, you can test ldap configuration using `ldapsearch`
 ```
@@ -84,7 +82,7 @@ ldapsearch -x -D "cn=admin,dc=mycompany,dc=com" \
   -s sub "(uid=*)"
 ```
 
-### Configuring Keycloak
+# Configuring Keycloak
 
 ![keycloak](images/keycloak.png)
 
@@ -144,13 +142,13 @@ Password: admin
 - Do the same for the user `sjobs`.
 - Let's leave `mcuban` without `user` role.
 
-### Spring Boot Application
+# Run application
 
 1. Go to a terminal
 
 2. In `springboot-keycloak-openldap` root folder, run the command bellow to start `simple-service` application:
 ```
-mvn clean spring-boot:run
+./mvnw clean spring-boot:run
 ```
 
 ## Test using cURL
@@ -336,9 +334,9 @@ Code: 200
 Response Body: bgates, it is private.
 ```
 
-## Useful Links
+# Useful Links
 
 ### jwt.io
 
-With [jwt.io](https://jwt.io) you can inform the JWT token you have received from Keycloak and the online tool decodes
+With [jwt.io](https://jwt.io) you can inform the JWT token you received from Keycloak and the online tool decodes
 the token, showing its header and payload.

@@ -5,7 +5,7 @@ services:
     image: mysql:5.7.24 #8.0.13 <- At least Keycloak 4.4.0.Final doesn't work with MySQL 8
     container_name: mysql-keycloak
     ports:
-      - 3306:3306
+      - "3306:3306"
     environment:
       - MYSQL_DATABASE=keycloak
       - MYSQL_USER=keycloak
@@ -25,7 +25,7 @@ services:
       - DB_ADDR=mysql-keycloak
       - JDBC_PARAMS=useSSL=false # it's needed for mysql 8 -> &allowPublicKeyRetrieval=true
     ports:
-      - 8181:8080
+      - "8181:8080"
     depends_on:
       - mysql-keycloak
     healthcheck:
@@ -39,7 +39,7 @@ services:
       - LDAP_ORGANISATION="MyCompany Inc."
       - LDAP_DOMAIN=mycompany.com
     ports:
-      - 389:389
+      - "389:389"
 #    healthcheck:
 #      test: ???
 #      start_period: 10s
@@ -50,7 +50,7 @@ services:
     environment:
       - PHPLDAPADMIN_LDAP_HOSTS=ldap-host
     ports:
-      - 6443:443
+      - "6443:443"
     depends_on:
       - ldap-host
 #    healthcheck:
