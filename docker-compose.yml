@@ -1,9 +1,9 @@
 version: '3.5'
 services:
       
-  mysql-keycloak:
-    image: mysql:5.7.24 #8.0.13 <- At least Keycloak 4.4.0.Final doesn't work with MySQL 8
-    container_name: mysql-keycloak
+  mysql:
+    image: mysql:5.7.25
+    container_name: mysql
     ports:
       - "3306:3306"
     environment:
@@ -16,33 +16,30 @@ services:
       start_period: 10s
 
   keycloak:
-    image: jboss/keycloak:4.8.1.Final
+    image: jboss/keycloak:5.0.0
     container_name: keycloak
     environment:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
       - DB_VENDOR=mysql
-      - DB_ADDR=mysql-keycloak
+      - DB_ADDR=mysql
       - JDBC_PARAMS=useSSL=false # it's needed for mysql 8 -> &allowPublicKeyRetrieval=true
     ports:
-      - "8181:8080"
+      - "8080:8080"
     depends_on:
-      - mysql-keycloak
+      - mysql
     healthcheck:
       test: "curl -f http://localhost:8080/auth || exit 1"
       start_period: 10s
      
   ldap-host:
-    image: osixia/openldap:1.2.2
+    image: osixia/openldap:1.2.4
     container_name: ldap-host
     environment:
       - LDAP_ORGANISATION="MyCompany Inc."
       - LDAP_DOMAIN=mycompany.com
     ports:
       - "389:389"
-#    healthcheck:
-#      test: ???
-#      start_period: 10s
 
   phpldapadmin-service:
     image: osixia/phpldapadmin:0.7.2
@@ -53,6 +50,3 @@ services:
       - "6443:443"
     depends_on:
       - ldap-host
-#    healthcheck:
-#      test: ???
-#      start_period: 10s
