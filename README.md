@@ -386,7 +386,7 @@ curl -i -H "Authorization: Bearer $BGATES_ACCESS_TOKEN" http://localhost:9080/ap
 docker stop simple-service
 ```
 
-### Shutdown
+## Shutdown
 
 To stop and remove containers, networks and volumes
 ```
