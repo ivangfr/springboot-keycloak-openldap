@@ -55,7 +55,7 @@ In `springboot-keycloak-openldap` root folder run
 
 ![openldap](images/openldap.png)
 
-- Access the link https://localhost:6443
+- Access https://localhost:6443
 
 - Login with the credentials
 ```
@@ -67,7 +67,7 @@ Password: admin
 
 ### Check users imported
 
-- Run the command below to check the users imported. It uses `ldapsearch`
+Run the command below to check the users imported. It uses `ldapsearch`
 ```
 ldapsearch -x -D "cn=admin,dc=mycompany,dc=com" \
   -w admin -H ldap://localhost:389 \
@@ -168,7 +168,7 @@ HTTP/1.1 200
 It is public.
 ```
 
-3. Try to call the endpoint `GET /api/private` (without authentication)
+3. Try to call the endpoint `GET /api/private` without authentication
 ``` 
 curl -i http://localhost:9080/api/private
 ```
