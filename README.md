@@ -15,16 +15,13 @@ token must contain the role `USER`.
 
 ## Start Environment
 
-- Open one terminal
-
-- Inside `springboot-keycloak-openldap` root folder run
+Open a terminal and inside `springboot-keycloak-openldap` root folder run
 ```
 docker-compose up -d
 ```
 
-- Wait a little bit until `MySQL` and `Keycloak` containers are `Up (healthy)`
-
-- In order to check the status of the containers run the command
+Wait a little bit until `MySQL` and `Keycloak` containers are `Up (healthy)`. In order to check the status of the
+containers, run the command
 ```
 docker-compose ps
 ```
