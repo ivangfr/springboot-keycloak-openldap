@@ -1,14 +1,14 @@
 # `springboot-keycloak-openldap`
 
-The goal of this project is to create a simple Spring-Boot REST API, called `simple-service`, and secure it with
-[`Keycloak`](https://www.keycloak.org). Furthermore, the API users will be loaded into `Keycloak` from
-[`OpenLDAP`](https://www.openldap.org) server.
+The goal of this project is to create a simple [Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
+REST API, called `simple-service`, and secure it with [`Keycloak`](https://www.keycloak.org). Furthermore, the API users
+will be loaded into `Keycloak` from [`OpenLDAP`](https://www.openldap.org) server.
 
-## Microservice
+## Application
 
 ### simple-service
 
-Spring-Boot Java Web application that exposes two endpoints:
+Spring Boot Web Java application that exposes two endpoints:
 - `/api/public`: endpoint that can be access by anyone, it is not secured;
 - `/api/private`: endpoint that can just be accessed by users that provides a `JWT` token issued by `Keycloak` and the
 token must contain the role `USER`.

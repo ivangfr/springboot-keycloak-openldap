@@ -30,7 +30,7 @@ public class SimpleServiceController {
     })
     @GetMapping("/private")
     public String getPrivateString(Principal principal) {
-        return String.format("%s, it is private.\n", principal.getName());
+        return String.format("%s, it is private.%n", principal.getName());
     }
 
 }
