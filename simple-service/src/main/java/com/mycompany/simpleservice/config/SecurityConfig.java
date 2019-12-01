@@ -12,6 +12,7 @@ import org.keycloak.adapters.springsecurity.management.HttpSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.RegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -55,29 +56,29 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
      */
 
     @Bean
-    public FilterRegistrationBean keycloakAuthenticationProcessingFilterRegistrationBean(KeycloakAuthenticationProcessingFilter filter) {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean<>(filter);
+    public RegistrationBean keycloakAuthenticationProcessingFilterRegistrationBean(KeycloakAuthenticationProcessingFilter filter) {
+        RegistrationBean registrationBean = new FilterRegistrationBean<>(filter);
         registrationBean.setEnabled(false);
         return registrationBean;
     }
 
     @Bean
-    public FilterRegistrationBean keycloakPreAuthActionsFilterRegistrationBean(KeycloakPreAuthActionsFilter filter) {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean<>(filter);
+    public RegistrationBean keycloakPreAuthActionsFilterRegistrationBean(KeycloakPreAuthActionsFilter filter) {
+        RegistrationBean registrationBean = new FilterRegistrationBean<>(filter);
         registrationBean.setEnabled(false);
         return registrationBean;
     }
 
     @Bean
-    public FilterRegistrationBean keycloakAuthenticatedActionsFilterBean(KeycloakAuthenticatedActionsFilter filter) {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean<>(filter);
+    public RegistrationBean keycloakAuthenticatedActionsFilterBean(KeycloakAuthenticatedActionsFilter filter) {
+        RegistrationBean registrationBean = new FilterRegistrationBean<>(filter);
         registrationBean.setEnabled(false);
         return registrationBean;
     }
 
     @Bean
-    public FilterRegistrationBean keycloakSecurityContextRequestFilterBean(KeycloakSecurityContextRequestFilter filter) {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean<>(filter);
+    public RegistrationBean keycloakSecurityContextRequestFilterBean(KeycloakSecurityContextRequestFilter filter) {
+        RegistrationBean registrationBean = new FilterRegistrationBean<>(filter);
         registrationBean.setEnabled(false);
         return registrationBean;
     }
