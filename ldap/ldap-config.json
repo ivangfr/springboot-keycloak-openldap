@@ -1,0 +1,91 @@
+{
+  "name": "ldap",
+  "providerId": "ldap",
+  "providerType": "org.keycloak.storage.UserStorageProvider",
+  "config": {
+    "fullSyncPeriod": [
+      "-1"
+    ],
+    "pagination": [
+      "true"
+    ],
+    "usersDn": [
+      "ou=users,dc=mycompany,dc=com"
+    ],
+    "connectionPooling": [
+      "true"
+    ],
+    "cachePolicy": [
+      "DEFAULT"
+    ],
+    "useKerberosForPasswordAuthentication": [
+      "false"
+    ],
+    "importEnabled": [
+      "true"
+    ],
+    "enabled": [
+      "true"
+    ],
+    "changedSyncPeriod": [
+      "-1"
+    ],
+    "bindCredential": [
+      "admin"
+    ],
+    "bindDn": [
+      "cn=admin,dc=mycompany,dc=com"
+    ],
+    "usernameLDAPAttribute": [
+      "uid"
+    ],
+    "lastSync": [
+      "1575220979"
+    ],
+    "vendor": [
+      "other"
+    ],
+    "uuidLDAPAttribute": [
+      "entryUUID"
+    ],
+    "connectionUrl": [
+      "ldap://ldap-host"
+    ],
+    "allowKerberosAuthentication": [
+      "false"
+    ],
+    "syncRegistrations": [
+      "false"
+    ],
+    "authType": [
+      "simple"
+    ],
+    "customUserSearchFilter": [
+      "(gidnumber=500)"
+    ],
+    "debug": [
+      "false"
+    ],
+    "searchScope": [
+      "1"
+    ],
+    "useTruststoreSpi": [
+      "ldapsOnly"
+    ],
+    "priority": [
+      "0"
+    ],
+    "userObjectClasses": [
+      "inetOrgPerson, organizationalPerson"
+    ],
+    "rdnLDAPAttribute": [
+      "uid"
+    ],
+    "validatePasswordPolicy": [
+      "false"
+    ],
+    "batchSizeForSync": [
+      "1000"
+    ]
+  }
+}
