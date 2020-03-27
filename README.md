@@ -1,4 +1,4 @@
-# `springboot-keycloak-openldap`
+# springboot-keycloak-openldap
 
 The goal of this project is to create a simple [Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) REST API, called `simple-service`, and secure it with [`Keycloak`](https://www.keycloak.org). Furthermore, the users of the API will be loaded into `Keycloak` from [`OpenLDAP`](https://www.openldap.org) server.
 
