@@ -10,34 +10,34 @@ In order to run some commands/scripts, you must have [`jq`](https://stedolan.git
 
 ## Application
 
-### simple-service
+- **simple-service**
 
-`Spring Boot` Web Java application that exposes two endpoints:
-
-- `/api/public`: endpoint that can be access by anyone, it is not secured;
-- `/api/private`: endpoint that can just be accessed by users that provide a `JWT` token issued by `Keycloak` and the token must contain the role `USER`.
+  `Spring Boot` Web Java application that exposes two endpoints:
+  
+  - `/api/public`: endpoint that can be access by anyone, it is not secured;
+  - `/api/private`: endpoint that can just be accessed by users that provide a `JWT` token issued by `Keycloak` and the token must contain the role `USER`.
 
 ## Start Environment
 
-Open a terminal and inside `springboot-keycloak-openldap` root folder run
-```
-docker-compose up -d
-```
+- Open a terminal and inside `springboot-keycloak-openldap` root folder run
+  ```
+  docker-compose up -d
+  ```
 
-Wait a little bit until `MySQL` and `Keycloak` containers are `Up (healthy)`. In order to check the status of the containers, run the command
-```
-docker-compose ps
-```
+- Wait a little bit until `MySQL` and `Keycloak` containers are `Up (healthy)`. In order to check the status of the containers, run the command
+  ```
+  docker-compose ps
+  ```
 
 ## Import OpenLDAP Users
 
-The `LDIF` file that we will use, `springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`, contains already a pre-defined structure for `mycompany.com`. Basically, it has 2 groups (`developers` and `admin`) and 4 users (`Bill Gates`, `Steve Jobs`, `Mark Cuban` and `Ivan Franchin`). Besides, it is defined that `Bill Gates`, `Steve Jobs` and `Mark Cuban` belong to `developers` group and `Ivan Franchin` belongs to `admin` group.
-```
-Bill Gates > username: bgates, password: 123
-Steve Jobs > username: sjobs, password: 123
-Mark Cuban > username: mcuban, password: 123
-Ivan Franchin > username: ifranchin, password: 123
-```
+> The `LDIF` file that we will use, `springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`, contains already a pre-defined structure for `mycompany.com`. Basically, it has 2 groups (`developers` and `admin`) and 4 users (`Bill Gates`, `Steve Jobs`, `Mark Cuban` and `Ivan Franchin`). Besides, it is defined that `Bill Gates`, `Steve Jobs` and `Mark Cuban` belong to `developers` group and `Ivan Franchin` belongs to `admin` group.
+> ```
+> Bill Gates > username: bgates, password: 123
+> Steve Jobs > username: sjobs, password: 123
+> Mark Cuban > username: mcuban, password: 123
+> Ivan Franchin > username: ifranchin, password: 123
+> ```
 
 There are two ways to import those users: running a script or using `phpldapadmin` website
 
@@ -53,11 +53,13 @@ In a terminal and inside `springboot-keycloak-openldap` root folder run
 ![openldap](images/openldap.png)
 
 - Access https://localhost:6443
+
 - Login with the credentials
   ```
   Login DN: cn=admin,dc=mycompany,dc=com
   Password: admin
   ```
+
 - Import the file `springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`
 
 ## Configure Keycloak
@@ -66,14 +68,16 @@ There are two ways: running a script or using `Keycloak` website
 
 ### Running a script
 
-In a terminal and inside `springboot-keycloak-openldap` root folder run
-```
-./init-keycloak.sh
-```
+- In a terminal, make sure you are inside `springboot-keycloak-openldap` root folder
 
-This script creates `company-services` realm, `simple-service` client, `USER` client role, `ldap` federation and the users `bgates` and `sjobs` with the role `USER` assigned.
+- Run the script below to configure `Keycloak` for `simple-service` application
+  ```
+  ./init-keycloak.sh
+  ```
 
-`SIMPLE_SERVICE_CLIENT_SECRET` value is shown at the end of the script. It will be needed whenever we call `Keycloak` to get a token to access `simple-service`
+  This script creates `company-services` realm, `simple-service` client, `USER` client role, `ldap` federation and the users `bgates` and `sjobs` with the role `USER` assigned.
+
+- Copy `SIMPLE_SERVICE_CLIENT_SECRET` value that is shown at the end of the script. It will be needed whenever we call `Keycloak` to get a token to access `simple-service`
 
 ### Using Keycloak website
 
@@ -138,6 +142,7 @@ This script creates `company-services` realm, `simple-service` client, `USER` cl
 ## Run simple-service using Maven
 
 - Open a new terminal
+
 - In `springboot-keycloak-openldap` root folder, run the command below to start `simple-service` application
   ```
   ./mvnw clean spring-boot:run --projects simple-service -Dspring-boot.run.jvmArguments="-Dserver.port=9080"
@@ -251,57 +256,57 @@ This script creates `company-services` realm, `simple-service` client, `USER` cl
 
 ![swagger](images/swagger.png)
 
-- Access http://localhost:9080/swagger-ui.html
+1. Access http://localhost:9080/swagger-ui.html
 
-- Click on `GET /api/public` to open it. Then, click on `Try it out` button and, finally, click on `Execute` button
+1. Click on `GET /api/public` to open it. Then, click on `Try it out` button and, finally, click on `Execute` button
 
-  It will return
-  ```
-  Code: 200
-  Response Body: It is public.
-  ```
+   It will return
+   ```
+   Code: 200
+   Response Body: It is public.
+   ```
 
-- Now click on `GET /api/private`, it is a secured endpoint. Let's try it without authentication
+1. Now click on `GET /api/private`, it is a secured endpoint. Let's try it without authentication
 
-- Click on `Try it out` button and then on `Execute` button
+1. Click on `Try it out` button and then on `Execute` button
   
-  It will return
-  ```
-  TypeError: Failed to fetch
-  ```
+   It will return
+   ```
+   TypeError: Failed to fetch
+   ```
 
-- In order to access the private endpoint, you need an access token. So, open a terminal
+1. In order to access the private endpoint, you need an access token. So, open a terminal
 
-- Export the `Client Secret` generated by `Keycloak` to `simple-service` at [Configure Keycloak](#configure-keycloak) step
-  ```
-  export SIMPLE_SERVICE_CLIENT_SECRET=...
-  ```
+1. Export the `Client Secret` generated by `Keycloak` to `simple-service` at [Configure Keycloak](#configure-keycloak) step
+   ```
+   export SIMPLE_SERVICE_CLIENT_SECRET=...
+   ```
   
-- Run the following commands
-  ```
-  BGATES_ACCESS_TOKEN="Bearer $(curl -s -X POST \
-    "http://localhost:8080/auth/realms/company-services/protocol/openid-connect/token" \
-    -H "Content-Type: application/x-www-form-urlencoded" \
-    -d "username=bgates" \
-    -d "password=123" \
-    -d "grant_type=password" \
-    -d "client_secret=$SIMPLE_SERVICE_CLIENT_SECRET" \
-    -d "client_id=simple-service" | jq -r .access_token)"
-    
-  echo $BGATES_ACCESS_TOKEN
-  ```
+1. Run the following commands
+   ```
+   BGATES_ACCESS_TOKEN="Bearer $(curl -s -X POST \
+     "http://localhost:8080/auth/realms/company-services/protocol/openid-connect/token" \
+     -H "Content-Type: application/x-www-form-urlencoded" \
+     -d "username=bgates" \
+     -d "password=123" \
+     -d "grant_type=password" \
+     -d "client_secret=$SIMPLE_SERVICE_CLIENT_SECRET" \
+     -d "client_id=simple-service" | jq -r .access_token)"
+     
+   echo $BGATES_ACCESS_TOKEN
+   ```
 
-- Copy the token generated (something like that starts with `Bearer ...`) and go back to `Swagger`
+1. Copy the token generated (something like that starts with `Bearer ...`) and go back to `Swagger`
 
-- Click on the `Authorize` button, paste the access token (copied previously) in the value field. Then, click on `Authorize` and, to finalize, click on `Close`
+1. Click on the `Authorize` button, paste the access token (copied previously) in the value field. Then, click on `Authorize` and, to finalize, click on `Close`
 
-- Go to `GET /api/private`, click on `Try it out` and then on `Execute` button
+1. Go to `GET /api/private`, click on `Try it out` and then on `Execute` button
 
-  It will return
-  ```
-  Code: 200
-  Response Body: bgates, it is private.
-  ```
+   It will return
+   ```
+   Code: 200
+   Response Body: bgates, it is private.
+   ```
 
 ## Using client_id and client_secret to get access token
 
@@ -320,33 +325,33 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 ### Test
 
-- Open a terminal
+1. Open a terminal
 
-- Export the `Client Secret` generated by `Keycloak` to `simple-service` at [Configure Keycloak](#configure-keycloak) step
-  ```
-  export SIMPLE_SERVICE_CLIENT_SECRET=...
-  ```
+1. Export the `Client Secret` generated by `Keycloak` to `simple-service` at [Configure Keycloak](#configure-keycloak) step
+   ```
+   export SIMPLE_SERVICE_CLIENT_SECRET=...
+   ```
   
-- Run the following command
-  ```
-  CLIENT_ACCESS_TOKEN=$(curl -s -X POST \
-    "http://localhost:8080/auth/realms/company-services/protocol/openid-connect/token" \
-    -H "Content-Type: application/x-www-form-urlencoded" \
-    -d "grant_type=client_credentials" \
-    -d "client_secret=$SIMPLE_SERVICE_CLIENT_SECRET" \
-    -d "client_id=simple-service" | jq -r .access_token)
-  ```
+1. Run the following command
+   ```
+   CLIENT_ACCESS_TOKEN=$(curl -s -X POST \
+     "http://localhost:8080/auth/realms/company-services/protocol/openid-connect/token" \
+     -H "Content-Type: application/x-www-form-urlencoded" \
+     -d "grant_type=client_credentials" \
+     -d "client_secret=$SIMPLE_SERVICE_CLIENT_SECRET" \
+     -d "client_id=simple-service" | jq -r .access_token)
+   ```
   
-- Try to call the endpoint `GET /api/private`
-  ```
-  curl -i http://localhost:9080/api/private -H "authorization: Bearer $CLIENT_ACCESS_TOKEN"
-  ```
+1. Try to call the endpoint `GET /api/private`
+   ```
+   curl -i http://localhost:9080/api/private -H "authorization: Bearer $CLIENT_ACCESS_TOKEN"
+   ```
   
-  It will return
-  ```
-  HTTP/1.1 200
-  service-account-simple-service, it is private.
-  ```
+   It will return
+   ```
+   HTTP/1.1 200
+   service-account-simple-service, it is private.
+   ```
 
 ## Running simple-service as a Docker container
 
@@ -394,33 +399,35 @@ You can get an access token to `simple-service` using `client_id` and `client_se
   curl -i -H "Authorization: Bearer $BGATES_ACCESS_TOKEN" http://localhost:9080/api/private
   ```
 
-- To stop `simple-service` docker container run
-  ```
-  docker stop simple-service
-  ```
-
 ## Shutdown
 
-To stop and remove containers, networks and volumes
-```
-docker-compose down -v
-```
+- Stop `simple-service` application
+  - If it was started with `Maven`, go to the terminal where it is running and press `Ctrl+C`
+  - If it was started as a Docker container, run the command below
+    ```
+    docker stop simple-service
+    ```
 
-## Useful Links
+- Stop and remove docker-compose containers, networks and volumes
+  ```
+  docker-compose down -v
+  ```
 
-### jwt.io
+## Useful Links/Commands
 
-With [jwt.io](https://jwt.io) you can inform the JWT token received from `Keycloak` and the online tool decodes the token, showing its header and payload.
+- **jwt.io**
 
-### ldapsearch
+  With [jwt.io](https://jwt.io) you can inform the JWT token received from `Keycloak` and the online tool decodes the token, showing its header and payload.
 
-It can be used to check the users imported into `OpenLDAP`
-```
-ldapsearch -x -D "cn=admin,dc=mycompany,dc=com" \
-  -w admin -H ldap://localhost:389 \
-  -b "ou=users,dc=mycompany,dc=com" \
-  -s sub "(uid=*)"
-```
+- **ldapsearch**
+
+  It can be used to check the users imported into `OpenLDAP`
+  ```
+  ldapsearch -x -D "cn=admin,dc=mycompany,dc=com" \
+    -w admin -H ldap://localhost:389 \
+    -b "ou=users,dc=mycompany,dc=com" \
+    -s sub "(uid=*)"
+  ```
 
 ## References
 
