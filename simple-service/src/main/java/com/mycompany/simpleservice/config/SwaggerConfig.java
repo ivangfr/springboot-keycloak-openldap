@@ -55,11 +55,16 @@ public class SwaggerConfig {
 
     @Bean
     SecurityConfiguration security() {
-        return SecurityConfigurationBuilder.builder().useBasicAuthenticationWithAccessCodeGrant(false).build();
+        return SecurityConfigurationBuilder.builder()
+                .useBasicAuthenticationWithAccessCodeGrant(false)
+                .build();
     }
 
     private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(defaultAuth()).forPaths(regex("/api/private")).build();
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .forPaths(regex("/api/private"))
+                .build();
     }
 
     List<SecurityReference> defaultAuth() {
