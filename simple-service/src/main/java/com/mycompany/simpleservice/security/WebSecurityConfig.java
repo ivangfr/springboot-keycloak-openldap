@@ -1,4 +1,4 @@
-package com.mycompany.simpleservice.config;
+package com.mycompany.simpleservice.security;
 
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
@@ -18,7 +19,7 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 
 @Configuration
 @KeycloakConfiguration
-public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) {
@@ -42,8 +43,10 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
-                .antMatchers("/api/private**").hasRole("USER")
-                .anyRequest().permitAll();
+                .antMatchers(HttpMethod.GET, "/api/private").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/api/public").permitAll()
+                .antMatchers("/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/swagger-resources/**").permitAll()
+                .anyRequest().authenticated();
     }
 
     @Bean

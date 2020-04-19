@@ -31,13 +31,13 @@ In order to run some commands/scripts, you must have [`jq`](https://stedolan.git
 
 ## Import OpenLDAP Users
 
-> The `LDIF` file that we will use, `springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`, contains already a pre-defined structure for `mycompany.com`. Basically, it has 2 groups (`developers` and `admin`) and 4 users (`Bill Gates`, `Steve Jobs`, `Mark Cuban` and `Ivan Franchin`). Besides, it is defined that `Bill Gates`, `Steve Jobs` and `Mark Cuban` belong to `developers` group and `Ivan Franchin` belongs to `admin` group.
-> ```
-> Bill Gates > username: bgates, password: 123
-> Steve Jobs > username: sjobs, password: 123
-> Mark Cuban > username: mcuban, password: 123
-> Ivan Franchin > username: ifranchin, password: 123
-> ```
+The `LDIF` file that we will use, `springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`, contains already a pre-defined structure for `mycompany.com`. Basically, it has 2 groups (`developers` and `admin`) and 4 users (`Bill Gates`, `Steve Jobs`, `Mark Cuban` and `Ivan Franchin`). Besides, it is defined that `Bill Gates`, `Steve Jobs` and `Mark Cuban` belong to `developers` group and `Ivan Franchin` belongs to `admin` group.
+```
+Bill Gates > username: bgates, password: 123
+Steve Jobs > username: sjobs, password: 123
+Mark Cuban > username: mcuban, password: 123
+Ivan Franchin > username: ifranchin, password: 123
+```
 
 There are two ways to import those users: running a script or using `phpldapadmin` website
 
@@ -403,12 +403,12 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 - Stop `simple-service` application
   - If it was started with `Maven`, go to the terminal where it is running and press `Ctrl+C`
-  - If it was started as a Docker container, run the command below
+  - If it was started as a Docker container, run in a terminal the command below
     ```
     docker stop simple-service
     ```
 
-- Stop and remove docker-compose containers, networks and volumes
+- Stop and remove docker-compose containers, networks and volumes, run the command below in `springboot-keycloak-openldap` root folder
   ```
   docker-compose down -v
   ```
