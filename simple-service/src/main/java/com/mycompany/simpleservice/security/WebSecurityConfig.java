@@ -44,6 +44,7 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/private").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/api/public").permitAll()
+                .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                 .antMatchers("/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/swagger-resources/**").permitAll()
                 .anyRequest().authenticated();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
