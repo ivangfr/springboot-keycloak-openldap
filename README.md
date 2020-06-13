@@ -2,11 +2,9 @@
 
 The goal of this project is to create a simple [Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) REST API, called `simple-service`, and secure it with [`Keycloak`](https://www.keycloak.org). Furthermore, the users of the API will be loaded into `Keycloak` from [`OpenLDAP`](https://www.openldap.org) server.
 
-> **Note:** In [`docker-swarm-environment`](https://github.com/ivangfr/docker-swarm-environment) repository, it is shown how to deploy this project into a cluster of Docker Engines in swarm mode. Besides, we will be running a Keycloak cluster with more than one instance.
+> **Note 1:** In [`springboot-react-keycloak`](https://github.com/ivangfr/springboot-react-keycloak) repository, we have implemented a `movies-app` using `Keycloak` (with `PKCE`). This application consists of two services: the backend that was implemented using `Spring Boot` and the frontend implemented with `ReactJS`.
 
-## Prerequisite
-
-In order to run some commands/scripts, you must have [`jq`](https://stedolan.github.io/jq) installed on you machine
+> **Note 2:** In [`docker-swarm-environment`](https://github.com/ivangfr/docker-swarm-environment) repository, it's shown how to deploy this project into a cluster of Docker Engines in swarm mode. Besides, we will be running a Keycloak cluster with more than one instance.
 
 ## Application
 
@@ -16,6 +14,13 @@ In order to run some commands/scripts, you must have [`jq`](https://stedolan.git
   
   - `/api/public`: endpoint that can be access by anyone, it is not secured;
   - `/api/private`: endpoint that can just be accessed by users that provide a `JWT` token issued by `Keycloak` and the token must contain the role `USER`.
+
+## Prerequisites
+
+- `Java 11+`
+- `Docker`
+- `Docker-Compose`
+- [`jq`](https://stedolan.github.io/jq)
 
 ## Start Environment
 
@@ -357,7 +362,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 - Build Docker Image
   ```
-  ./mvnw clean package dockerfile:build -DskipTests --projects simple-service
+  ./mvnw clean compile jib:dockerBuild --projects simple-service
   ```
   | Environment Variable | Description                                                 |
   | -------------------- | ----------------------------------------------------------- |

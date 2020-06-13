@@ -2,7 +2,7 @@ version: '3.7'
 services:
       
   mysql:
-    image: mysql:5.7.29
+    image: mysql:5.7.30
     container_name: mysql
     ports:
       - "3306:3306"
@@ -16,7 +16,7 @@ services:
       start_period: 10s
 
   keycloak:
-    image: jboss/keycloak:9.0.3
+    image: jboss/keycloak:10.0.2
     container_name: keycloak
     environment:
       - KEYCLOAK_USER=admin
