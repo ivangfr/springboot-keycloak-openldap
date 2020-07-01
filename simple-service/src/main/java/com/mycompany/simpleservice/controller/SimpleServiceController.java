@@ -1,33 +1,28 @@
 package com.mycompany.simpleservice.controller;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
+import static com.mycompany.simpleservice.config.SwaggerConfig.BEARER_KEY_SECURITY_SCHEME;
+
 @RestController
 @RequestMapping("/api")
 public class SimpleServiceController {
 
-    @ApiOperation(value = "Get string from public endpoint")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK")
-    })
+    @Operation(summary = "Get string from public endpoint")
     @GetMapping("/public")
     public String getPublicString() {
         return "It is public.\n";
     }
 
-    @ApiOperation(value = "Get string from private/secured endpoint")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 401, message = "Unauthorized"),
-            @ApiResponse(code = 403, message = "Forbidden")
-    })
+    @Operation(
+            summary = "Get string from private/secured endpoint",
+            security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/private")
     public String getPrivateString(Principal principal) {
         return String.format("%s, it is private.%n", principal.getName());

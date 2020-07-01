@@ -17,9 +17,9 @@ The goal of this project is to create a simple [Spring Boot](https://docs.spring
 
 ## Prerequisites
 
-- `Java 11+`
-- `Docker`
-- `Docker-Compose`
+- [`Java 11+`](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+- [`Docker`](https://www.docker.com/)
+- [`Docker-Compose`](https://docs.docker.com/compose/install/)
 - [`jq`](https://stedolan.github.io/jq)
 
 ## Start Environment
@@ -55,8 +55,6 @@ In a terminal and inside `springboot-keycloak-openldap` root folder run
 
 ### Using phpldapadmin website
 
-![openldap](images/openldap.png)
-
 - Access https://localhost:6443
 
 - Login with the credentials
@@ -66,6 +64,10 @@ In a terminal and inside `springboot-keycloak-openldap` root folder run
   ```
 
 - Import the file `springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`
+
+- You should see a tree like the one shown in the picture below
+
+  ![openldap](images/openldap.png)
 
 ## Configure Keycloak
 
@@ -91,6 +93,7 @@ There are two ways: running a script or using `Keycloak` website
 #### Login
 
 - Access http://localhost:8080/auth/admin/
+
 - Login with the credentials
   ```
   Username: admin
@@ -162,7 +165,7 @@ There are two ways: running a script or using `Keycloak` website
    curl -i http://localhost:9080/api/public
    ```
    
-   It will return
+   It should return
    ```
    HTTP/1.1 200
    It is public.
@@ -173,7 +176,7 @@ There are two ways: running a script or using `Keycloak` website
    curl -i http://localhost:9080/api/private
    ```
    
-   It will return
+   It should return
    ```
    HTTP/1.1 302
    ```
@@ -201,7 +204,7 @@ There are two ways: running a script or using `Keycloak` website
    curl -i -H "Authorization: Bearer $BGATES_ACCESS_TOKEN" http://localhost:9080/api/private
    ```
    
-   It will return
+   It should return
    ```
    HTTP/1.1 200
    bgates, it is private.
@@ -225,7 +228,7 @@ There are two ways: running a script or using `Keycloak` website
    ```
    As `mcuban` does not have the `USER` role, he cannot access this endpoint.
    
-   The endpoint return will be
+   The endpoint return should be
    ```
    HTTP/1.1 403
    {
@@ -243,7 +246,7 @@ There are two ways: running a script or using `Keycloak` website
 
 1. Call again the endpoint `GET /api/private` using the `curl` command presented on `step 8`
 
-   It will return
+   It should return
    ```
    HTTP/1.1 200
    mcuban, it is private.
@@ -251,7 +254,7 @@ There are two ways: running a script or using `Keycloak` website
 
 1. The access token default expiration period is `5 minutes`. So, wait for this time and, using the same access token, try to call the private endpoint.
 
-   It will return
+   It should return
    ```
    HTTP/1.1 401
    WWW-Authenticate: Bearer realm="company-services", error="invalid_token", error_description="Token is not active"
@@ -259,13 +262,13 @@ There are two ways: running a script or using `Keycloak` website
 
 ## Test using Swagger
 
-![swagger](images/swagger.png)
-
 1. Access http://localhost:9080/swagger-ui.html
+
+   ![simple-service-swagger](images/simple-service-swagger.png)
 
 1. Click on `GET /api/public` to open it. Then, click on `Try it out` button and, finally, click on `Execute` button
 
-   It will return
+   It should return
    ```
    Code: 200
    Response Body: It is public.
@@ -275,7 +278,7 @@ There are two ways: running a script or using `Keycloak` website
 
 1. Click on `Try it out` button and then on `Execute` button
   
-   It will return
+   It should return
    ```
    TypeError: Failed to fetch
    ```
@@ -289,25 +292,25 @@ There are two ways: running a script or using `Keycloak` website
   
 1. Run the following commands
    ```
-   BGATES_ACCESS_TOKEN="Bearer $(curl -s -X POST \
+   BGATES_ACCESS_TOKEN=$(curl -s -X POST \
      "http://localhost:8080/auth/realms/company-services/protocol/openid-connect/token" \
      -H "Content-Type: application/x-www-form-urlencoded" \
      -d "username=bgates" \
      -d "password=123" \
      -d "grant_type=password" \
      -d "client_secret=$SIMPLE_SERVICE_CLIENT_SECRET" \
-     -d "client_id=simple-service" | jq -r .access_token)"
+     -d "client_id=simple-service" | jq -r .access_token)
      
    echo $BGATES_ACCESS_TOKEN
    ```
 
-1. Copy the token generated (something like that starts with `Bearer ...`) and go back to `Swagger`
+1. Copy the token generated and go back to `Swagger`
 
-1. Click on the `Authorize` button, paste the access token (copied previously) in the value field. Then, click on `Authorize` and, to finalize, click on `Close`
+1. Click on the `Authorize` button, paste the access token in the value field. Then, click on `Authorize` and, to finalize, click on `Close`
 
 1. Go to `GET /api/private`, click on `Try it out` and then on `Execute` button
 
-   It will return
+   It should return
    ```
    Code: 200
    Response Body: bgates, it is private.
@@ -352,7 +355,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
    curl -i http://localhost:9080/api/private -H "authorization: Bearer $CLIENT_ACCESS_TOKEN"
    ```
   
-   It will return
+   It should return
    ```
    HTTP/1.1 200
    service-account-simple-service, it is private.

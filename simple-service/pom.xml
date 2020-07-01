@@ -16,7 +16,7 @@
 
     <properties>
         <keycloak.version>10.0.2</keycloak.version>
-        <springfox.version>2.9.2</springfox.version>
+        <springdoc.openapi-ui.version>1.4.2</springdoc.openapi-ui.version>
     </properties>
 
     <dependencies>
@@ -37,16 +37,16 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <!-- Swagger2 -->
+        <!-- SpringDoc OpenApi -->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox.version}</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc.openapi-ui.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${springfox.version}</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-security</artifactId>
+            <version>${springdoc.openapi-ui.version}</version>
         </dependency>
 
         <dependency>
