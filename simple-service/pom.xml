@@ -16,7 +16,7 @@
 
     <properties>
         <keycloak.version>10.0.2</keycloak.version>
-        <springdoc.openapi-ui.version>1.4.2</springdoc.openapi-ui.version>
+        <springdoc.openapi-ui.version>1.4.3</springdoc.openapi-ui.version>
     </properties>
 
     <dependencies>
