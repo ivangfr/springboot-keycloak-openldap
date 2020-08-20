@@ -16,7 +16,7 @@
 
     <properties>
         <keycloak.version>10.0.2</keycloak.version>
-        <springdoc.openapi-ui.version>1.4.3</springdoc.openapi-ui.version>
+        <springdoc.openapi.version>1.4.4</springdoc.openapi.version>
     </properties>
 
     <dependencies>
@@ -41,12 +41,12 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>${springdoc.openapi-ui.version}</version>
+            <version>${springdoc.openapi.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-security</artifactId>
-            <version>${springdoc.openapi-ui.version}</version>
+            <version>${springdoc.openapi.version}</version>
         </dependency>
 
         <dependency>

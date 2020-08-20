@@ -1,6 +1,6 @@
 # springboot-keycloak-openldap
 
-The goal of this project is to create a simple [Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) REST API, called `simple-service`, and secure it with [`Keycloak`](https://www.keycloak.org). Furthermore, the users of the API will be loaded into `Keycloak` from [`OpenLDAP`](https://www.openldap.org) server.
+The goal of this project is to create a simple [Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) REST API, called `simple-service`, and secure it with [`Keycloak`](https://www.keycloak.org). Furthermore, the API users will be loaded into `Keycloak` from [`OpenLDAP`](https://www.openldap.org) server.
 
 > **Note 1:** In [`springboot-react-keycloak`](https://github.com/ivangfr/springboot-react-keycloak) repository, we have implemented a `movies-app` using `Keycloak` (with `PKCE`). This application consists of two services: the backend that was implemented using `Spring Boot` and the frontend implemented with `ReactJS`.
 
@@ -8,7 +8,7 @@ The goal of this project is to create a simple [Spring Boot](https://docs.spring
 
 ## Application
 
-- **simple-service**
+- ### simple-service
 
   `Spring Boot` Web Java application that exposes two endpoints:
   
@@ -29,14 +29,14 @@ The goal of this project is to create a simple [Spring Boot](https://docs.spring
   docker-compose up -d
   ```
 
-- Wait a little bit until `MySQL` and `Keycloak` containers are `Up (healthy)`. In order to check the status of the containers, run the command
+- Wait a bit until `MySQL` and `Keycloak` containers are `Up (healthy)`. In order to check the status of the containers, run the command
   ```
   docker-compose ps
   ```
 
 ## Import OpenLDAP Users
 
-The `LDIF` file that we will use, `springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`, contains already a pre-defined structure for `mycompany.com`. Basically, it has 2 groups (`developers` and `admin`) and 4 users (`Bill Gates`, `Steve Jobs`, `Mark Cuban` and `Ivan Franchin`). Besides, it is defined that `Bill Gates`, `Steve Jobs` and `Mark Cuban` belong to `developers` group and `Ivan Franchin` belongs to `admin` group.
+The `LDIF` file that we will use, `springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`, contains a pre-defined structure for `mycompany.com`. Basically, it has 2 groups (`developers` and `admin`) and 4 users (`Bill Gates`, `Steve Jobs`, `Mark Cuban` and `Ivan Franchin`). Besides, it's defined that `Bill Gates`, `Steve Jobs` and `Mark Cuban` belong to `developers` group and `Ivan Franchin` belongs to `admin` group.
 ```
 Bill Gates > username: bgates, password: 123
 Steve Jobs > username: sjobs, password: 123
@@ -67,7 +67,7 @@ In a terminal and inside `springboot-keycloak-openldap` root folder run
 
 - You should see a tree like the one shown in the picture below
 
-  ![openldap](images/openldap.png)
+  ![phpldapadmin](images/phpldapadmin.png)
 
 ## Configure Keycloak
 
@@ -436,6 +436,10 @@ You can get an access token to `simple-service` using `client_id` and `client_se
     -b "ou=users,dc=mycompany,dc=com" \
     -s sub "(uid=*)"
   ```
+
+## Issues
+
+- Unable to update to `Keycloak` version `11.0.0`. Issue https://issues.redhat.com/browse/KEYCLOAK-15233
 
 ## References
 
