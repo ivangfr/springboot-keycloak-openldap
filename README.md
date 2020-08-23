@@ -128,10 +128,10 @@ There are two ways: running a script or using `Keycloak` website
 - On `Connection URL` type `ldap://ldap-host`
 - Click on `Test connection` button, to check if the connection is OK
 - On `Users DN` type `ou=users,dc=mycompany,dc=com`
+- On `Custom User LDAP Filter` set `(gidnumber=500)` to just get developers
 - On `Bind DN` type `cn=admin,dc=mycompany,dc=com`
 - On `Bind Credential` set `admin`
 - Click on `Test authentication` button, to check if the authentication is OK
-- On `Custom User LDAP Filter` set `(gidnumber=500)` to just get developers
 - Click on `Save`
 - Click on `Synchronize all users`
 
@@ -141,7 +141,7 @@ There are two ways: running a script or using `Keycloak` website
 - Click on `View all users`. 3 users will be shown
 - Edit user `bgates`
 - Go to `Role Mappings` tab
-- In the search field `Client Roles`, type `simple-service`. It will appear. Select it
+- In the search field `Client Roles`, select `simple-service`
 - Select the role `USER` present in `Available Roles` and click on `Add selected`
 - Done. `bgates` has now the role `USER` as one of his `Assigned Roles`
 - Do the same for the user `sjobs`
@@ -328,7 +328,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 - Select `simple-service` client
 - On `Settings` tab, turn `ON` the field `Service Accounts Enabled`
 - Click on `Save`
-- On `Service Account Roles`tab, search for `simple-service` on the `Client Roles` search field
+- On `Service Account Roles`tab, select `simple-service` on the `Client Roles` search field
 - Select the role `USER` present in `Available Roles` and click on `Add selected`
 
 ### Test
