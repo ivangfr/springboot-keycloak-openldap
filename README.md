@@ -437,10 +437,6 @@ You can get an access token to `simple-service` using `client_id` and `client_se
     -s sub "(uid=*)"
   ```
 
-## Issues
-
-- Unable to update to `Keycloak` version `11.0.0`. Issue https://issues.redhat.com/browse/KEYCLOAK-15233
-
 ## References
 
 - https://www.keycloak.org/docs/latest/server_admin/
