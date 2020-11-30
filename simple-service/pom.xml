@@ -15,8 +15,8 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <keycloak.version>11.0.1</keycloak.version>
-        <springdoc.openapi.version>1.4.4</springdoc.openapi.version>
+        <keycloak.version>11.0.3</keycloak.version>
+        <springdoc.openapi.version>1.5.0</springdoc.openapi.version>
     </properties>
 
     <dependencies>
@@ -53,12 +53,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
