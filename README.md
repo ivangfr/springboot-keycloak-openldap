@@ -29,7 +29,7 @@ The goal of this project is to create a simple [Spring Boot](https://docs.spring
   docker-compose up -d
   ```
 
-- Wait a bit until `MySQL` and `Keycloak` containers are `Up (healthy)`. In order to check the status of the containers, run the command
+- Wait until `MySQL` and `Keycloak` containers are `Up (healthy)`. In order to check it run
   ```
   docker-compose ps
   ```
@@ -82,7 +82,7 @@ There are two ways: running a script or using `Keycloak` website
   ./init-keycloak.sh
   ```
 
-  This script creates `company-services` realm, `simple-service` client, `USER` client role, `ldap` federation and the users `bgates` and `sjobs` with the role `USER` assigned.
+  It creates `company-services` realm, `simple-service` client, `USER` client role, `ldap` federation and the users `bgates` and `sjobs` with the role `USER` assigned.
 
 - Copy `SIMPLE_SERVICE_CLIENT_SECRET` value that is shown at the end of the script. It will be needed whenever we call `Keycloak` to get a token to access `simple-service`
 
@@ -364,9 +364,17 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 ## Running simple-service as a Docker container
 
 - Build Docker Image
-  ```
-  ./mvnw clean compile jib:dockerBuild --projects simple-service
-  ```
+  - JVM
+    ```
+    ./docker-build.sh
+    ```
+  - Native (it's not working yet, see [Issues](#issues))
+    ```
+    ./docker-build.sh native
+    ```
+  
+- Environment Variables
+
   | Environment Variable | Description                                                 |
   | -------------------- | ----------------------------------------------------------- |
   | `KEYCLOAK_HOST`      | Specify host of the `Keycloak` to use (default `localhost`) |
@@ -440,3 +448,45 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 ## References
 
 - https://www.keycloak.org/docs/latest/server_admin/
+
+## Issues
+
+- After building the docker native image successfully, the following exception is thrown when running it
+  ```
+  ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  
+  java.lang.IllegalStateException: Error processing condition on org.springdoc.core.SpringDocConfiguration$SpringDocActuatorConfiguration.springdocBeanFactoryPostProcessor3
+  	at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:60) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.1]
+  	at org.springframework.context.annotation.ConditionEvaluator.shouldSkip(ConditionEvaluator.java:108) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForBeanMethod(ConfigurationClassBeanDefinitionReader.java:193) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForConfigurationClass(ConfigurationClassBeanDefinitionReader.java:153) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitions(ConfigurationClassBeanDefinitionReader.java:129) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:348) ~[com.mycompany.simpleservice.SimpleServiceApplication:5.3.2]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:252) ~[com.mycompany.simpleservice.SimpleServiceApplication:5.3.2]
+  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:285) ~[na:na]
+  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:99) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:751) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:569) ~[na:na]
+  	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.1]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.1]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.1]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.1]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1309) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.1]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1298) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.1]
+  	at com.mycompany.simpleservice.SimpleServiceApplication.main(SimpleServiceApplication.java:10) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  Caused by: java.lang.IllegalStateException: java.io.FileNotFoundException: class path resource [org/springdoc/core/MultipleOpenApiSupportCondition.class] cannot be opened because it does not exist
+  	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition$MemberConditions.getMetadata(AbstractNestedCondition.java:149) ~[na:na]
+  	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition$MemberConditions.<init>(AbstractNestedCondition.java:113) ~[na:na]
+  	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition.getMatchOutcome(AbstractNestedCondition.java:62) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.1]
+  	at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:47) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.1]
+  	... 18 common frames omitted
+  Caused by: java.io.FileNotFoundException: class path resource [org/springdoc/core/MultipleOpenApiSupportCondition.class] cannot be opened because it does not exist
+  	at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:180) ~[na:na]
+  	at org.springframework.core.type.classreading.SimpleMetadataReader.getClassReader(SimpleMetadataReader.java:55) ~[na:na]
+  	at org.springframework.core.type.classreading.SimpleMetadataReader.<init>(SimpleMetadataReader.java:49) ~[na:na]
+  	at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:103) ~[na:na]
+  	at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:81) ~[na:na]
+  	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition$MemberConditions.getMetadata(AbstractNestedCondition.java:146) ~[na:na]
+  	... 21 common frames omitted
+  ```
