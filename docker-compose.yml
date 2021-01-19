@@ -13,10 +13,10 @@ services:
       - MYSQL_ROOT_PASSWORD=root_password
     healthcheck:
       test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
-      start_period: 10s
+      start_period: 30s
 
   keycloak:
-    image: jboss/keycloak:12.0.1
+    image: jboss/keycloak:12.0.2
     container_name: keycloak
     environment:
       - KEYCLOAK_USER=admin
@@ -32,7 +32,7 @@ services:
       - mysql
     healthcheck:
       test: "curl -f http://localhost:8080/auth || exit 1"
-      start_period: 10s
+      start_period: 30s
      
   ldap-host:
     image: osixia/openldap:1.4.0
