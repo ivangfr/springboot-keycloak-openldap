@@ -451,7 +451,52 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 ## Issues
 
-- After building the docker native image successfully, the following exception is thrown when running it, see [issue #446](https://github.com/spring-projects-experimental/spring-native/issues/446)
+- After building the docker native image successfully, the following exception
   ```
-  /workspace/com.mycompany.simpleservice.SimpleServiceApplication: error while loading shared libraries: libz.so.1: cannot open shared object file: No such file or directory
+    .   ____          _            __ _ _
+   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+    '  |____| .__|_| |_|_| |_\__, | / / / /
+   =========|_|==============|___/=/_/_/_/
+   :: Spring Boot ::                (v2.4.2)
+  
+  2021-01-25 21:15:46.698  INFO 1 --- [           main] c.m.s.SimpleServiceApplication           : Starting SimpleServiceApplication using Java 11.0.10 on e7d711602940 with PID 1 (/workspace/com.mycompany.simpleservice.SimpleServiceApplication started by cnb in /workspace)
+  2021-01-25 21:15:46.699  INFO 1 --- [           main] c.m.s.SimpleServiceApplication           : No active profile set, falling back to default profiles: default
+  2021-01-25 21:15:46.775 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  
+  java.lang.IllegalStateException: Error processing condition on org.springdoc.core.SpringDocConfiguration$SpringDocActuatorConfiguration.springdocBeanFactoryPostProcessor3
+  	at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:60) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.2]
+  	at org.springframework.context.annotation.ConditionEvaluator.shouldSkip(ConditionEvaluator.java:108) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForBeanMethod(ConfigurationClassBeanDefinitionReader.java:193) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForConfigurationClass(ConfigurationClassBeanDefinitionReader.java:153) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitions(ConfigurationClassBeanDefinitionReader.java:129) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:348) ~[com.mycompany.simpleservice.SimpleServiceApplication:5.3.3]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:252) ~[com.mycompany.simpleservice.SimpleServiceApplication:5.3.3]
+  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:285) ~[na:na]
+  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:99) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:751) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:569) ~[na:na]
+  	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.2]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.2]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.2]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.2]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.2]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.2]
+  	at com.mycompany.simpleservice.SimpleServiceApplication.main(SimpleServiceApplication.java:10) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  Caused by: java.lang.IllegalStateException: java.io.FileNotFoundException: class path resource [org/springdoc/core/MultipleOpenApiSupportCondition.class] cannot be opened because it does not exist
+  	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition$MemberConditions.getMetadata(AbstractNestedCondition.java:149) ~[na:na]
+  	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition$MemberConditions.<init>(AbstractNestedCondition.java:113) ~[na:na]
+  	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition.getMatchOutcome(AbstractNestedCondition.java:62) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.2]
+  	at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:47) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.2]
+  	... 18 common frames omitted
+  Caused by: java.io.FileNotFoundException: class path resource [org/springdoc/core/MultipleOpenApiSupportCondition.class] cannot be opened because it does not exist
+  	at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:180) ~[na:na]
+  	at org.springframework.core.type.classreading.SimpleMetadataReader.getClassReader(SimpleMetadataReader.java:55) ~[na:na]
+  	at org.springframework.core.type.classreading.SimpleMetadataReader.<init>(SimpleMetadataReader.java:49) ~[na:na]
+  	at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:103) ~[na:na]
+  	at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:81) ~[na:na]
+  	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition$MemberConditions.getMetadata(AbstractNestedCondition.java:146) ~[na:na]
+  	... 21 common frames omitted
   ```
