@@ -149,9 +149,9 @@ There are two ways: running a script or using `Keycloak` website
 
 ## Run simple-service using Maven
 
-- Open a new terminal
+- Open a new terminal and make sure you are in `springboot-keycloak-openldap` root folder
 
-- In `springboot-keycloak-openldap` root folder, run the command below to start `simple-service` application
+- Start the application by running the following command
   ```
   ./mvnw clean spring-boot:run --projects simple-service -Dspring-boot.run.jvmArguments="-Dserver.port=9080"
   ```
@@ -280,7 +280,7 @@ There are two ways: running a script or using `Keycloak` website
   
    It should return
    ```
-   TypeError: Failed to fetch
+   Failed to fetch
    ```
 
 1. In order to access the private endpoint, you need an access token. So, open a terminal
@@ -445,13 +445,41 @@ You can get an access token to `simple-service` using `client_id` and `client_se
     -s sub "(uid=*)"
   ```
 
-## References
+## Generating missing configuration for native image
 
-- https://www.keycloak.org/docs/latest/server_admin/
+> **IMPORTANT**: you must have `GraalVM` and its tool `native-image` installed.
+> **TIP**: For more information see [Spring Native documentation](https://docs.spring.io/spring-native/docs/current/reference/htmlsingle/#_missing_configuration)
+
+- Run the following steps in a terminal and inside `springboot-keycloak-openldap` root folder
+  ```
+  mkdir -p simple-service/src/main/resources/META-INF/native-image
+  
+  ./mvnw clean package --projects simple-service
+  
+  cd simple-service
+  
+  java -jar -agentlib:native-image-agent=config-output-dir=src/main/resources/META-INF/native-image -Dserver.port=9080 target/simple-service-1.0.0.jar
+  ```
+
+- It should generate `JSON` files in `src/main/resources/META-INF/native-image` like `jni-config.json`, `proxy-config.json` etc.
 
 ## Issues
 
-- After building the docker native image successfully, the following exception is thrown at runtime
+- If the missing configuration for native image is generated using the `native-image-agent`, it's throwing the following error while building the Docker native image. It's fixed in this {issue #2951](https://github.com/oracle/graal/issues/2951). Waiting for `GraalVM 21.1` milestone be completed/released
+  ```
+  ...
+  [INFO]     [creator]     Error: type is not available in this platform: org.graalvm.compiler.hotspot.management.AggregatedMemoryPoolBean
+  [INFO]     [creator]     Error: Use -H:+ReportExceptionStackTraces to print stacktrace of underlying exception
+  [INFO]     [creator]     Error: Image build request failed with exit status 1
+  [INFO]     [creator]     unable to invoke layer creator
+  [INFO]     [creator]     unable to contribute native-image layer
+  [INFO]     [creator]     error running build
+  [INFO]     [creator]     exit status 1
+  [INFO]     [creator]     ERROR: failed to build: exit status 1
+  ...
+  ```
+
+- If the missing configuration is NOT generated, the following exception is thrown at Docker native container runtime
   ```
     .   ____          _            __ _ _
    /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -461,9 +489,9 @@ You can get an access token to `simple-service` using `client_id` and `client_se
    =========|_|==============|___/=/_/_/_/
    :: Spring Boot ::                (v2.4.3)
   
-  2021-03-04 17:56:20.634  INFO 1 --- [           main] c.m.s.SimpleServiceApplication           : Starting SimpleServiceApplication using Java 11.0.10 on f858971c82dc with PID 1 (/workspace/com.mycompany.simpleservice.SimpleServiceApplication started by cnb in /workspace)
-  2021-03-04 17:56:20.635  INFO 1 --- [           main] c.m.s.SimpleServiceApplication           : No active profile set, falling back to default profiles: default
-  2021-03-04 17:56:20.731 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  2021-03-15 13:42:45.383  INFO 1 --- [           main] c.m.s.SimpleServiceApplication           : Starting SimpleServiceApplication using Java 11.0.10 on ad7c5792573c with PID 1 (/workspace/com.mycompany.simpleservice.SimpleServiceApplication started by cnb in /workspace)
+  2021-03-15 13:42:45.384  INFO 1 --- [           main] c.m.s.SimpleServiceApplication           : No active profile set, falling back to default profiles: default
+  2021-03-15 13:42:45.473 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
   
   java.lang.IllegalStateException: Error processing condition on org.springdoc.core.SpringDocConfiguration$SpringDocActuatorConfiguration.springdocBeanFactoryPostProcessor3
   	at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:60) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.3]
@@ -500,3 +528,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
   	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition$MemberConditions.getMetadata(AbstractNestedCondition.java:146) ~[na:na]
   	... 21 common frames omitted
   ```
+
+## References
+
+- https://www.keycloak.org/docs/latest/server_admin/
