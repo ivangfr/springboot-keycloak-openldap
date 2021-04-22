@@ -102,48 +102,47 @@ There are two ways: running a script or using `Keycloak` website
 
 #### Create a new Realm
 
-- Go to top-left corner and hover the mouse over `Master` realm. A blue button `Add realm` will appear. Click on it
-- On `Name` field, write `company-services`. Click on `Create`
+- Go to top-left corner and hover the mouse over `Master` realm. Click the `Add realm` blue button that will appear
+- For the `Name` field set `company-services` and click `Create` button
 
 #### Create a new Client
 
-- Click on `Clients` menu on the left
+- On the left menu, click `Clients` 
 - Click `Create` button
-- On `Client ID` field type `simple-service`
-- Click on `Save`
-- On `Settings` tab, set the `Access Type` to `confidential`
-- Still on `Settings` tab, set the `Valid Redirect URIs` to `http://localhost:9080`
-- Click on `Save`
-- Go to `Credentials` tab. Copy the value on `Secret` field. It will be used on the next steps
-- Go to `Roles` tab
-- Click `Add Role` button
-- On `Role Name` type `USER`
-- Click on `Save`
+- Set `simple-service` for `Client ID` and click `Save` button
+- In `Settings` tab
+  - Set `confidential` for `Access Type`
+  - Set `http://localhost:9080` for `Valid Redirect URIs`
+- Click `Save` button
+- In `Credentials` tab you can find the secret `Keycloak` generated for `simple-service`
+- In `Roles` tab
+  - Click `Add Role` button
+  - Set `USER` to `Role Name` and click `Save` button
 
 #### LDAP Integration
 
-- Click on the `User Federation` menu on the left
+- On the left menu, click `User Federation`
 - Select `ldap`
-- On `Vendor` field select `Other`
-- On `Connection URL` type `ldap://ldap-host`
-- Click on `Test connection` button, to check if the connection is OK
-- On `Users DN` type `ou=users,dc=mycompany,dc=com`
-- On `Custom User LDAP Filter` set `(gidnumber=500)` to just get developers
-- On `Bind DN` type `cn=admin,dc=mycompany,dc=com`
-- On `Bind Credential` set `admin`
-- Click on `Test authentication` button, to check if the authentication is OK
-- Click on `Save`
-- Click on `Synchronize all users`
+- Select `Other` for `Vendor`
+- Set `ldap://ldap-host` for `Connection URL`
+- Click `Test connection` button, to check if the connection is OK
+- Set `ou=users,dc=mycompany,dc=com` for `Users DN` 
+- Set `(gidnumber=500)` for `Custom User LDAP Filter` (filter just developers)
+- Set `cn=admin,dc=mycompany,dc=com` for `Bind DN`
+- Set `admin` for `Bind Credential`
+- Click `Test authentication` button, to check if the authentication is OK
+- Click `Save` button
+- Click `Synchronize all users` button
 
 #### Configure users imported
 
-- Click on `Users` menu on the left
-- Click on `View all users`. 3 users will be shown
-- Edit user `bgates`
-- Go to `Role Mappings` tab
-- In the search field `Client Roles`, select `simple-service`
-- Select the role `USER` present in `Available Roles` and click on `Add selected`
-- Done. `bgates` has now the role `USER` as one of his `Assigned Roles`
+- On the left menu, click `Users`
+- Click `View all users` button. 3 users should be shown
+- Edit user `bgates` by clicking on its `ID` or `Edit` button
+- In `Role Mappings` tab
+  - Select `simple-service` in `Client Roles` combo-box
+  - Select `USER` role present in `Available Roles` and click `Add selected`
+  - `bgates` has now `USER` role as one of his `Assigned Roles`
 - Do the same for the user `sjobs`
 - Let's leave `mcuban` without `USER` role
 
@@ -242,9 +241,9 @@ There are two ways: running a script or using `Keycloak` website
 
 1. Go to `Keycloak` and add the role `USER` to the `mcuban`
 
-1. Run the command on `step 7)` again to get a new access token for `mcuban` user
+1. Run the command mentioned in `step 7)` again to get a new access token for `mcuban` user
 
-1. Call again the endpoint `GET /api/private` using the `curl` command presented on `step 8`
+1. Call again the endpoint `GET /api/private` using the `curl` command presented in `step 8`
 
    It should return
    ```
@@ -266,7 +265,7 @@ There are two ways: running a script or using `Keycloak` website
 
    ![simple-service-swagger](images/simple-service-swagger.png)
 
-1. Click on `GET /api/public` to open it. Then, click on `Try it out` button and, finally, click on `Execute` button
+1. Click `GET /api/public` to open it. Then, click `Try it out` button and, finally, click `Execute` button
 
    It should return
    ```
@@ -274,9 +273,7 @@ There are two ways: running a script or using `Keycloak` website
    Response Body: It is public.
    ```
 
-1. Now click on `GET /api/private`, it is a secured endpoint. Let's try it without authentication
-
-1. Click on `Try it out` button and then on `Execute` button
+1. Now click `GET /api/private` secured endpoint. Let's try it without authentication. Then, click `Try it out` button and, finally, click `Execute` button
   
    It should return
    ```
@@ -306,9 +303,9 @@ There are two ways: running a script or using `Keycloak` website
 
 1. Copy the token generated and go back to `Swagger`
 
-1. Click on the `Authorize` button, paste the access token in the value field. Then, click on `Authorize` and, to finalize, click on `Close`
+1. Click `Authorize` button and paste the access token in the `Value` field. Then, click `Authorize` button and, to finalize, click `Close`
 
-1. Go to `GET /api/private`, click on `Try it out` and then on `Execute` button
+1. Go to `GET /api/private` and call this endpoint again, now with authentication
 
    It should return
    ```
@@ -324,12 +321,14 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 - Access http://localhost:8080/auth/admin/
 - Select `company-services` realm (if it is not already selected)
-- Click on `Clients` on the left menu
+- On the left menu, click `Clients`
 - Select `simple-service` client
-- On `Settings` tab, turn `ON` the field `Service Accounts Enabled`
-- Click on `Save`
-- On `Service Account Roles`tab, select `simple-service` on the `Client Roles` search field
-- Select the role `USER` present in `Available Roles` and click on `Add selected`
+- In `Settings` tab
+  - Turn `ON` the field `Service Accounts Enabled`
+  - Click `Save` button
+- In `Service Account Roles`tab
+  - Select `simple-service` in `Client Roles` combo-box
+  - Select `USER` role present in `Available Roles` and click `Add selected`
 
 ### Test
 
@@ -465,7 +464,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 ## Issues
 
-- If the missing configuration for native image is generated using the `native-image-agent`, it's throwing the following error while building the Docker native image. It's fixed in this {issue #2951](https://github.com/oracle/graal/issues/2951). Waiting for `GraalVM 21.1` milestone be completed/released
+- If the missing configuration for native image is generated using the `native-image-agent`, it's throwing the following error while building the Docker native image. It's fixed in this [issue #2951](https://github.com/oracle/graal/issues/2951). Waiting for `GraalVM 21.1` milestone be completed/released
   ```
   ...
   [INFO]     [creator]     Error: type is not available in this platform: org.graalvm.compiler.hotspot.management.AggregatedMemoryPoolBean
