@@ -113,7 +113,7 @@ There are two ways: running a script or using `Keycloak` website
 - In `Settings` tab
   - Set `confidential` for `Access Type`
   - Set `http://localhost:9080` for `Valid Redirect URIs`
-- Click `Save` button
+  - Click `Save` button
 - In `Credentials` tab you can find the secret `Keycloak` generated for `simple-service`
 - In `Roles` tab
   - Click `Add Role` button
@@ -446,7 +446,8 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 ## Generating missing configuration for native image
 
-> **IMPORTANT**: you must have `GraalVM` and its tool `native-image` installed.
+> **IMPORTANT**: you must have `GraalVM` and its tool called `native-image` installed.
+
 > **TIP**: For more information see [Spring Native documentation](https://docs.spring.io/spring-native/docs/current/reference/htmlsingle/#_missing_configuration)
 
 - Run the following steps in a terminal and inside `springboot-keycloak-openldap` root folder
@@ -464,21 +465,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 ## Issues
 
-- If the missing configuration for native image is generated using the `native-image-agent`, it's throwing the following error while building the Docker native image. It's fixed in this [issue #2951](https://github.com/oracle/graal/issues/2951). Waiting for `GraalVM 21.1` milestone be completed/released
-  ```
-  ...
-  [INFO]     [creator]     Error: type is not available in this platform: org.graalvm.compiler.hotspot.management.AggregatedMemoryPoolBean
-  [INFO]     [creator]     Error: Use -H:+ReportExceptionStackTraces to print stacktrace of underlying exception
-  [INFO]     [creator]     Error: Image build request failed with exit status 1
-  [INFO]     [creator]     unable to invoke layer creator
-  [INFO]     [creator]     unable to contribute native-image layer
-  [INFO]     [creator]     error running build
-  [INFO]     [creator]     exit status 1
-  [INFO]     [creator]     ERROR: failed to build: exit status 1
-  ...
-  ```
-
-- If the missing configuration is NOT generated, the following exception is thrown at Docker native container runtime
+- If the missing configuration for native image is generated using the `native-image-agent`, the following exception is thrown at runtime
   ```
     .   ____          _            __ _ _
    /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -486,46 +473,87 @@ You can get an access token to `simple-service` using `client_id` and `client_se
    \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
     '  |____| .__|_| |_|_| |_\__, | / / / /
    =========|_|==============|___/=/_/_/_/
-   :: Spring Boot ::                (v2.4.3)
+   :: Spring Boot ::                (v2.4.5)
   
-  2021-03-15 13:42:45.383  INFO 1 --- [           main] c.m.s.SimpleServiceApplication           : Starting SimpleServiceApplication using Java 11.0.10 on ad7c5792573c with PID 1 (/workspace/com.mycompany.simpleservice.SimpleServiceApplication started by cnb in /workspace)
-  2021-03-15 13:42:45.384  INFO 1 --- [           main] c.m.s.SimpleServiceApplication           : No active profile set, falling back to default profiles: default
-  2021-03-15 13:42:45.473 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  2021-04-22 18:40:33.854  INFO 1 --- [           main] c.m.s.SimpleServiceApplication           : Starting SimpleServiceApplication using Java 11.0.10 on 399b4542b5f3 with PID 1 (/workspace/com.mycompany.simpleservice.SimpleServiceApplication started by cnb in /workspace)
+  2021-04-22 18:40:33.854  INFO 1 --- [           main] c.m.s.SimpleServiceApplication           : No active profile set, falling back to default profiles: default
+  2021-04-22 18:40:33.943  WARN 1 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is java.lang.IllegalArgumentException: Duplicate context initialization parameter [keycloak.config.resolver]
+  2021-04-22 18:40:33.945  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener :
   
-  java.lang.IllegalStateException: Error processing condition on org.springdoc.core.SpringDocConfiguration$SpringDocActuatorConfiguration.springdocBeanFactoryPostProcessor3
-  	at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:60) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.3]
+  Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+  2021-04-22 18:40:33.945 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  
+  org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is java.lang.IllegalArgumentException: Duplicate context initialization parameter [keycloak.config.resolver]
+  	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.5]
+  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:577) ~[com.mycompany.simpleservice.SimpleServiceApplication:5.3.6]
+  	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.5]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:782) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:774) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:339) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1340) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1329) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  	at com.mycompany.simpleservice.SimpleServiceApplication.main(SimpleServiceApplication.java:10) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  Caused by: java.lang.IllegalArgumentException: Duplicate context initialization parameter [keycloak.config.resolver]
+  	at org.apache.catalina.core.StandardContext.addParameter(StandardContext.java:3150) ~[com.mycompany.simpleservice.SimpleServiceApplication:9.0.45]
+  	at org.keycloak.adapters.springboot.KeycloakBaseSpringBootConfiguration$KeycloakBaseTomcatContextCustomizer.customize(KeycloakBaseSpringBootConfiguration.java:296) ~[com.mycompany.simpleservice.SimpleServiceApplication:12.0.4]
+  	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.configureContext(TomcatServletWebServerFactory.java:389) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.5]
+  	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.prepareContext(TomcatServletWebServerFactory.java:246) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.5]
+  	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:198) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.5]
+  	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:181) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.5]
+  	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:159) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.5]
+  	... 9 common frames omitted
+  ```
+
+- If the missing configuration for native image is NOT generated, the following exception is thrown at runtime
+  ```
+    .   ____          _            __ _ _
+   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+    '  |____| .__|_| |_|_| |_\__, | / / / /
+   =========|_|==============|___/=/_/_/_/
+   :: Spring Boot ::                (v2.4.5)
+  
+  2021-04-22 19:02:11.587  INFO 1 --- [           main] c.m.s.SimpleServiceApplication           : Starting SimpleServiceApplication using Java 11.0.10 on 8f6431d9c387 with PID 1 (/workspace/com.mycompany.simpleservice.SimpleServiceApplication started by cnb in /workspace)
+  2021-04-22 19:02:11.587  INFO 1 --- [           main] c.m.s.SimpleServiceApplication           : No active profile set, falling back to default profiles: default
+  2021-04-22 19:02:11.637 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  
+  java.lang.IllegalStateException: Error processing condition on org.springdoc.core.SpringDocConfiguration.springdocBeanFactoryPostProcessor
+  	at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:60) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
   	at org.springframework.context.annotation.ConditionEvaluator.shouldSkip(ConditionEvaluator.java:108) ~[na:na]
   	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForBeanMethod(ConfigurationClassBeanDefinitionReader.java:193) ~[na:na]
   	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForConfigurationClass(ConfigurationClassBeanDefinitionReader.java:153) ~[na:na]
   	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitions(ConfigurationClassBeanDefinitionReader.java:129) ~[na:na]
-  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:342) ~[com.mycompany.simpleservice.SimpleServiceApplication:5.3.4]
-  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:246) ~[com.mycompany.simpleservice.SimpleServiceApplication:5.3.4]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:343) ~[com.mycompany.simpleservice.SimpleServiceApplication:5.3.6]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:247) ~[com.mycompany.simpleservice.SimpleServiceApplication:5.3.6]
   	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311) ~[na:na]
   	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112) ~[na:na]
-  	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:745) ~[na:na]
-  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:563) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:746) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:564) ~[na:na]
   	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) ~[na:na]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.3]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:782) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:774) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:339) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1340) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1329) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
   	at com.mycompany.simpleservice.SimpleServiceApplication.main(SimpleServiceApplication.java:10) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
-  Caused by: java.lang.IllegalStateException: java.io.FileNotFoundException: class path resource [org/springdoc/core/MultipleOpenApiSupportCondition.class] cannot be opened because it does not exist
+  Caused by: java.lang.IllegalStateException: java.io.FileNotFoundException: class path resource [org/springdoc/core/CacheOrGroupedOpenApiCondition$OnCacheDisabled.class] cannot be opened because it does not exist
   	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition$MemberConditions.getMetadata(AbstractNestedCondition.java:149) ~[na:na]
-  	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition$MemberConditions.<init>(AbstractNestedCondition.java:113) ~[na:na]
-  	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition.getMatchOutcome(AbstractNestedCondition.java:62) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.3]
-  	at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:47) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.3]
+  	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition$MemberConditions.getMemberConditions(AbstractNestedCondition.java:121) ~[na:na]
+  	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition$MemberConditions.<init>(AbstractNestedCondition.java:114) ~[na:na]
+  	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition.getMatchOutcome(AbstractNestedCondition.java:62) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+  	at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:47) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
   	... 18 common frames omitted
-  Caused by: java.io.FileNotFoundException: class path resource [org/springdoc/core/MultipleOpenApiSupportCondition.class] cannot be opened because it does not exist
-  	at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:180) ~[na:na]
+  Caused by: java.io.FileNotFoundException: class path resource [org/springdoc/core/CacheOrGroupedOpenApiCondition$OnCacheDisabled.class] cannot be opened because it does not exist
+  	at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:187) ~[na:na]
   	at org.springframework.core.type.classreading.SimpleMetadataReader.getClassReader(SimpleMetadataReader.java:55) ~[na:na]
   	at org.springframework.core.type.classreading.SimpleMetadataReader.<init>(SimpleMetadataReader.java:49) ~[na:na]
   	at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:103) ~[na:na]
   	at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:81) ~[na:na]
   	at org.springframework.boot.autoconfigure.condition.AbstractNestedCondition$MemberConditions.getMetadata(AbstractNestedCondition.java:146) ~[na:na]
-  	... 21 common frames omitted
+  	... 22 common frames omitted
   ```
 
 ## References
