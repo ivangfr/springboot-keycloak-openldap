@@ -1,5 +1,5 @@
 # LDIF Export for dc=mycompany,dc=com
-# Server: ldap-host (ldap-host)
+# Server: openldap (openldap)
 # Search Scope: sub
 # Search Filter: (objectClass=*)
 # Total Entries: 10

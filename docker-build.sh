@@ -2,7 +2,7 @@
 
 if [ "$1" = "native" ];
 then
-  ./mvnw clean spring-boot:build-image -Pnative --projects simple-service
+  ./mvnw clean spring-boot:build-image --projects simple-service
 else
-  ./mvnw clean compile jib:dockerBuild --projects simple-service
+  ./mvnw clean package jib:dockerBuild --projects simple-service
 fi

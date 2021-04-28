@@ -34,21 +34,21 @@ services:
       test: "curl -f http://localhost:8080/auth || exit 1"
       start_period: 30s
      
-  ldap-host:
+  openldap:
     image: osixia/openldap:1.5.0
-    container_name: ldap-host
+    container_name: openldap
     environment:
       - LDAP_ORGANISATION="MyCompany Inc."
       - LDAP_DOMAIN=mycompany.com
     ports:
       - "389:389"
 
-  phpldapadmin-service:
+  phpldapadmin:
     image: osixia/phpldapadmin:0.9.0
-    container_name: phpldapadmin-service
+    container_name: phpldapadmin
     environment:
-      - PHPLDAPADMIN_LDAP_HOSTS=ldap-host
+      - PHPLDAPADMIN_LDAP_HOSTS=openldap
     ports:
       - "6443:443"
     depends_on:
-      - ldap-host
+      - openldap

@@ -27,11 +27,55 @@
         <module>simple-service</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.experimental</groupId>
+            <artifactId>spring-native</artifactId>
+            <version>${spring-native.version}</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <image>
+                        <builder>paketobuildpacks/builder:tiny</builder>
+                        <name>${docker-image.prefix}/${project.artifactId}:${project.version}</name>
+                        <env>
+                            <BP_BOOT_NATIVE_IMAGE>1</BP_BOOT_NATIVE_IMAGE>
+                            <BP_BOOT_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                                -Dspring.native.remove-yaml-support=true
+                                --enable-https
+                                -H:+ReportExceptionStackTraces
+                            </BP_BOOT_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                        </env>
+                    </image>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.experimental</groupId>
+                <artifactId>spring-aot-maven-plugin</artifactId>
+                <version>${spring-native.version}</version>
+                <executions>
+                    <execution>
+                        <id>test-generate</id>
+                        <goals>
+                            <goal>test-generate</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <removeYamlSupport>true</removeYamlSupport>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
@@ -46,82 +90,26 @@
         </plugins>
     </build>
 
-    <profiles>
-        <profile>
-            <id>native</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.experimental</groupId>
-                    <artifactId>spring-native</artifactId>
-                    <version>${spring-native.version}</version>
-                </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <configuration>
-                            <image>
-                                <builder>paketobuildpacks/builder:tiny</builder>
-                                <name>${docker-image.prefix}/${project.artifactId}:${project.version}</name>
-                                <env>
-                                    <BP_BOOT_NATIVE_IMAGE>1</BP_BOOT_NATIVE_IMAGE>
-                                    <BP_BOOT_NATIVE_IMAGE_BUILD_ARGUMENTS>
-                                        -Dspring.native.remove-yaml-support=true
-                                        -Dspring.spel.ignore=true
-                                        --enable-https
-                                    </BP_BOOT_NATIVE_IMAGE_BUILD_ARGUMENTS>
-                                </env>
-                            </image>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.springframework.experimental</groupId>
-                        <artifactId>spring-aot-maven-plugin</artifactId>
-                        <version>${spring-native.version}</version>
-                        <executions>
-                            <execution>
-                                <id>test-generate</id>
-                                <goals>
-                                    <goal>test-generate</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>generate</id>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <removeSpelSupport>true</removeSpelSupport>
-                            <removeYamlSupport>true</removeYamlSupport>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-            <repositories>
-                <repository>
-                    <id>spring-releases</id>
-                    <name>Spring Releases</name>
-                    <url>https://repo.spring.io/release</url>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>spring-releases</id>
-                    <name>Spring Releases</name>
-                    <url>https://repo.spring.io/release</url>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </pluginRepository>
-            </pluginRepositories>
-        </profile>
-    </profiles>
+    <repositories>
+        <repository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>https://repo.spring.io/release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>https://repo.spring.io/release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>

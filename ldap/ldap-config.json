@@ -49,7 +49,7 @@
       "entryUUID"
     ],
     "connectionUrl": [
-      "ldap://ldap-host"
+      "ldap://openldap"
     ],
     "allowKerberosAuthentication": [
       "false"
