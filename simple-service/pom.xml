@@ -14,8 +14,8 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <keycloak.version>12.0.4</keycloak.version>
-        <springdoc-openapi.version>1.5.7</springdoc-openapi.version>
+        <keycloak.version>13.0.0</keycloak.version>
+        <springdoc-openapi.version>1.5.8</springdoc-openapi.version>
     </properties>
 
     <dependencies>

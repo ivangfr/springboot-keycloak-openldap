@@ -103,16 +103,16 @@ There are two ways: running a script or using `Keycloak` website
 #### Create a new Realm
 
 - Go to top-left corner and hover the mouse over `Master` realm. Click the `Add realm` blue button that will appear
-- For the `Name` field set `company-services` and click `Create` button
+- Set `company-services` to the `Name` field and click `Create` button
 
 #### Create a new Client
 
 - On the left menu, click `Clients` 
 - Click `Create` button
-- Set `simple-service` for `Client ID` and click `Save` button
+- Set `simple-service` to `Client ID` and click `Save` button
 - In `Settings` tab
-  - Set `confidential` for `Access Type`
-  - Set `http://localhost:9080` for `Valid Redirect URIs`
+  - Set `confidential` to `Access Type`
+  - Set `http://localhost:9080` to `Valid Redirect URIs`
   - Click `Save` button
 - In `Credentials` tab you can find the secret `Keycloak` generated for `simple-service`
 - In `Roles` tab
@@ -124,12 +124,12 @@ There are two ways: running a script or using `Keycloak` website
 - On the left menu, click `User Federation`
 - Select `ldap`
 - Select `Other` for `Vendor`
-- Set `ldap://openldap` for `Connection URL`
+- Set `ldap://openldap` to `Connection URL`
 - Click `Test connection` button, to check if the connection is OK
-- Set `ou=users,dc=mycompany,dc=com` for `Users DN` 
-- Set `(gidnumber=500)` for `Custom User LDAP Filter` (filter just developers)
-- Set `cn=admin,dc=mycompany,dc=com` for `Bind DN`
-- Set `admin` for `Bind Credential`
+- Set `ou=users,dc=mycompany,dc=com` to `Users DN` 
+- Set `(gidnumber=500)` to `Custom User LDAP Filter` (filter just developers)
+- Set `cn=admin,dc=mycompany,dc=com` to `Bind DN`
+- Set `admin` to `Bind Credential`
 - Click `Test authentication` button, to check if the authentication is OK
 - Click `Save` button
 - Click `Synchronize all users` button
