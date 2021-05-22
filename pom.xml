@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.5</version>
+        <version>2.4.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -20,7 +20,7 @@
         <java.version>11</java.version>
         <spring-native.version>0.9.2</spring-native.version>
         <jib-maven-plugin.version>3.0.0</jib-maven-plugin.version>
-        <docker-image.prefix>docker.mycompany.com</docker-image.prefix>
+        <docker-image.prefix>ivanfranchin</docker-image.prefix>
     </properties>
 
     <modules>
@@ -49,7 +49,6 @@
                             <BP_BOOT_NATIVE_IMAGE_BUILD_ARGUMENTS>
                                 -Dspring.native.remove-yaml-support=true
                                 --enable-https
-                                -H:+ReportExceptionStackTraces
                             </BP_BOOT_NATIVE_IMAGE_BUILD_ARGUMENTS>
                         </env>
                     </image>
