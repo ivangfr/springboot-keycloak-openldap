@@ -382,8 +382,8 @@ You can get an access token to `simple-service` using `client_id` and `client_se
   | `KEYCLOAK_HOST`      | Specify host of the `Keycloak` to use (default `localhost`) |
   | `KEYCLOAK_PORT`      | Specify port of the `Keycloak` to use (default `8080`)      |
 
-- Run `simple-service` docker container, joining it to docker-compose network
-  > **Warning:** Native Docker images is not working yet, see [Issues](#issues)
+- Run Docker Container
+  > **Warning:** Native is not working yet, see [Issues](#issues)
   ```
   docker run --rm --name simple-service -p 9080:8080 \
     -e KEYCLOAK_HOST=keycloak \
@@ -462,7 +462,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 - Once the application is running, exercise it by calling its endpoints using `curl` and `Swagger` so that `Tracing Agent` observes the behavior of the application running on Java HotSpot VM and writes configuration files for reflection, JNI, resource, and proxy usage to automatically configure the native image generator.
 
-- It should generate `JSON` files in `simple-api/src/main/resources/META-INF/native-image` such as: `jni-config.json`, `proxy-config.json`, `reflect-config.json`, `resource-config.json` and `serialization-config.json`.
+- It should generate `JSON` files in `simple-service/src/main/resources/META-INF/native-image` such as: `jni-config.json`, `proxy-config.json`, `reflect-config.json`, `resource-config.json` and `serialization-config.json`.
 
 ## Issues
 
