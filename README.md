@@ -152,8 +152,7 @@ There are two ways: running a script or using `Keycloak` website
 
 - Start the application by running the following command
   ```
-  ./mvnw clean package spring-boot:run --projects simple-service \
-    -Dspring-boot.run.jvmArguments="-Dserver.port=9080" -DskipTests
+  ./mvnw clean spring-boot:run --projects simple-service -Dspring-boot.run.jvmArguments="-Dserver.port=9080"
   ```
 
 ## Test using curl
