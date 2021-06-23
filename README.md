@@ -152,8 +152,7 @@ There are two ways: running a script or using `Keycloak` website
 
 - Start the application by running the following command
   ```
-  ./mvnw clean package spring-boot:run --projects simple-service \
-    -Dspring-boot.run.jvmArguments="-Dserver.port=9080" -DskipTests
+  ./mvnw clean spring-boot:run --projects simple-service -Dspring-boot.run.jvmArguments="-Dserver.port=9080"
   ```
 
 ## Test using curl
@@ -426,6 +425,10 @@ You can get an access token to `simple-service` using `client_id` and `client_se
   ```
   docker-compose down -v
   ```
+- To remove the Docker image create in the project, run
+  ```
+  docker rmi ivanfranchin/simple-service:1.0.0
+  ```
 
 ## Useful Links/Commands
 
@@ -451,7 +454,6 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 - Run the following steps in a terminal and inside `springboot-keycloak-openldap` root folder
   ```
-  mkdir -p simple-service/src/main/resources/META-INF/native-image
   ./mvnw clean package --projects simple-service -DskipTests
   cd simple-service
   java -jar -agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image -Dserver.port=9080 target/simple-service-1.0.0.jar
@@ -466,25 +468,24 @@ The Docker native image is built successfully. However, the following exception 
 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
 
 org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is java.lang.IllegalArgumentException: Duplicate context initialization parameter [keycloak.config.resolver]
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162) ~[na:na]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:163) ~[na:na]
 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:577) ~[na:na]
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) ~[na:na]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:771) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.6]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:763) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.6]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:438) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.6]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:339) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.6]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1329) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.6]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1318) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.6]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[na:na]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
 	at com.mycompany.simpleservice.SimpleServiceApplication.main(SimpleServiceApplication.java:13) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
 Caused by: java.lang.IllegalArgumentException: Duplicate context initialization parameter [keycloak.config.resolver]
 	at org.apache.catalina.core.StandardContext.addParameter(StandardContext.java:3150) ~[com.mycompany.simpleservice.SimpleServiceApplication:9.0.46]
 	at org.keycloak.adapters.springboot.KeycloakBaseSpringBootConfiguration$KeycloakBaseTomcatContextCustomizer.customize(KeycloakBaseSpringBootConfiguration.java:296) ~[na:na]
-	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.configureContext(TomcatServletWebServerFactory.java:389) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.6]
-	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.prepareContext(TomcatServletWebServerFactory.java:246) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.6]
-	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:198) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.4.6]
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:181) ~[na:na]
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:159) ~[na:na]
-	... 9 common frames omitted
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.configureContext(TomcatServletWebServerFactory.java:389) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.prepareContext(TomcatServletWebServerFactory.java:246) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:198) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:182) ~[na:na]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:160) ~[na:na]
+	... 8 common frames omitted
 ```
 
 ## References
