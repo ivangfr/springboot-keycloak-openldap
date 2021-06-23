@@ -1,5 +1,3 @@
-*.DS_store
-
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
@@ -30,3 +28,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### MAC OS ###
+*.DS_store
