@@ -14,7 +14,7 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <keycloak.version>13.0.1</keycloak.version>
+        <keycloak.version>14.0.0</keycloak.version>
         <springdoc-openapi.version>1.5.9</springdoc-openapi.version>
     </properties>
 
@@ -26,17 +26,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.security</groupId>
-                    <artifactId>spring-security-config</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>5.5.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

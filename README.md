@@ -230,13 +230,7 @@ There are two ways: running a script or using `Keycloak` website
    The endpoint return should be
    ```
    HTTP/1.1 403
-   {
-     "timestamp":"2018-12-26T13:14:10.493+0000",
-     "status":403,
-     "error":"Forbidden",
-     "message":"Forbidden",
-     "path":"/api/private"
-   }
+   {"timestamp":"...","status":403,"error":"Forbidden","path":"/api/private"}
    ```
 
 1. Go to `Keycloak` and add the role `USER` to the `mcuban`
@@ -384,7 +378,8 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 - Run Docker Container
   > **Warning:** Native is not working yet, see [Issues](#issues)
   ```
-  docker run --rm --name simple-service -p 9080:8080 \
+  docker run --rm --name simple-service \
+    -p 9080:8080 \
     -e KEYCLOAK_HOST=keycloak \
     --network=springboot-keycloak-openldap_default \
     ivanfranchin/simple-service:1.0.0
@@ -471,18 +466,18 @@ org.springframework.context.ApplicationContextException: Unable to start web ser
 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:163) ~[na:na]
 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:577) ~[na:na]
 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[na:na]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.2]
 	at com.mycompany.simpleservice.SimpleServiceApplication.main(SimpleServiceApplication.java:13) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
 Caused by: java.lang.IllegalArgumentException: Duplicate context initialization parameter [keycloak.config.resolver]
-	at org.apache.catalina.core.StandardContext.addParameter(StandardContext.java:3150) ~[com.mycompany.simpleservice.SimpleServiceApplication:9.0.46]
+	at org.apache.catalina.core.StandardContext.addParameter(StandardContext.java:3168) ~[com.mycompany.simpleservice.SimpleServiceApplication:9.0.48]
 	at org.keycloak.adapters.springboot.KeycloakBaseSpringBootConfiguration$KeycloakBaseTomcatContextCustomizer.customize(KeycloakBaseSpringBootConfiguration.java:296) ~[na:na]
-	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.configureContext(TomcatServletWebServerFactory.java:389) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
-	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.prepareContext(TomcatServletWebServerFactory.java:246) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
-	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:198) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.1]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.configureContext(TomcatServletWebServerFactory.java:389) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.2]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.prepareContext(TomcatServletWebServerFactory.java:246) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.2]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:198) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.2]
 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:182) ~[na:na]
 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:160) ~[na:na]
 	... 8 common frames omitted
