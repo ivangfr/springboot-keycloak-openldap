@@ -19,7 +19,7 @@
     <properties>
         <java.version>11</java.version>
         <repackage.classifier/>
-        <spring-native.version>0.10.2</spring-native.version>
+        <spring-native.version>0.10.3</spring-native.version>
         <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
         <docker-image.prefix>ivanfranchin</docker-image.prefix>
     </properties>
@@ -48,9 +48,6 @@
                         <name>${docker-image.prefix}/${project.artifactId}:${project.version}</name>
                         <env>
                             <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
-                            <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
-                                --enable-https
-                            </BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                         </env>
                     </image>
                 </configuration>
@@ -117,7 +114,7 @@
             <id>native</id>
             <properties>
                 <repackage.classifier>exec</repackage.classifier>
-                <native-buildtools.version>0.9.1</native-buildtools.version>
+                <native-buildtools.version>0.9.3</native-buildtools.version>
             </properties>
             <dependencies>
                 <dependency>

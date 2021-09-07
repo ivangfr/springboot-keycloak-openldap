@@ -474,7 +474,7 @@ org.springframework.context.ApplicationContextException: Unable to start web ser
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.4]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.4]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.5.4]
-	at com.mycompany.simpleservice.SimpleServiceApplication.main(SimpleServiceApplication.java:13) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
+	at com.mycompany.simpleservice.SimpleServiceApplication.main(SimpleServiceApplication.java:17) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
 Caused by: java.lang.IllegalArgumentException: Duplicate context initialization parameter [keycloak.config.resolver]
 	at org.apache.catalina.core.StandardContext.addParameter(StandardContext.java:3168) ~[com.mycompany.simpleservice.SimpleServiceApplication:9.0.52]
 	at org.keycloak.adapters.springboot.KeycloakBaseSpringBootConfiguration$KeycloakBaseTomcatContextCustomizer.customize(KeycloakBaseSpringBootConfiguration.java:296) ~[na:na]

@@ -27,5 +27,4 @@ public class SimpleServiceController {
     public String getPrivateString(Principal principal) {
         return String.format("%s, it is private.%n", principal.getName());
     }
-
 }

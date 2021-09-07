@@ -57,5 +57,4 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected HttpSessionManager httpSessionManager() {
         return new HttpSessionManager();
     }
-
 }
