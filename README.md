@@ -29,7 +29,7 @@ The goal of this project is to create a simple [Spring Boot](https://docs.spring
   docker-compose up -d
   ```
 
-- Wait for `MySQL` and `Keycloak` containers to be with state `Up (healthy)`. To check it, run
+- Wait for `MySQL` and `Keycloak` Docker containers to be with state `Up (healthy)`. To check it, run
   ```
   docker-compose ps
   ```
@@ -67,7 +67,7 @@ In a terminal and inside `springboot-keycloak-openldap` root folder run
 
 - You should see a tree like the one shown in the picture below
 
-  ![phpldapadmin](images/phpldapadmin.png)
+  ![phpldapadmin](documentation/phpldapadmin.png)
 
 ## Configure Keycloak
 
@@ -88,7 +88,7 @@ There are two ways: running a script or using `Keycloak` website
 
 ### Using Keycloak website
 
-![keycloak](images/keycloak.png)
+![keycloak](documentation/keycloak.png)
 
 #### Login
 
@@ -258,7 +258,7 @@ There are two ways: running a script or using `Keycloak` website
 
 1. Access http://localhost:9080/swagger-ui.html
 
-   ![simple-service-swagger](images/simple-service-swagger.png)
+   ![simple-service-swagger](documentation/simple-service-swagger.png)
 
 1. Click `GET /api/public` to open it. Then, click `Try it out` button and, finally, click `Execute` button
 
@@ -369,8 +369,6 @@ You can get an access token to `simple-service` using `client_id` and `client_se
     ./docker-build.sh native
     ```
   
-- Environment Variables
-
   | Environment Variable | Description                                                 |
   | -------------------- | ----------------------------------------------------------- |
   | `KEYCLOAK_HOST`      | Specify host of the `Keycloak` to use (default `localhost`) |
@@ -396,14 +394,13 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 - Run the commands below to get an access token for `bgates` user
   ```
   BGATES_TOKEN=$(
-      docker exec -t -e CLIENT_SECRET=$SIMPLE_SERVICE_CLIENT_SECRET keycloak bash -c '
-        curl -s -X POST \
-        http://keycloak:8080/auth/realms/company-services/protocol/openid-connect/token \
+    docker exec -t keycloak bash -c '
+      curl -s -X POST http://keycloak:8080/auth/realms/company-services/protocol/openid-connect/token \
         -H "Content-Type: application/x-www-form-urlencoded" \
         -d "username=bgates" \
         -d "password=123" \
         -d "grant_type=password" \
-        -d "client_secret=$CLIENT_SECRET" \
+        -d "client_secret='$SIMPLE_SERVICE_CLIENT_SECRET'" \
         -d "client_id=simple-service"')
   
   BGATES_ACCESS_TOKEN=$(echo $BGATES_TOKEN | jq -r .access_token)
@@ -413,21 +410,6 @@ You can get an access token to `simple-service` using `client_id` and `client_se
   ```
   curl -i -H "Authorization: Bearer $BGATES_ACCESS_TOKEN" http://localhost:9080/api/private
   ```
-
-## Shutdown
-
-- To stop `simple-service` application, go to the terminal where it is running and press `Ctrl+C`
-- To stop and remove docker-compose containers, network and volumes, go to a terminal and inside `springboot-keycloak-openldap` root folder, run the following command
-  ```
-  docker-compose down -v
-  ```
-
-## Cleanup
-
-To remove the Docker image create by this project, go to a terminal and run the following command
-```
-docker rmi ivanfranchin/simple-service:1.0.0
-```
 
 ## Useful Links/Commands
 
@@ -444,6 +426,21 @@ docker rmi ivanfranchin/simple-service:1.0.0
     -b "ou=users,dc=mycompany,dc=com" \
     -s sub "(uid=*)"
   ```
+
+## Shutdown
+
+- To stop `simple-service` application, go to the terminal where it is running and press `Ctrl+C`
+- To stop and remove docker-compose containers, network and volumes, go to a terminal and inside `springboot-keycloak-openldap` root folder, run the following command
+  ```
+  docker-compose down -v
+  ```
+
+## Cleanup
+
+To remove the Docker image create by this project, go to a terminal and run the following command
+```
+docker rmi ivanfranchin/simple-service:1.0.0
+```
 
 ## Issues
 
