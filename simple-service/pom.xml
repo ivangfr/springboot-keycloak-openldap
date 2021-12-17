@@ -15,7 +15,7 @@
 
     <properties>
         <keycloak.version>15.0.2</keycloak.version>
-        <springdoc-openapi.version>1.5.12</springdoc-openapi.version>
+        <springdoc-openapi.version>1.6.1</springdoc-openapi.version>
     </properties>
 
     <dependencies>
@@ -45,6 +45,11 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-security</artifactId>
+            <version>${springdoc-openapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-native</artifactId>
             <version>${springdoc-openapi.version}</version>
         </dependency>
 
