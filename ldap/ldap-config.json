@@ -24,6 +24,9 @@
     "importEnabled": [
       "true"
     ],
+    "editMode": [
+      "READ_ONLY"
+    ],
     "enabled": [
       "true"
     ],

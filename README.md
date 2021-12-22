@@ -123,6 +123,7 @@ There are two ways: running a script or using `Keycloak` website
 
 - On the left menu, click `User Federation`
 - Select `ldap`
+- Select `READ_ONLY` to `Edit Mode`
 - Select `Other` for `Vendor`
 - Set `ldap://openldap` to `Connection URL`
 - Click `Test connection` button, to check if the connection is OK
@@ -369,7 +370,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
     ```
   
   | Environment Variable | Description                                                 |
-  | -------------------- | ----------------------------------------------------------- |
+  |----------------------|-------------------------------------------------------------|
   | `KEYCLOAK_HOST`      | Specify host of the `Keycloak` to use (default `localhost`) |
   | `KEYCLOAK_PORT`      | Specify port of the `Keycloak` to use (default `8080`)      |
 
@@ -451,14 +452,14 @@ org.springframework.context.ApplicationContextException: Unable to start web ser
 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:163) ~[na:na]
 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:577) ~[na:na]
 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[na:na]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.6.1]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:412) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.6.1]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:302) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.6.1]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.6.1]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1290) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.6.1]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.6.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:412) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.6.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:302) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.6.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.6.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1290) ~[com.mycompany.simpleservice.SimpleServiceApplication:2.6.2]
 	at com.mycompany.simpleservice.SimpleServiceApplication.main(SimpleServiceApplication.java:17) ~[com.mycompany.simpleservice.SimpleServiceApplication:na]
 Caused by: java.lang.IllegalArgumentException: Duplicate context initialization parameter [keycloak.config.resolver]
-	at org.apache.catalina.core.StandardContext.addParameter(StandardContext.java:3168) ~[com.mycompany.simpleservice.SimpleServiceApplication:9.0.55]
+	at org.apache.catalina.core.StandardContext.addParameter(StandardContext.java:3168) ~[com.mycompany.simpleservice.SimpleServiceApplication:9.0.56]
 	at org.keycloak.adapters.springboot.KeycloakBaseSpringBootConfiguration$KeycloakBaseTomcatContextCustomizer.customize(KeycloakBaseSpringBootConfiguration.java:296) ~[na:na]
 	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.configureContext(TomcatServletWebServerFactory.java:397) ~[na:na]
 	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.prepareContext(TomcatServletWebServerFactory.java:253) ~[na:na]
