@@ -92,7 +92,7 @@ There are two ways: running a script or using `Keycloak` website
 
 #### Login
 
-- Access http://localhost:8080/auth/admin/
+- Access http://localhost:8080/admin/
 
 - Login with the credentials
   ```
@@ -139,7 +139,7 @@ There are two ways: running a script or using `Keycloak` website
 
 - On the left menu, click `Users`
 - Click `View all users` button. 3 users should be shown
-- Edit user `bgates` by clicking on its `ID` or `Edit` button
+- Edit user `bgates` by clicking its `ID` or `Edit` button
 - In `Role Mappings` tab
   - Select `simple-service` in `Client Roles` combo-box
   - Select `USER` role present in `Available Roles` and click `Add selected`
@@ -190,7 +190,7 @@ There are two ways: running a script or using `Keycloak` website
 1. Run the command below to get an access token for `bgates` user
    ```
    BGATES_ACCESS_TOKEN=$(curl -s -X POST \
-     "http://localhost:8080/auth/realms/company-services/protocol/openid-connect/token" \
+     "http://localhost:8080/realms/company-services/protocol/openid-connect/token" \
      -H "Content-Type: application/x-www-form-urlencoded" \
      -d "username=bgates" \
      -d "password=123" \
@@ -213,7 +213,7 @@ There are two ways: running a script or using `Keycloak` website
 1. Run the command below to get an access token for `mcuban` user
    ```
    MCUBAN_ACCESS_TOKEN=$(curl -s -X POST \
-     "http://localhost:8080/auth/realms/company-services/protocol/openid-connect/token" \
+     "http://localhost:8080/realms/company-services/protocol/openid-connect/token" \
      -H "Content-Type: application/x-www-form-urlencoded" \
      -d "username=mcuban" \
      -d "password=123" \
@@ -285,7 +285,7 @@ There are two ways: running a script or using `Keycloak` website
 1. Run the following commands
    ```
    BGATES_ACCESS_TOKEN=$(curl -s -X POST \
-     "http://localhost:8080/auth/realms/company-services/protocol/openid-connect/token" \
+     "http://localhost:8080/realms/company-services/protocol/openid-connect/token" \
      -H "Content-Type: application/x-www-form-urlencoded" \
      -d "username=bgates" \
      -d "password=123" \
@@ -314,7 +314,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 ### Configuration
 
-- Access http://localhost:8080/auth/admin/
+- Access http://localhost:8080/admin/
 - Select `company-services` realm (if it is not already selected)
 - On the left menu, click `Clients`
 - Select `simple-service` client
@@ -337,7 +337,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 1. Run the following command
    ```
    CLIENT_ACCESS_TOKEN=$(curl -s -X POST \
-     "http://localhost:8080/auth/realms/company-services/protocol/openid-connect/token" \
+     "http://localhost:8080/realms/company-services/protocol/openid-connect/token" \
      -H "Content-Type: application/x-www-form-urlencoded" \
      -d "grant_type=client_credentials" \
      -d "client_secret=$SIMPLE_SERVICE_CLIENT_SECRET" \
@@ -395,7 +395,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
   ```
   BGATES_TOKEN=$(
     docker exec -t keycloak bash -c '
-      curl -s -X POST http://keycloak:8080/auth/realms/company-services/protocol/openid-connect/token \
+      curl -s -X POST http://keycloak:8080/realms/company-services/protocol/openid-connect/token \
         -H "Content-Type: application/x-www-form-urlencoded" \
         -d "username=bgates" \
         -d "password=123" \
