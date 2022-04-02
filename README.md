@@ -10,10 +10,10 @@ The goal of this project is to create a simple [Spring Boot](https://docs.spring
 
 - ### simple-service
 
-  `Spring Boot` Web Java application that exposes two endpoints:
-  
-  - `/api/public`: endpoint that can be access by anyone, it is not secured;
-  - `/api/private`: endpoint that can just be accessed by users that provide a `JWT` token issued by `Keycloak` and the token must contain the role `USER`.
+  `Spring Boot` Web Java application that exposes the following endpoints:
+  - `GET /api/public`: it's a not secured endpoint, everybody can access it;
+  - `GET /api/private`: it's a secured endpoint, only accessible by users that provide a `JWT` access token issued by `Keycloak` and the token must contain the role `USER`;
+  - `GET /actuator/*`: they are not secured endpoint, used to expose operational information about the application.
 
 ## Prerequisites
 
@@ -48,10 +48,18 @@ There are two ways to import those users: running a script or using `phpldapadmi
 
 ### Running a script
 
-In a terminal and inside `springboot-keycloak-openldap` root folder run
-```
-./import-openldap-users.sh
-```
+- In a terminal and inside `springboot-keycloak-openldap` root folder run
+  ```
+  ./import-openldap-users.sh
+  ```
+
+- The command below can be used to check the users imported
+  ```
+  ldapsearch -x -D "cn=admin,dc=mycompany,dc=com" \
+    -w admin -H ldap://localhost:389 \
+    -b "ou=users,dc=mycompany,dc=com" \
+    -s sub "(uid=*)"
+  ```
 
 ### Using phpldapadmin website
 
@@ -84,7 +92,7 @@ There are two ways: running a script or using `Keycloak` website
 
   It creates `company-services` realm, `simple-service` client, `USER` client role, `ldap` federation and the users `bgates` and `sjobs` with the role `USER` assigned.
 
-- Copy `SIMPLE_SERVICE_CLIENT_SECRET` value that is shown at the end of the script. It will be needed whenever we call `Keycloak` to get a token to access `simple-service`
+- Copy `SIMPLE_SERVICE_CLIENT_SECRET` value that is shown at the end of the script. It will be needed whenever we call `Keycloak` to get a `JWT` access token to access `simple-service`
 
 ### Using Keycloak website
 
@@ -197,10 +205,11 @@ There are two ways: running a script or using `Keycloak` website
      -d "client_secret=$SIMPLE_SERVICE_CLIENT_SECRET" \
      -d "client_id=simple-service" | jq -r .access_token)
    ```
+   > **Tip:** In [jwt.io](https://jwt.io), you can decode and verify the `JWT` access token
 
 1. Call the endpoint `GET /api/private`
    ```
-   curl -i -H "Authorization: Bearer $BGATES_ACCESS_TOKEN" http://localhost:9080/api/private
+   curl -i http://localhost:9080/api/private -H "Authorization: Bearer $BGATES_ACCESS_TOKEN"
    ```
    
    It should return
@@ -223,7 +232,7 @@ There are two ways: running a script or using `Keycloak` website
 
 1. Try to call the endpoint `GET /api/private`
    ```
-   curl -i -H "Authorization: Bearer $MCUBAN_ACCESS_TOKEN" http://localhost:9080/api/private
+   curl -i http://localhost:9080/api/private -H "Authorization: Bearer $MCUBAN_ACCESS_TOKEN"
    ```
    As `mcuban` does not have the `USER` role, he cannot access this endpoint.
    
@@ -346,7 +355,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
   
 1. Try to call the endpoint `GET /api/private`
    ```
-   curl -i http://localhost:9080/api/private -H "authorization: Bearer $CLIENT_ACCESS_TOKEN"
+   curl -i http://localhost:9080/api/private -H "Authorization: Bearer $CLIENT_ACCESS_TOKEN"
    ```
   
    It should return
@@ -407,23 +416,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 - Call the endpoint `GET /api/private`
   ```
-  curl -i -H "Authorization: Bearer $BGATES_ACCESS_TOKEN" http://localhost:9080/api/private
-  ```
-
-## Useful Links/Commands
-
-- **jwt.io**
-
-  With [jwt.io](https://jwt.io) you can inform the JWT token received from `Keycloak` and the online tool decodes the token, showing its header and payload.
-
-- **ldapsearch**
-
-  It can be used to check the users imported into `OpenLDAP`
-  ```
-  ldapsearch -x -D "cn=admin,dc=mycompany,dc=com" \
-    -w admin -H ldap://localhost:389 \
-    -b "ou=users,dc=mycompany,dc=com" \
-    -s sub "(uid=*)"
+  curl -i http://localhost:9080/api/private -H "Authorization: Bearer $BGATES_ACCESS_TOKEN"
   ```
 
 ## Shutdown
