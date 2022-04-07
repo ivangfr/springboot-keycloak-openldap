@@ -19,7 +19,7 @@
     <properties>
         <java.version>11</java.version>
         <repackage.classifier/>
-        <spring-native.version>0.11.3</spring-native.version>
+        <spring-native.version>0.11.4</spring-native.version>
         <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
         <docker-image.prefix>ivanfranchin</docker-image.prefix>
     </properties>
@@ -114,7 +114,7 @@
             <id>native</id>
             <properties>
                 <repackage.classifier>exec</repackage.classifier>
-                <native-buildtools.version>0.9.10</native-buildtools.version>
+                <native-buildtools.version>0.9.11</native-buildtools.version>
             </properties>
             <dependencies>
                 <dependency>

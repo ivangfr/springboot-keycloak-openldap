@@ -26,8 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/public").permitAll()
                 .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                 .antMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
-                .anyRequest()
-                .authenticated();
+                .anyRequest().authenticated();
         http.oauth2ResourceServer()
                 .jwt()
                 .jwtAuthenticationConverter(jwtAuthConverter);
