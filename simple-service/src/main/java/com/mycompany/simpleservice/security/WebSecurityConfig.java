@@ -3,17 +3,13 @@ package com.mycompany.simpleservice.security;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.jwt.JwtDecoders;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationProvider;
-import org.springframework.security.oauth2.server.resource.authentication.JwtIssuerAuthenticationManagerResolver;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtValidators;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -25,8 +21,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http,
-                                            JwtIssuerAuthenticationManagerResolver jwtIssuerAuthenticationManagerResolver) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/private").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/api/public").permitAll()
@@ -34,22 +29,17 @@ public class WebSecurityConfig {
                 .antMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated();
         http.oauth2ResourceServer()
-                .authenticationManagerResolver(jwtIssuerAuthenticationManagerResolver);
+                .jwt()
+                .jwtAuthenticationConverter(jwtAuthConverter);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.cors().and().csrf().disable();
         return http.build();
     }
 
     @Bean
-    JwtIssuerAuthenticationManagerResolver jwtIssuerAuthenticationManagerResolver(OAuth2ResourceServerProperties oAuth2ResourceServerProperties) {
-        Map<String, AuthenticationManager> authenticationManagers = new HashMap<>();
-        addManager(oAuth2ResourceServerProperties.getJwt().getIssuerUri(), authenticationManagers);
-        return new JwtIssuerAuthenticationManagerResolver(authenticationManagers::get);
-    }
-
-    private void addManager(String issuer, Map<String, AuthenticationManager> authenticationManagers) {
-        JwtAuthenticationProvider authenticationProvider = new JwtAuthenticationProvider(JwtDecoders.fromOidcIssuerLocation(issuer));
-        authenticationProvider.setJwtAuthenticationConverter(jwtAuthConverter);
-        authenticationManagers.put(issuer, authenticationProvider::authenticate);
+    JwtDecoder jwtDecoder(OAuth2ResourceServerProperties oAuth2ResourceServerProperties) {
+        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withJwkSetUri(oAuth2ResourceServerProperties.getJwt().getJwkSetUri()).build();
+        jwtDecoder.setJwtValidator(JwtValidators.createDefaultWithIssuer(oAuth2ResourceServerProperties.getJwt().getIssuerUri()));
+        return jwtDecoder;
     }
 }
