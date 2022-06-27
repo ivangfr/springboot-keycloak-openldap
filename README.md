@@ -75,7 +75,7 @@ There are two ways to import those users: running a script or using `phpldapadmi
 
 - You should see a tree like the one shown in the picture below
 
-  ![phpldapadmin](documentation/phpldapadmin.png)
+  ![phpldapadmin](documentation/phpldapadmin.jpeg)
 
 ## Configure Keycloak
 
@@ -96,7 +96,7 @@ There are two ways: running a script or using `Keycloak` website
 
 ### Using Keycloak website
 
-![keycloak](documentation/keycloak.png)
+![keycloak](documentation/keycloak.jpeg)
 
 #### Login
 
@@ -264,9 +264,9 @@ There are two ways: running a script or using `Keycloak` website
 
 ## Test using Swagger
 
-1. Access http://localhost:9080/swagger-ui.html
+1. Access http://localhost:9080/swagger-ui/index.html
 
-   ![simple-service-swagger](documentation/simple-service-swagger.png)
+   ![simple-service-swagger](documentation/simple-service-swagger.jpeg)
 
 1. Click `GET /api/public` to open it. Then, click `Try it out` button and, finally, click `Execute` button
 
