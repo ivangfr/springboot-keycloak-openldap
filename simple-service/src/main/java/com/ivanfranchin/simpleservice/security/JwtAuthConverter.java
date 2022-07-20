@@ -1,4 +1,4 @@
-package com.mycompany.simpleservice.security;
+package com.ivanfranchin.simpleservice.security;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;

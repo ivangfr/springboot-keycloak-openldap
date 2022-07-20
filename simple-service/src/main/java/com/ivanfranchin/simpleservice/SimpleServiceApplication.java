@@ -1,4 +1,4 @@
-package com.mycompany.simpleservice;
+package com.ivanfranchin.simpleservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

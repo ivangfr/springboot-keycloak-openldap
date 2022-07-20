@@ -2,9 +2,9 @@
 
 The goal of this project is to create a simple [Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) REST API, called `simple-service`, and secure it with [`Keycloak`](https://www.keycloak.org). Furthermore, the API users will be loaded into `Keycloak` from [`OpenLDAP`](https://www.openldap.org) server.
 
-> **Note 1:** In [`springboot-react-keycloak`](https://github.com/ivangfr/springboot-react-keycloak) repository, we have implemented a `movies-app` using `Keycloak` (with `PKCE`). This application consists of two services: the backend that was implemented using `Spring Boot` and the frontend implemented with `ReactJS`.
+> **Note 1**: In [`springboot-react-keycloak`](https://github.com/ivangfr/springboot-react-keycloak) repository, we have implemented a `movies-app` using `Keycloak` (with `PKCE`). This application consists of two services: the backend that was implemented using `Spring Boot` and the frontend implemented with `ReactJS`.
 
-> **Note 2:** In [`docker-swarm-environment`](https://github.com/ivangfr/docker-swarm-environment) repository, it's shown how to deploy this project into a cluster of Docker Engines in swarm mode. Besides, we will be running a Keycloak cluster with more than one instance.
+> **Note 2**: In [`docker-swarm-environment`](https://github.com/ivangfr/docker-swarm-environment) repository, it's shown how to deploy this project into a cluster of Docker Engines in swarm mode. Besides, we will be running a Keycloak cluster with more than one instance.
 
 ## Application
 
@@ -205,7 +205,7 @@ There are two ways: running a script or using `Keycloak` website
      -d "client_secret=$SIMPLE_SERVICE_CLIENT_SECRET" \
      -d "client_id=simple-service" | jq -r .access_token)
    ```
-   > **Tip:** In [jwt.io](https://jwt.io), you can decode and verify the `JWT` access token
+   > **Note**: In [jwt.io](https://jwt.io), you can decode and verify the `JWT` access token
 
 1. Call the endpoint `GET /api/private`
    ```

@@ -1,4 +1,4 @@
-package com.mycompany.simpleservice;
+package com.ivanfranchin.simpleservice;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

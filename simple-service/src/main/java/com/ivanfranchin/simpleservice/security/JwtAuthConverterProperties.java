@@ -1,4 +1,4 @@
-package com.mycompany.simpleservice.security;
+package com.ivanfranchin.simpleservice.security;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

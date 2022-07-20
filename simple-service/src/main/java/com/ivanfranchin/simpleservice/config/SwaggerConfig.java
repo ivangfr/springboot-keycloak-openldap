@@ -1,4 +1,4 @@
-package com.mycompany.simpleservice.config;
+package com.ivanfranchin.simpleservice.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -16,7 +16,7 @@ public class SwaggerConfig {
     private String applicationName;
 
     @Bean
-    OpenAPI customOpenAPI() {
+    public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .components(
                         new Components().addSecuritySchemes(BEARER_KEY_SECURITY_SCHEME,
@@ -25,12 +25,12 @@ public class SwaggerConfig {
     }
 
     @Bean
-    GroupedOpenApi customApi() {
+    public GroupedOpenApi customApi() {
         return GroupedOpenApi.builder().group("api").pathsToMatch("/api/**").build();
     }
 
     @Bean
-    GroupedOpenApi actuatorApi() {
+    public GroupedOpenApi actuatorApi() {
         return GroupedOpenApi.builder().group("actuator").pathsToMatch("/actuator/**").build();
     }
 
