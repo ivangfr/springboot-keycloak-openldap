@@ -17,7 +17,7 @@ The goal of this project is to create a simple [Spring Boot](https://docs.spring
 
 ## Prerequisites
 
-- [`Java 11+`](https://www.oracle.com/java/technologies/downloads/#java11)
+- [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
 - [`Docker`](https://www.docker.com/)
 - [`Docker-Compose`](https://docs.docker.com/compose/install/)
 - [`jq`](https://stedolan.github.io/jq)
@@ -110,50 +110,54 @@ There are two ways: running a script or using `Keycloak` website
 
 #### Create a new Realm
 
-- Go to top-left corner and hover the mouse over `Master` realm. Click the `Add realm` blue button that will appear
-- Set `company-services` to the `Name` field and click `Create` button
+- Click the dropdown button that contains `Master` and then, click `Create Realm` button
+- Set `company-services` to the `Realm name` field and click `Create` button
 
 #### Create a new Client
 
 - On the left menu, click `Clients` 
-- Click `Create` button
-- Set `simple-service` to `Client ID` and click `Save` button
+- Click `Create client` button
+- In `General Settings`
+  - Set `simple-service` to `Client ID`
+  - Click `Next` button
+- In `Capacity config`
+  - Enable `Client authentication` toggle switch
+  - Click `Save` button
 - In `Settings` tab
-  - Set `confidential` to `Access Type`
   - Set `http://localhost:9080/*` to `Valid Redirect URIs`
   - Click `Save` button
-- In `Credentials` tab you can find the secret `Keycloak` generated for `simple-service`
+- In `Credentials` tab, you can find the secret generated for `simple-service`
 - In `Roles` tab
-  - Click `Add Role` button
+  - Click `Create Role` button
   - Set `USER` to `Role Name` and click `Save` button
 
 #### LDAP Integration
 
-- On the left menu, click `User Federation`
-- Select `ldap`
-- Select `READ_ONLY` to `Edit Mode`
+- On the left menu, click `User federation`
+- Click `Add Ldap providers`
 - Select `Other` for `Vendor`
 - Set `ldap://openldap` to `Connection URL`
-- Click `Test connection` button, to check if the connection is OK
-- Set `ou=users,dc=mycompany,dc=com` to `Users DN` 
-- Set `(gidnumber=500)` to `Custom User LDAP Filter` (filter just developers)
 - Set `cn=admin,dc=mycompany,dc=com` to `Bind DN`
 - Set `admin` to `Bind Credential`
+- Select `READ_ONLY` to `Edit Mode`
+- Set `ou=users,dc=mycompany,dc=com` to `Users DN` 
+- Set `(gidnumber=500)` to `User LDAP Filter` (filter just developers)
+- Click `Test connection` button, to check if the connection is OK
 - Click `Test authentication` button, to check if the authentication is OK
 - Click `Save` button
-- Click `Synchronize all users` button
 
 #### Configure users imported
 
 - On the left menu, click `Users`
-- Click `View all users` button. 3 users should be shown
-- Edit user `bgates` by clicking its `ID` or `Edit` button
+- In `Search user` field, type `*` and press `Enter` to view all users. 3 users should be shown
+- Edit user `bgates` by clicking its `username` link
 - In `Role Mappings` tab
-  - Select `simple-service` in `Client Roles` combo-box
-  - Select `USER` role present in `Available Roles` and click `Add selected`
-  - `bgates` has now `USER` role as one of his `Assigned Roles`
+  - Click `Assign role` button
+  - Click the `Filter by Origin` dropdown button and select `simple-service`
+  - Select `USER` role and click `Assign` button
+  - Now, `bgates` has the role `USER` of `simple-service`
 - Do the same for the user `sjobs`
-- Let's leave `mcuban` without `USER` role
+- Leave `mcuban` without it
 
 ## Run simple-service using Maven
 
@@ -264,7 +268,7 @@ There are two ways: running a script or using `Keycloak` website
 
 ## Test using Swagger
 
-1. Access http://localhost:9080/swagger-ui/index.html
+1. Access http://localhost:9080/swagger-ui.html
 
    ![simple-service-swagger](documentation/simple-service-swagger.jpeg)
 
@@ -328,11 +332,16 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 - On the left menu, click `Clients`
 - Select `simple-service` client
 - In `Settings` tab
-  - Turn `ON` the field `Service Accounts Enabled`
+  - Go to `Capability config` and check `Service accounts roles` checkbox
   - Click `Save` button
-- In `Service Account Roles`tab
-  - Select `simple-service` in `Client Roles` combo-box
-  - Select `USER` role present in `Available Roles` and click `Add selected`
+- In `Service account roles` tab
+  - Click `service-account-simple-service` link present in the info message
+    > "To manage detail and group mappings, click on the username service-account-simple-service"
+  - In `Role mapping` tab
+    - Click `Assign role` button
+    - Click the `Filter by Origin` dropdown button and select `simple-service`
+    - Select `USER` role and click `Assign` button
+    - Now, `service-account-simple-service` has the role `USER` of `simple-service`
 
 ### Test
 

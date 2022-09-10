@@ -11,5 +11,4 @@ public class SimpleServiceApplicationTests {
     @Test
     public void contextLoads() {
     }
-
 }
