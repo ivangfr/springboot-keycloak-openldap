@@ -110,7 +110,7 @@ There are two ways: running a script or using `Keycloak` website
 
 #### Create a new Realm
 
-- Click the dropdown button that contains `Master` and then, click `Create Realm` button
+- On the left menu, click the dropdown button that contains `Master` and then, click `Create Realm` button
 - Set `company-services` to the `Realm name` field and click `Create` button
 
 #### Create a new Client
@@ -120,7 +120,7 @@ There are two ways: running a script or using `Keycloak` website
 - In `General Settings`
   - Set `simple-service` to `Client ID`
   - Click `Next` button
-- In `Capacity config`
+- In `Capability config`
   - Enable `Client authentication` toggle switch
   - Click `Save` button
 - In `Settings` tab
@@ -129,7 +129,8 @@ There are two ways: running a script or using `Keycloak` website
 - In `Credentials` tab, you can find the secret generated for `simple-service`
 - In `Roles` tab
   - Click `Create Role` button
-  - Set `USER` to `Role Name` and click `Save` button
+  - Set `USER` to `Role Name`
+  - Click `Save` button
 
 #### LDAP Integration
 
@@ -153,7 +154,7 @@ There are two ways: running a script or using `Keycloak` website
 - Edit user `bgates` by clicking its `username` link
 - In `Role Mappings` tab
   - Click `Assign role` button
-  - Click the `Filter by Origin` dropdown button and select `simple-service`
+  - Click `Filter by Origin` dropdown button and select `simple-service`
   - Select `USER` role and click `Assign` button
   - Now, `bgates` has the role `USER` of `simple-service`
 - Do the same for the user `sjobs`
@@ -339,7 +340,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
     > "To manage detail and group mappings, click on the username service-account-simple-service"
   - In `Role mapping` tab
     - Click `Assign role` button
-    - Click the `Filter by Origin` dropdown button and select `simple-service`
+    - Click `Filter by Origin` dropdown button and select `simple-service`
     - Select `USER` role and click `Assign` button
     - Now, `service-account-simple-service` has the role `USER` of `simple-service`
 
