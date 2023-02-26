@@ -6,6 +6,10 @@ The goal of this project is to create a simple [Spring Boot](https://docs.spring
 
 > **Note 2**: In [`docker-swarm-environment`](https://github.com/ivangfr/docker-swarm-environment) repository, it's shown how to deploy this project into a cluster of Docker Engines in swarm mode. Besides, we will be running a Keycloak cluster with more than one instance.
 
+## Project diagram
+
+![project-diagram](documentation/project-diagram.png)
+
 ## Application
 
 - ### simple-service
