@@ -14,7 +14,7 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <springdoc-openapi.version>2.0.0</springdoc-openapi.version>
+        <springdoc-openapi.version>2.0.3</springdoc-openapi.version>
     </properties>
 
     <dependencies>

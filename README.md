@@ -416,7 +416,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 - Run the commands below to get an access token for `bgates` user
   ```
   BGATES_TOKEN=$(
-    docker exec -t keycloak bash -c '
+    docker run -t --rm --network springboot-keycloak-openldap_default alpine/curl:latest sh -c '
       curl -s -X POST http://keycloak:8080/realms/company-services/protocol/openid-connect/token \
         -H "Content-Type: application/x-www-form-urlencoded" \
         -d "username=bgates" \
