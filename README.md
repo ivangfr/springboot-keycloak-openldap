@@ -12,9 +12,9 @@ The goal of this project is to create a simple [Spring Boot](https://docs.spring
 
 - \[**Medium**\] [**How To Secure A Spring Boot App With Keycloak**](https://medium.com/@ivangfr/how-to-secure-a-spring-boot-app-with-keycloak-5a931ee12c5a)
 
-## Project diagram
+## Project Diagram
 
-![project-diagram](documentation/project-diagram.png)
+![project-diagram](documentation/project-diagram.jpeg)
 
 ## Application
 
@@ -132,14 +132,14 @@ There are two ways: running a script or using `Keycloak` website
   - Click `Next` button
 - In `Capability config`
   - Enable `Client authentication` toggle switch
-  - Click `Save` button
-- In `Settings` tab
+  - Click `Next` button
+- In `Login settings`
   - Set `http://localhost:9080/*` to `Valid Redirect URIs`
   - Click `Save` button
 - In `Credentials` tab, you can find the secret generated for `simple-service`
 - In `Roles` tab
-  - Click `Create Role` button
-  - Set `USER` to `Role Name`
+  - Click `Create role` button
+  - Set `USER` to `Role name`
   - Click `Save` button
 
 #### LDAP Integration
@@ -150,11 +150,10 @@ There are two ways: running a script or using `Keycloak` website
 - Set `ldap://openldap` to `Connection URL`
 - Set `cn=admin,dc=mycompany,dc=com` to `Bind DN`
 - Set `admin` to `Bind Credential`
+- Click `Test authentication` button, to check if the authentication is OK
 - Select `READ_ONLY` to `Edit Mode`
 - Set `ou=users,dc=mycompany,dc=com` to `Users DN` 
 - Set `(gidnumber=500)` to `User LDAP Filter` (filter just developers)
-- Click `Test connection` button, to check if the connection is OK
-- Click `Test authentication` button, to check if the authentication is OK
 - Click `Save` button
 
 #### Configure users imported
@@ -164,9 +163,10 @@ There are two ways: running a script or using `Keycloak` website
 - Edit user `bgates` by clicking its `username` link
 - In `Role Mappings` tab
   - Click `Assign role` button
-  - Click `Filter by Origin` dropdown button and select `simple-service`
-  - Select `USER` role and click `Assign` button
-  - Now, `bgates` has the role `USER` of `simple-service`
+  - Click `Filter by realm roles` dropdown button and select `Filter by clients`
+  - In `Search by role name` type `simple-service` and press `Enter`
+  - Select `USER` role of the `simple-service` and click `Assign` button
+  - Now, `bgates` has the role `USER` of `simple-service` assigned
 - Do the same for the user `sjobs`
 - Leave `mcuban` without it
 
@@ -249,12 +249,12 @@ There are two ways: running a script or using `Keycloak` website
    ```
    curl -i http://localhost:9080/api/private -H "Authorization: Bearer $MCUBAN_ACCESS_TOKEN"
    ```
-   As `mcuban` does not have the `USER` role, he cannot access this endpoint.
+   As `mcuban` does not have the `USER` role assigned, he cannot access this endpoint.
    
    The endpoint return should be
    ```
    HTTP/1.1 403
-   {"timestamp":"...","status":403,"error":"Forbidden","path":"/api/private"}
+   WWW-Authenticate: Bearer error="insufficient_scope", error_description="The request requires higher privileges than provided by the access token.", error_uri="https://tools.ietf.org/html/rfc6750#section-3.1"
    ```
 
 1. Go to `Keycloak` and add the role `USER` to the `mcuban`
@@ -350,9 +350,10 @@ You can get an access token to `simple-service` using `client_id` and `client_se
     > "To manage detail and group mappings, click on the username service-account-simple-service"
   - In `Role mapping` tab
     - Click `Assign role` button
-    - Click `Filter by Origin` dropdown button and select `simple-service`
-    - Select `USER` role and click `Assign` button
-    - Now, `service-account-simple-service` has the role `USER` of `simple-service`
+    - Click `Filter by realm roles` dropdown button and select `Filter by clients`
+    - In `Search by role name` type `simple-service` and press `Enter`
+    - Select `USER` role of the `simple-service` and click `Assign` button
+    - Now, `service-account-simple-service` has the role `USER` of `simple-service` assigned
 
 ### Test
 
