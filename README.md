@@ -6,6 +6,12 @@ The goal of this project is to create a simple [Spring Boot](https://docs.spring
 
 > **Note 2**: In [`docker-swarm-environment`](https://github.com/ivangfr/docker-swarm-environment) repository, it's shown how to deploy this project into a cluster of Docker Engines in swarm mode. Besides, we will be running a Keycloak cluster with more than one instance.
 
+## Tutorials
+
+> **I Would Appreciate Your Support**: I’m embarking on a writing journey on [Medium](https://medium.com/@ivangfr) and I would be grateful for your support. If you enjoy my content, please consider [following me](https://medium.com/@ivangfr). **I am committed to following you back**, and together we can share our knowledge and experiences on the platform.
+
+- \[**Medium**\] [**How To Secure A Spring Boot App With Keycloak**](https://medium.com/@ivangfr/how-to-secure-a-spring-boot-app-with-keycloak-5a931ee12c5a)
+
 ## Project diagram
 
 ![project-diagram](documentation/project-diagram.png)
