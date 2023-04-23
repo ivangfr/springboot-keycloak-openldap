@@ -11,6 +11,7 @@ The goal of this project is to create a simple [Spring Boot](https://docs.spring
 > **I Would Appreciate Your Support**: I’m embarking on a writing journey on [Medium](https://medium.com/@ivangfr) and I would be grateful for your support. If you enjoy my content, please consider [following me](https://medium.com/@ivangfr). **I am committed to following you back**, and together we can share our knowledge and experiences on the platform.
 
 - \[**Medium**\] [**How To Secure A Spring Boot App With Keycloak**](https://medium.com/@ivangfr/how-to-secure-a-spring-boot-app-with-keycloak-5a931ee12c5a)
+- \[**Medium**\] [**Setting Up OpenLDAP With Keycloak For User Federation**](https://medium.com/@ivangfr/setting-up-openldap-with-keycloak-for-user-federation-82c643b3a0e6)
 
 ## Project Diagram
 
@@ -106,69 +107,7 @@ There are two ways: running a script or using `Keycloak` website
 
 ### Using Keycloak website
 
-![keycloak](documentation/keycloak.jpeg)
-
-#### Login
-
-- Access http://localhost:8080/admin/
-
-- Login with the credentials
-  ```
-  Username: admin
-  Password: admin
-  ```
-
-#### Create a new Realm
-
-- On the left menu, click the dropdown button that contains `Master` and then, click `Create Realm` button
-- Set `company-services` to the `Realm name` field and click `Create` button
-
-#### Create a new Client
-
-- On the left menu, click `Clients` 
-- Click `Create client` button
-- In `General Settings`
-  - Set `simple-service` to `Client ID`
-  - Click `Next` button
-- In `Capability config`
-  - Enable `Client authentication` toggle switch
-  - Click `Next` button
-- In `Login settings`
-  - Set `http://localhost:9080/*` to `Valid Redirect URIs`
-  - Click `Save` button
-- In `Credentials` tab, you can find the secret generated for `simple-service`
-- In `Roles` tab
-  - Click `Create role` button
-  - Set `USER` to `Role name`
-  - Click `Save` button
-
-#### LDAP Integration
-
-- On the left menu, click `User federation`
-- Click `Add Ldap providers`
-- Select `Other` for `Vendor`
-- Set `ldap://openldap` to `Connection URL`
-- Set `cn=admin,dc=mycompany,dc=com` to `Bind DN`
-- Set `admin` to `Bind Credential`
-- Click `Test authentication` button, to check if the authentication is OK
-- Select `READ_ONLY` to `Edit Mode`
-- Set `ou=users,dc=mycompany,dc=com` to `Users DN` 
-- Set `(gidnumber=500)` to `User LDAP Filter` (filter just developers)
-- Click `Save` button
-
-#### Configure users imported
-
-- On the left menu, click `Users`
-- In `Search user` field, type `*` and press `Enter` to view all users. 3 users should be shown
-- Edit user `bgates` by clicking its `username` link
-- In `Role Mappings` tab
-  - Click `Assign role` button
-  - Click `Filter by realm roles` dropdown button and select `Filter by clients`
-  - In `Search by role name` type `simple-service` and press `Enter`
-  - Select `USER` role of the `simple-service` and click `Assign` button
-  - Now, `bgates` has the role `USER` of `simple-service` assigned
-- Do the same for the user `sjobs`
-- Leave `mcuban` without it
+Please, have a look at this **Medium** article, [**Setting Up OpenLDAP With Keycloak For User Federation**](https://medium.com/@ivangfr/setting-up-openldap-with-keycloak-for-user-federation-82c643b3a0e6)
 
 ## Run simple-service using Maven
 
