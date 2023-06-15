@@ -6,12 +6,13 @@ The goal of this project is to create a simple [Spring Boot](https://docs.spring
 
 > **Note 2**: In [`docker-swarm-environment`](https://github.com/ivangfr/docker-swarm-environment) repository, it's shown how to deploy this project into a cluster of Docker Engines in swarm mode. Besides, we will be running a Keycloak cluster with more than one instance.
 
-## Tutorials
-
-> **I Would Appreciate Your Support**: I’m embarking on a writing journey on [Medium](https://medium.com/@ivangfr) and I would be grateful for your support. If you enjoy my content, please consider [following me](https://medium.com/@ivangfr). **I am committed to following you back**, and together we can share our knowledge and experiences on the platform.
+## Additional Readings
 
 - \[**Medium**\] [**How To Secure A Simple Spring Boot API With Keycloak**](https://medium.com/@ivangfr/how-to-secure-a-spring-boot-app-with-keycloak-5a931ee12c5a)
+- \[**Medium**\] [**How To Secure A Simple Spring Boot UI (Thymeleaf + RBAC) With Keycloak**](https://medium.com/spring-boot/how-to-secure-a-simple-spring-boot-ui-thymeleaf-rbac-with-keycloak-ba9f30b9cb2b)
 - \[**Medium**\] [**Setting Up OpenLDAP With Keycloak For User Federation**](https://medium.com/@ivangfr/setting-up-openldap-with-keycloak-for-user-federation-82c643b3a0e6)
+- \[**Medium**\] [**Integrating GitHub as a Social Identity Provider in Keycloak**](https://medium.com/@ivangfr/integrating-github-as-a-social-identity-provider-in-keycloak-982f521a622f)
+- \[**Medium**\] [**Integrating Google as a Social Identity Provider in Keycloak**](https://medium.com/@ivangfr/integrating-google-as-a-social-identity-provider-in-keycloak-c905577ec499)
 
 ## Project Diagram
 
