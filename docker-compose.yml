@@ -2,7 +2,7 @@ version: '3.8'
 services:
       
   mysql:
-    image: mysql:5.7.42
+    image: mysql:5.7.43
     container_name: mysql
     ports:
       - "3306:3306"
@@ -15,7 +15,7 @@ services:
       test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
 
   keycloak:
-    image: quay.io/keycloak/keycloak:21.1.2
+    image: quay.io/keycloak/keycloak:22.0.3
     container_name: keycloak
     environment:
       - KEYCLOAK_ADMIN=admin
