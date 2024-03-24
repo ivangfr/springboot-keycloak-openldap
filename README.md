@@ -178,49 +178,13 @@ Please, have a look at this **Medium** article, [**Setting Up OpenLDAP With Keyc
    bgates, it is private.
    ```
 
-7. Run the command below to get an access token for `mcuban` user
+7. The access token default expiration period is `5 minutes`. So, wait for this time and, using the same access token, try to call the private endpoint.
+
+   It should return
    ```
-   MCUBAN_ACCESS_TOKEN=$(curl -s -X POST \
-     "http://localhost:8080/realms/company-services/protocol/openid-connect/token" \
-     -H "Content-Type: application/x-www-form-urlencoded" \
-     -d "username=mcuban" \
-     -d "password=123" \
-     -d "grant_type=password" \
-     -d "client_secret=$SIMPLE_SERVICE_CLIENT_SECRET" \
-     -d "client_id=simple-service" | jq -r .access_token)
+   HTTP/1.1 401
+   WWW-Authenticate: Bearer realm="company-services", error="invalid_token", error_description="Token is not active"
    ```
-
-8. Try to call the endpoint `GET /api/private`
-   ```
-   curl -i http://localhost:9080/api/private -H "Authorization: Bearer $MCUBAN_ACCESS_TOKEN"
-   ```
-   As `mcuban` does not have the `USER` role assigned, he cannot access this endpoint.
-   
-   The endpoint return should be
-   ```
-   HTTP/1.1 403
-   WWW-Authenticate: Bearer error="insufficient_scope", error_description="The request requires higher privileges than provided by the access token.", error_uri="https://tools.ietf.org/html/rfc6750#section-3.1"
-   ```
-
-9. Go to `Keycloak` and add the role `USER` to the `mcuban`
-
-10. Run the command mentioned in `step 7)` again to get a new access token for `mcuban` user
-
-11. Call again the endpoint `GET /api/private` using the `curl` command presented in `step 8`
-
-    It should return
-    ```
-    HTTP/1.1 200
-    mcuban, it is private.
-    ```
-
-12. The access token default expiration period is `5 minutes`. So, wait for this time and, using the same access token, try to call the private endpoint.
-
-    It should return
-    ```
-    HTTP/1.1 401
-    WWW-Authenticate: Bearer realm="company-services", error="invalid_token", error_description="Token is not active"
-    ```
 
 ## Test using Swagger
 
@@ -283,8 +247,8 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 ### Configuration
 
-- Access http://localhost:8080/admin/
-- Select `company-services` realm (if it's not already selected)
+- Access http://localhost:8080
+- Click the dropdown button that contains `Keycloak` and select `company-services`
 - On the left menu, click `Clients`
 - Select `simple-service` client
 - In `Settings` tab
@@ -297,7 +261,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
     - Click `Assign role` button
     - Click `Filter by realm roles` dropdown button and select `Filter by clients`
     - In `Search by role name` type `simple-service` and press `Enter`
-    - Select `USER` role of the `simple-service` and click `Assign` button
+    - Select `[simple-service] USER` name and click `Assign` button
     - Now, `service-account-simple-service` has the role `USER` of `simple-service` assigned
 
 ### Test
@@ -368,13 +332,13 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 - Run the commands below to get an access token for `bgates` user
   ```
   BGATES_TOKEN=$(
-    docker run -t --rm --network springboot-keycloak-openldap_default alpine/curl:latest sh -c '
+    docker run -t --rm -e CLIENT_SECRET=$SIMPLE_SERVICE_CLIENT_SECRET --network springboot-keycloak-openldap_default alpine/curl:latest sh -c '
       curl -s -X POST http://keycloak:8080/realms/company-services/protocol/openid-connect/token \
         -H "Content-Type: application/x-www-form-urlencoded" \
         -d "username=bgates" \
         -d "password=123" \
         -d "grant_type=password" \
-        -d "client_secret='$SIMPLE_SERVICE_CLIENT_SECRET'" \
+        -d "client_secret=$CLIENT_SECRET" \
         -d "client_id=simple-service"')
   
   BGATES_ACCESS_TOKEN=$(echo $BGATES_TOKEN | jq -r .access_token)
@@ -383,6 +347,12 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 - Call the endpoint `GET /api/private`
   ```
   curl -i http://localhost:9080/api/private -H "Authorization: Bearer $BGATES_ACCESS_TOKEN"
+  ```
+
+  It should return
+  ```
+  HTTP/1.1 200
+  bgates, it is private.
   ```
 
 ## Shutdown
