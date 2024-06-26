@@ -54,7 +54,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   Once you see the following log, Keycloak has started:
   ```
-  INFO  [io.quarkus] (main) Keycloak 24.0.3 on JVM (powered by Quarkus 3.8.3) started in 41.728s. Listening on: http://0.0.0.0:8080
+  INFO  [io.quarkus] (main) Keycloak 25.0.1 on JVM (powered by Quarkus 3.8.5) started in 27.529s. Listening on: http://0.0.0.0:8080. Management interface listening on http://0.0.0.0:9000.
   ```
 
 ## Import OpenLDAP Users
@@ -194,7 +194,7 @@ Please, have a look at this **Medium** article, [**Setting Up OpenLDAP With Keyc
 
 ## Test using Swagger
 
-1. Access http://localhost:9080/swagger-ui.html.
+1. Access http://localhost:9080/swagger-ui.html
 
    ![simple-service-swagger](documentation/simple-service-swagger.jpeg)
 
