@@ -31,7 +31,7 @@ services:
     depends_on:
       - mysql
     healthcheck:
-      test: "curl -f http://localhost:8080/health/ready || exit 1"
+      test: [ "CMD", "sh", "-c", "[ -z \"$(echo \"\" > /dev/tcp/localhost/9081)\" ] || exit 1" ]
      
   openldap:
     image: osixia/openldap:1.5.0
