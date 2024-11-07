@@ -35,7 +35,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Prerequisites
 
-- [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
+- [`Java 21+`](https://www.oracle.com/java/technologies/downloads/#java21)
 - [`Docker`](https://www.docker.com/)
 - [`jq`](https://jqlang.github.io/jq/)
 
