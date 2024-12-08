@@ -1,53 +1,53 @@
 services:
       
   mysql:
-    image: mysql:9.0.1
-    container_name: mysql
+    image: 'mysql:9.1.0'
+    container_name: 'mysql'
     ports:
-      - "3306:3306"
+      - '3306:3306'
     environment:
-      - MYSQL_DATABASE=keycloak
-      - MYSQL_USER=keycloak
-      - MYSQL_PASSWORD=password
-      - MYSQL_ROOT_PASSWORD=root_password
+      - 'MYSQL_DATABASE=keycloak'
+      - 'MYSQL_USER=keycloak'
+      - 'MYSQL_PASSWORD=password'
+      - 'MYSQL_ROOT_PASSWORD=root_password'
     healthcheck:
-      test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
+      test: 'mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}'
 
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0.5
-    container_name: keycloak
+    image: 'quay.io/keycloak/keycloak:26.0.6'
+    container_name: 'keycloak'
     environment:
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
-      - KC_DB=mysql
-      - KC_DB_URL_HOST=mysql
-      - KC_DB_URL_DATABASE=keycloak
-      - KC_DB_USERNAME=keycloak
-      - KC_DB_PASSWORD=password
-      - KC_HEALTH_ENABLED=true
+      - 'KEYCLOAK_ADMIN=admin'
+      - 'KEYCLOAK_ADMIN_PASSWORD=admin'
+      - 'KC_DB=mysql'
+      - 'KC_DB_URL_HOST=mysql'
+      - 'KC_DB_URL_DATABASE=keycloak'
+      - 'KC_DB_USERNAME=keycloak'
+      - 'KC_DB_PASSWORD=password'
+      - 'KC_HEALTH_ENABLED=true'
     ports:
-      - "8080:8080"
-    command: start-dev
+      - '8080:8080'
+    command: 'start-dev'
     depends_on:
-      - mysql
+      - 'mysql'
     healthcheck:
       test: [ "CMD", "sh", "-c", "[ -z \"$(echo \"\" > /dev/tcp/localhost/9081)\" ] || exit 1" ]
      
   openldap:
-    image: osixia/openldap:1.5.0
-    container_name: openldap
+    image: 'osixia/openldap:1.5.0'
+    container_name: 'openldap'
     environment:
-      - LDAP_ORGANISATION="MyCompany Inc."
-      - LDAP_DOMAIN=mycompany.com
+      - 'LDAP_ORGANISATION="MyCompany Inc."'
+      - 'LDAP_DOMAIN=mycompany.com'
     ports:
-      - "389:389"
+      - '389:389'
 
   phpldapadmin:
-    image: osixia/phpldapadmin:0.9.0
-    container_name: phpldapadmin
+    image: 'osixia/phpldapadmin:0.9.0'
+    container_name: 'phpldapadmin'
     environment:
-      - PHPLDAPADMIN_LDAP_HOSTS=openldap
+      - 'PHPLDAPADMIN_LDAP_HOSTS=openldap'
     ports:
-      - "6443:443"
+      - '6443:443'
     depends_on:
-      - openldap
+      - 'openldap'

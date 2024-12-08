@@ -36,7 +36,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 ## Prerequisites
 
 - [`Java 21+`](https://www.oracle.com/java/technologies/downloads/#java21)
-- [`Docker`](https://www.docker.com/)
+- Some containerization tool [`Docker`](https://www.docker.com), [`Podman`](https://podman.io), etc.
 - [`jq`](https://jqlang.github.io/jq/)
 
 ## Start Environment
@@ -48,13 +48,13 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - Just wait for the Docker containers to start running. The Keycloak Docker container usually takes longer. You can check its progress by running this command:
   ```
-  docker logs keycloak -f
+  docker logs -f keycloak
   ```
   > Press `Ctrl+C` to exit
 
   Once you see the following log, Keycloak has started:
   ```
-  INFO  [io.quarkus] (main) Keycloak 25.0.1 on JVM (powered by Quarkus 3.8.5) started in 27.529s. Listening on: http://0.0.0.0:8080. Management interface listening on http://0.0.0.0:9000.
+  INFO  [io.quarkus] (main) Keycloak 26.0.6 on JVM (powered by Quarkus 3.15.1) started in 32.079s. Listening on: http://0.0.0.0:8080. Management interface listening on http://0.0.0.0:9000.
   ```
 
 ## Import OpenLDAP Users
