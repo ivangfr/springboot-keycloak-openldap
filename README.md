@@ -41,7 +41,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Start Environment
 
-- Open a terminal and inside `springboot-keycloak-openldap` root folder run:
+- Open a terminal and inside the `springboot-keycloak-openldap` root folder run:
   ```
   docker compose up -d
   ```
@@ -71,7 +71,7 @@ There are two ways to import those users: running a script or using `phpldapadmi
 
 ### Running a script
 
-- In a terminal and inside `springboot-keycloak-openldap` root folder run:
+- In a terminal and inside the `springboot-keycloak-openldap` root folder run:
   ```
   ./import-openldap-users.sh
   ```
@@ -106,7 +106,7 @@ There are two ways: running a script or using `Keycloak` website.
 
 ### Running a script
 
-- In a terminal, make sure you are inside `springboot-keycloak-openldap` root folder.
+- In a terminal, make sure you are inside the `springboot-keycloak-openldap` root folder.
 
 - Run the script below to configure `Keycloak` for `simple-service` application:
   ```
@@ -123,7 +123,7 @@ Please, have a look at this **Medium** article, [**Setting Up OpenLDAP With Keyc
 
 ## Run simple-service using Maven
 
-- Open a new terminal and make sure you are in `springboot-keycloak-openldap` root folder.
+- Open a new terminal and make sure you are in the `springboot-keycloak-openldap` root folder.
 
 - Start the application by running the following command:
   ```
@@ -302,7 +302,7 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 ## Running simple-service as a Docker container
 
-- In a terminal, make sure you are in `springboot-keycloak-openldap` root folder.
+- In a terminal, make sure you are in the `springboot-keycloak-openldap` root folder.
 
 - Build Docker Image:
   - JVM
@@ -364,14 +364,14 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 ## Shutdown
 
 - To stop `simple-service` application, go to the terminal where it is running and press `Ctrl+C`;
-- To stop and remove docker compose containers, network and volumes, go to a terminal and inside `springboot-keycloak-openldap` root folder, run the following command:
+- To stop and remove docker compose containers, network and volumes, go to a terminal and inside the `springboot-keycloak-openldap` root folder, run the following command:
   ```
   docker compose down -v
   ```
 
 ## Cleanup
 
-To remove the Docker image create by this project, go to a terminal and, inside `springboot-keycloak-openldap` root folder, run the following script:
+To remove the Docker image create by this project, go to a terminal and, inside the `springboot-keycloak-openldap` root folder, run the following script:
 ```
 ./remove-docker-images.sh
 ```
