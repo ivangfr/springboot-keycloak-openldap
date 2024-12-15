@@ -67,7 +67,7 @@ Mark Cuban > username: mcuban, password: 123
 Ivan Franchin > username: ifranchin, password: 123
 ```
 
-There are two ways to import those users: running a script or using `phpldapadmin` website.
+There are two ways to import those users: by running a script or by using [`phpLDAPadmin`](https://github.com/leenooks/phpLDAPadmin).
 
 ### Running a script
 
@@ -84,7 +84,7 @@ There are two ways to import those users: running a script or using `phpldapadmi
     -s sub "(uid=*)"
   ```
 
-### Using phpldapadmin website
+### Using phpLDAPadmin website
 
 - Access https://localhost:6443
 
@@ -307,11 +307,11 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 - Build Docker Image:
   - JVM
     ```
-    ./docker-build.sh
+    ./build-docker-images.sh
     ```
   - Native
     ```
-    ./docker-build.sh native
+    ./build-docker-images.sh native
     ```
   
   | Environment Variable | Description                                                 |
