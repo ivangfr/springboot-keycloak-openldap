@@ -30,8 +30,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   `Spring Boot` Web Java application that exposes the following endpoints:
   - `GET /api/public`: it's a not secured endpoint, everybody can access it;
-  - `GET /api/private`: it's a secured endpoint, only accessible by users that provide a `JWT` access token issued by `Keycloak` and the token must contain the role `USER`;
-  - `GET /actuator/*`: they are not secured endpoint, used to expose operational information about the application.
+  - `GET /api/private`: it's a secured endpoint, only accessible by users that provide a `JWT` access token issued by `Keycloak` and the token must contain the role `USER`.
 
 ## Prerequisites
 
