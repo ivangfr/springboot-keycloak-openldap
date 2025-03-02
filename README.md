@@ -2,7 +2,7 @@
 
 The goal of this project is to create a simple [Spring Boot](https://docs.spring.io/spring-boot/index.html) REST API, called `simple-service`, and secure it with [`Keycloak`](https://www.keycloak.org). Furthermore, the API users will be loaded into `Keycloak` from [`OpenLDAP`](https://www.openldap.org) server.
 
-> **Note**: In [`springboot-react-keycloak`](https://github.com/ivangfr/springboot-react-keycloak) repository, we have implemented a `movies-app` using `Keycloak` (with `PKCE`). This application consists of two services: the backend that was implemented using `Spring Boot` and the frontend implemented with `ReactJS`.
+> **Note**: In the [`springboot-react-keycloak`](https://github.com/ivangfr/springboot-react-keycloak) repository, we have implemented a `movies-app` using `Keycloak` (with `PKCE`). This application consists of two services: the backend that was implemented using `Spring Boot` and the frontend implemented with `ReactJS`.
 
 ## Proof-of-Concepts & Articles
 
@@ -34,8 +34,8 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Prerequisites
 
-- [`Java 21+`](https://www.oracle.com/java/technologies/downloads/#java21)
-- Some containerization tool [`Docker`](https://www.docker.com), [`Podman`](https://podman.io), etc.
+- [`Java 21`](https://www.oracle.com/java/technologies/downloads/#java21) or higher;
+- A containerization tool (e.g., [`Docker`](https://www.docker.com), [`Podman`](https://podman.io), etc.)
 - [`jq`](https://jqlang.github.io/jq/)
 
 ## Start Environment
@@ -53,12 +53,12 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   Once you see the following log, Keycloak has started:
   ```
-  INFO  [io.quarkus] (main) Keycloak 26.0.6 on JVM (powered by Quarkus 3.15.1) started in 32.079s. Listening on: http://0.0.0.0:8080. Management interface listening on http://0.0.0.0:9000.
+  INFO  [io.quarkus] (main) Keycloak 26.0.8 on JVM (powered by Quarkus 3.15.1) started in 50.109s. Listening on: http://0.0.0.0:8080. Management interface listening on http://0.0.0.0:9000
   ```
 
 ## Import OpenLDAP Users
 
-The `LDIF` file that we will use, `springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`, contains a pre-defined structure for `mycompany.com`. Basically, it has 2 groups (`developers` and `admin`) and 4 users (`Bill Gates`, `Steve Jobs`, `Mark Cuban` and `Ivan Franchin`). Besides, it's defined that `Bill Gates`, `Steve Jobs` and `Mark Cuban` belong to `developers` group and `Ivan Franchin` belongs to `admin` group.
+The `LDIF` file that we will use, `springboot-keycloak-openldap/ldap/ldap-mycompany-com.ldif`, contains a predefined structure for `mycompany.com`. Basically, it has 2 groups (`developers` and `admin`) and 4 users (`Bill Gates`, `Steve Jobs`, `Mark Cuban` and `Ivan Franchin`). Additionally, it is defined that `Bill Gates`, `Steve Jobs` and `Mark Cuban` belong to `developers` group and `Ivan Franchin` belongs to `admin` group.
 ```
 Bill Gates > username: bgates, password: 123
 Steve Jobs > username: sjobs, password: 123
@@ -75,7 +75,7 @@ There are two ways to import those users: by running a script or by using [`phpL
   ./import-openldap-users.sh
   ```
 
-- The command below can be used to check the users imported:
+- The command below can be used to check the imported users:
   ```
   ldapsearch -x -D "cn=admin,dc=mycompany,dc=com" \
     -w admin -H ldap://localhost:389 \
@@ -118,7 +118,7 @@ There are two ways: running a script or using `Keycloak` website.
 
 ### Using Keycloak website
 
-Please, have a look at this **Medium** article, [**Setting Up OpenLDAP With Keycloak For User Federation**](https://medium.com/@ivangfr/setting-up-openldap-with-keycloak-for-user-federation-82c643b3a0e6)
+Please have a look at this **Medium** article, [**Setting Up OpenLDAP With Keycloak For User Federation**](https://medium.com/@ivangfr/setting-up-openldap-with-keycloak-for-user-federation-82c643b3a0e6)
 
 ## Run simple-service using Maven
 
@@ -248,7 +248,7 @@ Please, have a look at this **Medium** article, [**Setting Up OpenLDAP With Keyc
 
 ## Using client_id and client_secret to get access token
 
-You can get an access token to `simple-service` using `client_id` and `client_secret`
+You can get an access token for `simple-service` using `client_id` and `client_secret`
 
 ### Configuration
 
@@ -362,8 +362,8 @@ You can get an access token to `simple-service` using `client_id` and `client_se
 
 ## Shutdown
 
-- To stop `simple-service` application, go to the terminal where it is running and press `Ctrl+C`;
-- To stop and remove docker compose containers, network and volumes, go to a terminal and inside the `springboot-keycloak-openldap` root folder, run the following command:
+- To stop the `simple-service` application, go to the terminal where it is running and press `Ctrl+C`;
+- To stop and remove Docker Compose containers, network, and volumes, go to a terminal and, inside the `springboot-keycloak-openldap` root folder, run the following command:
   ```
   docker compose down -v
   ```
