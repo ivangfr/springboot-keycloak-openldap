@@ -53,7 +53,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   Once you see the following log, Keycloak has started:
   ```
-  INFO  [io.quarkus] (main) Keycloak 26.0.8 on JVM (powered by Quarkus 3.15.1) started in 50.109s. Listening on: http://0.0.0.0:8080. Management interface listening on http://0.0.0.0:9000
+  INFO  [io.quarkus] (main) Keycloak 26.1.3 on JVM (powered by Quarkus 3.15.3.1) started in 44.567s. Listening on: http://0.0.0.0:8080. Management interface listening on http://0.0.0.0:9000.
   ```
 
 ## Import OpenLDAP Users
@@ -169,6 +169,8 @@ Please have a look at this **Medium** article, [**Setting Up OpenLDAP With Keycl
      -d "grant_type=password" \
      -d "client_secret=$SIMPLE_SERVICE_CLIENT_SECRET" \
      -d "client_id=simple-service" | jq -r .access_token)
+   
+   echo $BGATES_ACCESS_TOKEN
    ```
    > **Note**: In [jwt.io](https://jwt.io), you can decode and verify the `JWT` access token
 
@@ -264,10 +266,10 @@ You can get an access token for `simple-service` using `client_id` and `client_s
     > "To manage detail and group mappings, click on the username service-account-simple-service"
   - In `Role mapping` tab:
     - Click `Assign role` button;
-    - Click `Filter by realm roles` dropdown button and select `Filter by clients`;
-    - In `Search by role name` type `simple-service` and press `Enter`;
+    - Make sure the `Filter by clients` is selected in the first dropdown button;
+    - In `Search by role name`, type `simple-service` and press `Enter`;
     - Select `[simple-service] USER` name and click `Assign` button;
-    - Now, `service-account-simple-service` has the role `USER` of `simple-service` assigned.
+    - Now, `service-account-simple-service` has the role `USER` of the `simple-service` assigned.
 
 ### Test
 
@@ -286,6 +288,8 @@ You can get an access token for `simple-service` using `client_id` and `client_s
      -d "grant_type=client_credentials" \
      -d "client_secret=$SIMPLE_SERVICE_CLIENT_SECRET" \
      -d "client_id=simple-service" | jq -r .access_token)
+   
+   echo $CLIENT_ACCESS_TOKEN
    ```
   
 4. Try to call the endpoint `GET /api/private`:
