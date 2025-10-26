@@ -45,15 +45,15 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
   docker compose up -d
   ```
 
-- Just wait for the Docker containers to start running. The Keycloak Docker container usually takes longer. You can check its progress by running this command:
+- Just wait for the Docker containers to start running. The `Keycloak` Docker container usually takes longer. You can check its progress by running this command:
   ```bash
   docker logs -f keycloak
   ```
   > Press `Ctrl+C` to exit
 
-  Once you see the following log, Keycloak has started:
+  Once you see the following log, `Keycloak` has started:
   ```text
-  INFO  [io.quarkus] (main) Keycloak 26.1.3 on JVM (powered by Quarkus 3.15.3.1) started in 44.567s. Listening on: http://0.0.0.0:8080. Management interface listening on http://0.0.0.0:9000.
+  INFO  [io.quarkus] (main) Keycloak 26.4.1 on JVM (powered by Quarkus 3.27.0) started in 55.566s. Listening on: http://0.0.0.0:8080. Management interface listening on http://0.0.0.0:9000.
   ```
 
 ## Import OpenLDAP Users
