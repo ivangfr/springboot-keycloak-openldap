@@ -1,7 +1,7 @@
 services:
       
   mysql:
-    image: 'mysql:9.4.0'
+    image: 'mysql:9.5.0'
     container_name: 'mysql'
     ports:
       - '3306:3306'
@@ -14,8 +14,9 @@ services:
       test: 'mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}'
 
   keycloak:
-    image: 'quay.io/keycloak/keycloak:26.4.1'
+    image: 'quay.io/keycloak/keycloak:26.4.7'
     container_name: 'keycloak'
+    restart: 'unless-stopped'
     environment:
       - 'KC_BOOTSTRAP_ADMIN_USERNAME=admin'
       - 'KC_BOOTSTRAP_ADMIN_PASSWORD=admin'

@@ -34,7 +34,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Prerequisites
 
-- [`Java 21`](https://www.oracle.com/java/technologies/downloads/#java21) or higher;
+- [`Java 25`](https://www.oracle.com/java/technologies/downloads/#java25) or higher;
 - A containerization tool (e.g., [`Docker`](https://www.docker.com), [`Podman`](https://podman.io), etc.)
 - [`jq`](https://jqlang.github.io/jq/)
 
@@ -378,7 +378,3 @@ To remove the Docker image create by this project, go to a terminal and, inside 
 ```bash
 ./remove-docker-images.sh
 ```
-
-## References
-
-- https://www.keycloak.org/docs/latest/server_admin/
