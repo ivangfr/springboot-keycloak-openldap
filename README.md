@@ -53,7 +53,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   Once you see the following log, `Keycloak` has started:
   ```text
-  INFO  [io.quarkus] (main) Keycloak 26.4.1 on JVM (powered by Quarkus 3.27.0) started in 55.566s. Listening on: http://0.0.0.0:8080. Management interface listening on http://0.0.0.0:9000.
+  INFO  [io.quarkus] (main) Keycloak 26.5.5 on JVM (powered by Quarkus 3.27.2) started in 11.841s. Listening on: http://0.0.0.0:8080. Management interface listening on http://0.0.0.0:9000.
   ```
 
 ## Import OpenLDAP Users

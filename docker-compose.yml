@@ -1,8 +1,9 @@
 services:
-      
+
   mysql:
-    image: 'mysql:9.5.0'
+    image: 'mysql:9.6.0'
     container_name: 'mysql'
+    restart: unless-stopped
     ports:
       - '3306:3306'
     environment:
@@ -14,9 +15,9 @@ services:
       test: 'mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}'
 
   keycloak:
-    image: 'quay.io/keycloak/keycloak:26.4.7'
+    image: 'quay.io/keycloak/keycloak:26.5.5'
     container_name: 'keycloak'
-    restart: 'unless-stopped'
+    restart: unless-stopped
     environment:
       - 'KC_BOOTSTRAP_ADMIN_USERNAME=admin'
       - 'KC_BOOTSTRAP_ADMIN_PASSWORD=admin'
@@ -30,13 +31,13 @@ services:
       - '8080:8080'
     command: 'start-dev'
     depends_on:
-      - 'mysql'
-    healthcheck:
-      test: [ "CMD", "sh", "-c", "[ -z \"$(echo \"\" > /dev/tcp/localhost/9081)\" ] || exit 1" ]
-     
+      mysql:
+        condition: service_healthy
+
   openldap:
     image: 'osixia/openldap:1.5.0'
     container_name: 'openldap'
+    restart: unless-stopped
     environment:
       - 'LDAP_ORGANISATION="MyCompany Inc."'
       - 'LDAP_DOMAIN=mycompany.com'
@@ -46,6 +47,7 @@ services:
   phpldapadmin:
     image: 'osixia/phpldapadmin:0.9.0'
     container_name: 'phpldapadmin'
+    restart: unless-stopped
     environment:
       - 'PHPLDAPADMIN_LDAP_HOSTS=openldap'
     ports:
