@@ -1,5 +1,10 @@
 # springboot-keycloak-openldap
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-ivan.franchin-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/ivan.franchin)
+
+## Description
+
 The goal of this project is to create a simple [Spring Boot](https://docs.spring.io/spring-boot/index.html) REST API, called `simple-service`, and secure it with [`Keycloak`](https://www.keycloak.org). Furthermore, the API users will be loaded into `Keycloak` from [`OpenLDAP`](https://www.openldap.org) server.
 
 > **Note**: In the [`springboot-react-keycloak`](https://github.com/ivangfr/springboot-react-keycloak) repository, we have implemented a `movies-app` using `Keycloak` (with `PKCE`). This application consists of two services: the backend that was implemented using `Spring Boot` and the frontend implemented with `ReactJS`.
@@ -20,41 +25,30 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 - \[**Medium**\] [**Implementing a Full Stack Web App using Spring-Boot and React**](https://medium.com/@ivangfr/implementing-a-full-stack-web-app-using-spring-boot-and-react-7db598df4452)
 - \[**Medium**\] [**Using Keycloak to secure a Full Stack Web App implemented with Spring-Boot and React**](https://medium.com/@ivangfr/using-keycloak-to-secure-a-full-stack-web-app-implemented-with-spring-boot-and-react-6b2d80fc5c12)
 
-## Project Diagram
+## Project Overview
 
-![project-diagram](documentation/project-diagram.jpeg)
+![project-overview](documentation/project-overview.png)
 
 ## Application
 
 - ### simple-service
 
   `Spring Boot` Web Java application that exposes the following endpoints:
-  - `GET /api/public`: it's a not secured endpoint, everybody can access it;
+  - `GET /api/public`: it's a not secured endpoint, everybody can access it.
   - `GET /api/private`: it's a secured endpoint, only accessible by users that provide a `JWT` access token issued by `Keycloak` and the token must contain the role `USER`.
 
 ## Prerequisites
 
-- [`Java 25`](https://www.oracle.com/java/technologies/downloads/#java25) or higher;
+- [`Java 25`](https://www.oracle.com/java/technologies/downloads/#java25) or higher.
 - A containerization tool (e.g., [`Docker`](https://www.docker.com), [`Podman`](https://podman.io), etc.)
 - [`jq`](https://jqlang.github.io/jq/)
 
 ## Start Environment
 
-- Open a terminal and inside the `springboot-keycloak-openldap` root folder run:
-  ```bash
-  docker compose up -d
-  ```
-
-- Just wait for the Docker containers to start running. The `Keycloak` Docker container usually takes longer. You can check its progress by running this command:
-  ```bash
-  docker logs -f keycloak
-  ```
-  > Press `Ctrl+C` to exit
-
-  Once you see the following log, `Keycloak` has started:
-  ```text
-  INFO  [io.quarkus] (main) Keycloak 26.5.5 on JVM (powered by Quarkus 3.27.2) started in 11.841s. Listening on: http://0.0.0.0:8080. Management interface listening on http://0.0.0.0:9000.
-  ```
+Open a terminal and inside the `springboot-keycloak-openldap` root folder run:
+```bash
+docker compose up -d
+```
 
 ## Import OpenLDAP Users
 
@@ -97,7 +91,7 @@ There are two ways to import those users: by running a script or by using [`phpL
 
 - You should see a tree like the one shown in the picture below:
 
-  ![phpldapadmin](documentation/phpldapadmin.jpeg)
+  ![phpldapadmin](documentation/phpldapadmin.png)
 
 ## Configure Keycloak
 
@@ -197,7 +191,7 @@ Please have a look at this **Medium** article, [**Setting Up OpenLDAP With Keycl
 
 1. Access http://localhost:9080/swagger-ui.html
 
-   ![simple-service-swagger](documentation/simple-service-swagger.jpeg)
+   ![simple-service-swagger](documentation/simple-service-swagger.png)
 
 2. Click `GET /api/public` to open it. Then, click `Try it out` button and, finally, click `Execute` button.
 
@@ -254,21 +248,21 @@ You can get an access token for `simple-service` using `client_id` and `client_s
 
 ### Configuration
 
-- Access http://localhost:8080;
-- Click the dropdown button that contains `Keycloak` and select `company-services`;
-- On the left menu, click `Clients`;
-- Select `simple-service` client;
+- Access http://localhost:8080
+- Click the dropdown button that contains `Keycloak` and select `company-services`.
+- On the left menu, click `Clients`.
+- Select `simple-service` client.
 - In `Settings` tab:
-  - Go to `Capability config` and check `Service accounts roles` checkbox;
-  - Click `Save` button;
+  - Go to `Capability config` and check `Service accounts roles` checkbox.
+  - Click `Save` button.
 - In `Service account roles` tab:
-  - Click `service-account-simple-service` link present in the info message;
+  - Click `service-account-simple-service` link present in the info message.
     > "To manage detail and group mappings, click on the username service-account-simple-service"
   - In `Role mapping` tab:
-    - Click `Assign role` button;
-    - Make sure the `Filter by clients` is selected in the first dropdown button;
-    - In `Search by role name`, type `simple-service` and press `Enter`;
-    - Select `[simple-service] USER` name and click `Assign` button;
+    - Click `Assign role` button.
+    - Make sure the `Filter by clients` is selected in the first dropdown button.
+    - In `Search by role name`, type `simple-service` and press `Enter`.
+    - Select `[simple-service] USER` name and click `Assign` button.
     - Now, `service-account-simple-service` has the role `USER` of the `simple-service` assigned.
 
 ### Test
@@ -366,11 +360,18 @@ You can get an access token for `simple-service` using `client_id` and `client_s
 
 ## Shutdown
 
-- To stop the `simple-service` application, go to the terminal where it is running and press `Ctrl+C`;
+- To stop the `simple-service` application, go to the terminal where it is running and press `Ctrl+C`.
 - To stop and remove Docker Compose containers, network, and volumes, go to a terminal and, inside the `springboot-keycloak-openldap` root folder, run the following command:
   ```bash
   docker compose down -v
   ```
+
+## Running Unit Tests
+
+In a terminal, navigate to the `springboot-keycloak-openldap` root folder, and run the following command:
+```bash
+./mvnw clean test --projects simple-service
+```
 
 ## Cleanup
 
@@ -378,3 +379,17 @@ To remove the Docker image create by this project, go to a terminal and, inside 
 ```bash
 ./remove-docker-images.sh
 ```
+
+## How to optimize PNG screenshots in documentation folder
+
+\[**Medium**\] [**How I Reduce GIF and Screenshot Sizes for My Technical Articles on macOS**](https://medium.com/itnext/how-i-reduce-gif-and-screenshot-sizes-for-my-technical-articles-on-macos-7fea331afc68)
+
+## Support
+
+If you find this useful, consider buying me a coffee:
+
+<a href="https://buymeacoffee.com/ivan.franchin"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="50"></a>
+
+## License
+
+This project is licensed under the [MIT License](./LICENSE).

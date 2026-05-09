@@ -1,18 +1,20 @@
 services:
 
-  mysql:
-    image: 'mysql:9.6.0'
-    container_name: 'mysql'
+  postgres:
+    image: 'postgres:18.3'
+    container_name: 'postgres'
     restart: unless-stopped
     ports:
-      - '3306:3306'
+      - '5432:5432'
     environment:
-      - 'MYSQL_DATABASE=keycloak'
-      - 'MYSQL_USER=keycloak'
-      - 'MYSQL_PASSWORD=password'
-      - 'MYSQL_ROOT_PASSWORD=root_password'
+      - 'POSTGRES_DB=keycloak'
+      - 'POSTGRES_USER=keycloak'
+      - 'POSTGRES_PASSWORD=password'
     healthcheck:
-      test: 'mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}'
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "keycloak"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
 
   keycloak:
     image: 'quay.io/keycloak/keycloak:26.5.5'
@@ -21,8 +23,8 @@ services:
     environment:
       - 'KC_BOOTSTRAP_ADMIN_USERNAME=admin'
       - 'KC_BOOTSTRAP_ADMIN_PASSWORD=admin'
-      - 'KC_DB=mysql'
-      - 'KC_DB_URL_HOST=mysql'
+      - 'KC_DB=postgres'
+      - 'KC_DB_URL_HOST=postgres'
       - 'KC_DB_URL_DATABASE=keycloak'
       - 'KC_DB_USERNAME=keycloak'
       - 'KC_DB_PASSWORD=password'
@@ -31,7 +33,7 @@ services:
       - '8080:8080'
     command: 'start-dev'
     depends_on:
-      mysql:
+      postgres:
         condition: service_healthy
 
   openldap:
