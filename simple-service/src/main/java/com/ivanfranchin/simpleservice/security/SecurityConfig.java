@@ -10,23 +10,33 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    private final JwtAuthenticationTokenConverter jwtAuthenticationTokenConverter;
+  private final JwtAuthenticationTokenConverter jwtAuthenticationTokenConverter;
 
-    public SecurityConfig(JwtAuthenticationTokenConverter jwtAuthenticationTokenConverter) {
-        this.jwtAuthenticationTokenConverter = jwtAuthenticationTokenConverter;
-    }
+  public SecurityConfig(JwtAuthenticationTokenConverter jwtAuthenticationTokenConverter) {
+    this.jwtAuthenticationTokenConverter = jwtAuthenticationTokenConverter;
+  }
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) {
-        return http
-                .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers(HttpMethod.GET, "/api/private").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/api/public").permitAll()
-                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
-                        .anyRequest().authenticated())
-                .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
-                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationTokenConverter)))
-                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .build();
-    }
+  @Bean
+  SecurityFilterChain securityFilterChain(HttpSecurity http) {
+    return http.authorizeHttpRequests(
+            authorizeHttpRequests ->
+                authorizeHttpRequests
+                    .requestMatchers(HttpMethod.GET, "/api/private")
+                    .hasRole("USER")
+                    .requestMatchers(HttpMethod.GET, "/api/public")
+                    .permitAll()
+                    .requestMatchers(
+                        "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated())
+        .oauth2ResourceServer(
+            oauth2ResourceServer ->
+                oauth2ResourceServer.jwt(
+                    jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationTokenConverter)))
+        .sessionManagement(
+            sessionManagement ->
+                sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .build();
+  }
 }

@@ -366,12 +366,14 @@ You can get an access token for `simple-service` using `client_id` and `client_s
   docker compose down -v
   ```
 
-## Running Unit Tests
+## Running Test Cases
 
-In a terminal, navigate to the `springboot-keycloak-openldap` root folder, and run the following command:
-```bash
-./mvnw clean test --projects simple-service
-```
+- In a terminal, make sure you are in the `springboot-keycloak-openldap` root folder. 
+
+- Then, run the following command:
+  ```bash
+  ./mvnw clean test
+  ```
 
 ## Cleanup
 
@@ -379,6 +381,20 @@ To remove the Docker image create by this project, go to a terminal and, inside 
 ```bash
 ./remove-docker-images.sh
 ```
+
+## Code Formatting
+
+This project enforces consistent Java formatting using the [Spotless](https://github.com/diffplug/spotless) Maven plugin with [google-java-format](https://github.com/google/google-java-format) (GOOGLE style).
+
+- **Check formatting**:
+  ```bash
+  ./mvnw spotless:check
+  ```
+
+- **Auto-fix formatting**:
+  ```bash
+  ./mvnw spotless:apply
+  ```
 
 ## How to optimize PNG screenshots in documentation folder
 
