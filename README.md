@@ -366,14 +366,12 @@ You can get an access token for `simple-service` using `client_id` and `client_s
   docker compose down -v
   ```
 
-## Running Test Cases
+## Running Tests
 
-- In a terminal, make sure you are in the `springboot-keycloak-openldap` root folder. 
-
-- Then, run the following command:
-  ```bash
-  ./mvnw clean test
-  ```
+In a terminal and inside the `springboot-keycloak-openldap` root folder, run the following command:
+```bash
+./mvnw clean test
+```
 
 ## Cleanup
 

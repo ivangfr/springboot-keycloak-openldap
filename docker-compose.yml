@@ -3,7 +3,7 @@ services:
   postgres:
     image: 'postgres:18.3'
     container_name: 'postgres'
-    restart: unless-stopped
+    restart: 'unless-stopped'
     ports:
       - '5432:5432'
     environment:
@@ -19,7 +19,7 @@ services:
   keycloak:
     image: 'quay.io/keycloak/keycloak:26.5.5'
     container_name: 'keycloak'
-    restart: unless-stopped
+    restart: 'unless-stopped'
     environment:
       - 'KC_BOOTSTRAP_ADMIN_USERNAME=admin'
       - 'KC_BOOTSTRAP_ADMIN_PASSWORD=admin'
@@ -39,7 +39,7 @@ services:
   openldap:
     image: 'osixia/openldap:1.5.0'
     container_name: 'openldap'
-    restart: unless-stopped
+    restart: 'unless-stopped'
     environment:
       - 'LDAP_ORGANISATION="MyCompany Inc."'
       - 'LDAP_DOMAIN=mycompany.com'
@@ -49,7 +49,7 @@ services:
   phpldapadmin:
     image: 'osixia/phpldapadmin:0.9.0'
     container_name: 'phpldapadmin'
-    restart: unless-stopped
+    restart: 'unless-stopped'
     environment:
       - 'PHPLDAPADMIN_LDAP_HOSTS=openldap'
     ports:
