@@ -13,7 +13,7 @@
     <version>1.0.0</version>
     <packaging>pom</packaging>
     <name>springboot-keycloak-openldap</name>
-    <description>Demo project for Spring Boot</description>
+    <description/>
     <url/>
     <licenses>
         <license/>

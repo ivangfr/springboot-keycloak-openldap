@@ -10,7 +10,7 @@
     </parent>
     <artifactId>simple-service</artifactId>
     <name>simple-service</name>
-    <description>Demo project for Spring Boot</description>
+    <description/>
     <url/>
     <licenses>
         <license/>
