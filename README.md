@@ -382,7 +382,7 @@ To remove the Docker image create by this project, go to a terminal and, inside 
 
 ## Code Formatting
 
-This project enforces consistent Java formatting using the [Spotless](https://github.com/diffplug/spotless) Maven plugin with [google-java-format](https://github.com/google/google-java-format) (GOOGLE style).
+This project enforces consistent Java formatting using the [Spotless](https://github.com/diffplug/spotless/tree/main/plugin-maven) Maven plugin with [google-java-format](https://github.com/google/google-java-format) (GOOGLE style).
 
 - **Check formatting**:
   ```bash
