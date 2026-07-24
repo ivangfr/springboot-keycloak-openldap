@@ -3,7 +3,6 @@ package com.ivanfranchin.simpleservice.security;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,17 +36,24 @@ public class JwtAuthenticationTokenConverter
                 jwtGrantedAuthoritiesConverter.convert(jwt).stream(),
                 extractResourceRoles(jwt).stream())
             .collect(Collectors.toSet());
+
     String claimName = principalAttribute == null ? JwtClaimNames.SUB : principalAttribute;
-    return new JwtAuthenticationToken(jwt, authorities, jwt.getClaim(claimName));
+
+    Object claim = jwt.getClaim(claimName);
+    String principalName = claim != null ? claim.toString() : jwt.getSubject();
+    return new JwtAuthenticationToken(jwt, authorities, principalName);
   }
 
   private Collection<? extends GrantedAuthority> extractResourceRoles(Jwt jwt) {
-    return Optional.ofNullable(jwt.getClaim("resource_access"))
-        .map(resourceAccess -> (Map<String, Object>) resourceAccess)
-        .map(resourceAccess -> (Map<String, Object>) resourceAccess.get(resourceId))
-        .map(resource -> (Collection<String>) resource.get("roles"))
-        .orElse(Collections.emptySet())
-        .stream()
+    Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
+    Map<String, Object> resource;
+    Collection<String> resourceRoles;
+    if (resourceAccess == null
+        || (resource = (Map<String, Object>) resourceAccess.get(resourceId)) == null
+        || (resourceRoles = (Collection<String>) resource.get("roles")) == null) {
+      return Collections.emptySet();
+    }
+    return resourceRoles.stream()
         .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
         .collect(Collectors.toSet());
   }

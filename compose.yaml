@@ -1,7 +1,7 @@
 services:
 
   postgres:
-    image: 'postgres:18.3'
+    image: 'postgres:18.4'
     container_name: 'postgres'
     restart: 'unless-stopped'
     ports:
@@ -17,7 +17,7 @@ services:
       retries: 5
 
   keycloak:
-    image: 'quay.io/keycloak/keycloak:26.5.5'
+    image: 'quay.io/keycloak/keycloak:26.7.0'
     container_name: 'keycloak'
     restart: 'unless-stopped'
     environment:
