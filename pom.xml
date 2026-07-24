@@ -30,7 +30,6 @@
     <properties>
         <java.version>25</java.version>
         <spotless.version>3.8.0</spotless.version>
-        <google-java-format.version>1.35.0</google-java-format.version>
     </properties>
     <modules>
         <module>simple-service</module>
@@ -44,7 +43,6 @@
                 <configuration>
                     <java>
                         <googleJavaFormat>
-                            <version>${google-java-format.version}</version>
                             <style>GOOGLE</style>
                         </googleJavaFormat>
                         <removeUnusedImports/>
